@@ -3,6 +3,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
     file://lvds-support.cfg \
     file://lt9211-driver-fixup.patch \
+    file://clk-imx8ulp.patch \
     file://rom2620-ed91.dts;subdir=git/arch/arm64/boot/dts/freescale \
 "
 

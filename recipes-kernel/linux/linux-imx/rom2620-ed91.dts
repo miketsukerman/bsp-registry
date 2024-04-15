@@ -212,6 +212,32 @@
 	status = "okay";
 };
 
+&per_bridge3 {
+	tpm4: tpm@29330000 {
+		compatible = "fsl,imx8ulp-pwm", "fsl,imx7ulp-pwm";
+		reg = <0x29330000 0x1000>;
+		clocks = <&pcc3 IMX8ULP_CLK_TPM4>;
+		clock-names = "ipg";
+		assigned-clocks = <&pcc3 IMX8ULP_CLK_TPM4>;
+		assigned-clock-parents = <&cgc1 IMX8ULP_CLK_SOSC_DIV2>;
+		assigned-clock-rates = <24000000>;
+		status = "disabled";
+	};
+};
+
+&per_bridge4 {
+	tpm7: pwm@29830000 {
+		compatible = "fsl,imx8ulp-pwm", "fsl,imx7ulp-pwm";
+		reg = <0x29830000 0x10000>;
+                clocks = <&pcc4 IMX8ULP_CLK_TPM7>;
+                clock-names = "ipg", "sel";
+                assigned-clocks = <&pcc4 IMX8ULP_CLK_TPM7>, <&cgc1 IMX8ULP_CLK_TPM7_SEL>;
+                assigned-clock-parents =  <&cgc1 IMX8ULP_CLK_SOSC_DIV2>, <&cgc1 IMX8ULP_CLK_SOSC_TPM>;
+                assigned-clock-rates = <24000000>;
+                status = "disabled";
+	};
+};
+
 &per_bridge5 {
 	tpm8: tpm@2da80000 {
 		compatible = "fsl,imx7ulp-pwm";
@@ -248,6 +274,27 @@
 			};
 		};
 	};
+};
+
+&tpm4 {
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&pinctrl_tpm4>;
+	pinctrl-1 = <&pinctrl_tpm4>;
+	status = "okay";
+};
+
+&tpm7 {
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&pinctrl_tpm7>;
+	pinctrl-1 = <&pinctrl_tpm7>;
+	status = "okay";
+};
+
+&tpm8 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_tpm8>;
+	#pwm-cells = <3>;
+	status = "okay";
 };
 
 &dsp {
@@ -464,6 +511,21 @@
 };
 
 &iomuxc1 {
+	pinctrl_tpm4: tpm4grp {
+		fsl,pins = <
+			MX8ULP_PAD_PTF16__TPM4_CH4	0x42 /* PWM1 */
+		>;
+	};
+
+	pinctrl_tpm7: tpm7grp {
+                fsl,pins = <
+                        MX8ULP_PAD_PTF25__TPM7_CH5      0x42 /* PWM2 */
+                        MX8ULP_PAD_PTF29__TPM7_CH2      0x42 /* PWM3 */
+                        MX8ULP_PAD_PTF30__TPM7_CH3      0x42 /* PWM4 */
+                        MX8ULP_PAD_PTF31__TPM7_CH4      0x42 /* PWM5 */
+                >;
+        };
+
 	pinctrl_tpm8: tpm8grp {
 		fsl,pins = <
 			MX8ULP_PAD_PTD19__TPM8_CH1      0x42

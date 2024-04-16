@@ -5,6 +5,7 @@ SRC_URI += " \
     file://0001-modify-dts.patch \
     file://0002-modify-spi-nor-ids-c.patch \
     file://0003-modify-imx8ulp_evk_defconfig.patch \
+    file://0004-modify-u-boot-message.patch \
 "
 
 do_configure:prepend() {

@@ -221,7 +221,10 @@
 		assigned-clocks = <&pcc3 IMX8ULP_CLK_TPM4>;
 		assigned-clock-parents = <&cgc1 IMX8ULP_CLK_SOSC_DIV2>;
 		assigned-clock-rates = <24000000>;
-		status = "disabled";
+		pinctrl-names = "default", "sleep";
+		pinctrl-0 = <&pinctrl_tpm4>;
+		pinctrl-1 = <&pinctrl_tpm4>;
+		status = "okay";
 	};
 };
 
@@ -234,7 +237,10 @@
                 assigned-clocks = <&pcc4 IMX8ULP_CLK_TPM7>, <&cgc1 IMX8ULP_CLK_TPM7_SEL>;
                 assigned-clock-parents =  <&cgc1 IMX8ULP_CLK_SOSC_DIV2>, <&cgc1 IMX8ULP_CLK_SOSC_TPM>;
                 assigned-clock-rates = <24000000>;
-                status = "disabled";
+                pinctrl-names = "default", "sleep";
+                pinctrl-0 = <&pinctrl_tpm7>;
+                pinctrl-1 = <&pinctrl_tpm7>;
+                status = "okay";
 	};
 };
 
@@ -274,27 +280,6 @@
 			};
 		};
 	};
-};
-
-&tpm4 {
-	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&pinctrl_tpm4>;
-	pinctrl-1 = <&pinctrl_tpm4>;
-	status = "okay";
-};
-
-&tpm7 {
-	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&pinctrl_tpm7>;
-	pinctrl-1 = <&pinctrl_tpm7>;
-	status = "okay";
-};
-
-&tpm8 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_tpm8>;
-	#pwm-cells = <3>;
-	status = "okay";
 };
 
 &dsp {

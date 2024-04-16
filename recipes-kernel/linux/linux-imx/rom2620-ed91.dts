@@ -511,6 +511,24 @@
 };
 
 &iomuxc1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_hog_1>;
+
+	pinctrl_hog_1: hog1grp {
+		fsl,pins = <
+			MX8ULP_PAD_PTD12__PTD12		0x3
+			MX8ULP_PAD_PTD13__PTD13		0x3
+			MX8ULP_PAD_PTF1__PTF1		0x3
+		>;
+	};
+
+	pinctrl_cam: camgrp {
+		fsl,pins = <
+			MX8ULP_PAD_PTD22__PTD22		0x3 /* CAM_PWR */
+			MX8ULP_PAD_PTD23__PTD23		0x3 /* CAM_RST */
+		>;
+	};
+
 	pinctrl_tpm4: tpm4grp {
 		fsl,pins = <
 			MX8ULP_PAD_PTF16__TPM4_CH4	0x42 /* PWM1 */

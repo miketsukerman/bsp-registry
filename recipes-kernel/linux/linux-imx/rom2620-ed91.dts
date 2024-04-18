@@ -374,7 +374,7 @@
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&pinctrl_lpi2c7>;
 	pinctrl-1 = <&pinctrl_lpi2c7>;
-	status = "okay";
+	status = "disabled";
 
 	acodec: sgtl5000@a {
 		#sound-dai-cells = <0>;

@@ -3,7 +3,7 @@ LICENSE = "CLOSED"
 
 inherit deploy
 
-SRC_URI = "git://git@ssh.dev.azure.com/v3/AdvEECC/EECC_Internal/sdk_imx8ulp_adv;protocol=ssh;branch=master"
+SRC_URI = "git://github.com/Advantech-EECC/sdk_imx8ulp_adv;protocol=https;branch=master"
 SRCREV = "a2dab8cd091dfb2c564e103aa57fd41b919f641e"
 
 S = "${WORKDIR}/git"

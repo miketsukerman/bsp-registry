@@ -3,7 +3,6 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 SRC_URI += " \
     file://lvds-support.cfg \
     file://lt9211-driver-fixup.patch \
-    file://clk-imx8ulp.patch \
     file://rom2620-ed91.dts;subdir=git/arch/arm64/boot/dts/freescale \
 "
 
@@ -13,4 +12,4 @@ do_configure:prepend() {
 
 DELTA_KERNEL_DEFCONFIG += "lvds-support.cfg"
 
-LOCALVERSION = "-lts-next-imx-6.6.3-1.0.0-adv"
+#LOCALVERSION = "-lts-next-imx-6.6.3-1.0.0-adv"

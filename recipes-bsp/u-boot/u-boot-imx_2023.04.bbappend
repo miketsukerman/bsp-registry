@@ -2,10 +2,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += " \
     file://lpddr4_timing_rom2620a1_1G.c;subdir=git/board/freescale/imx8ulp_evk \
-    file://0001-modify-dts.patch \
-    file://0002-modify-spi-nor-ids-c.patch \
-    file://0003-modify-imx8ulp_evk_defconfig.patch \
-    file://0004-modify-u-boot-message.patch \
+	file://0001-modify-dts.patch \
 "
 
 do_configure:prepend() {

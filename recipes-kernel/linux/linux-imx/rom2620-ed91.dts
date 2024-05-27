@@ -23,14 +23,6 @@
 		reg = <0x0 0x80000000 0 0x40000000>;
 	};
 
-	reg_1p8v: regulator-1p8v {
-		compatible = "regulator-fixed";
-		regulator-name = "1P8V";
-		regulator-min-microvolt = <1800000>;
-		regulator-max-microvolt = <1800000>;
-		regulator-always-on;
-	};
-
 	reserved-memory {
 		#address-cells = <2>;
 		#size-cells = <2>;
@@ -125,20 +117,6 @@
 		#clock-cells = <0>;
 	};
 
-	sound {
-		compatible = "fsl,sgtl5000",
-				"fsl,imx-audio-sgtl5000";
-		model = "sgtl5000";
-		codec-master;
-		ssi-controller = <&sai7>;
-		audio-codec = <&acodec>;
-		audio-routing =
-			"MIC_IN", "Mic Jack",
-			"Mic Jack", "Mic Bias",
-			"Headphone Jack", "HP_OUT";
-		no-audmux;
-	};
-
 	lt9211_1v8: regulator-lt9211 {
 		compatible = "regulator-fixed";
 		regulator-name = "LVDS_BRIDGE";
@@ -210,38 +188,6 @@
 
 &epxp {
 	status = "okay";
-};
-
-&per_bridge3 {
-	tpm4: tpm@29330000 {
-		compatible = "fsl,imx8ulp-pwm", "fsl,imx7ulp-pwm";
-		reg = <0x29330000 0x1000>;
-		clocks = <&pcc3 IMX8ULP_CLK_TPM4>;
-		clock-names = "ipg";
-		assigned-clocks = <&pcc3 IMX8ULP_CLK_TPM4>;
-		assigned-clock-parents = <&cgc1 IMX8ULP_CLK_SOSC_DIV2>;
-		assigned-clock-rates = <24000000>;
-		pinctrl-names = "default", "sleep";
-		pinctrl-0 = <&pinctrl_tpm4>;
-		pinctrl-1 = <&pinctrl_tpm4>;
-		status = "okay";
-	};
-};
-
-&per_bridge4 {
-	tpm7: pwm@29830000 {
-		compatible = "fsl,imx8ulp-pwm", "fsl,imx7ulp-pwm";
-		reg = <0x29830000 0x10000>;
-                clocks = <&pcc4 IMX8ULP_CLK_TPM7>;
-                clock-names = "ipg", "sel";
-                assigned-clocks = <&pcc4 IMX8ULP_CLK_TPM7>, <&cgc1 IMX8ULP_CLK_TPM7_SEL>;
-                assigned-clock-parents =  <&cgc1 IMX8ULP_CLK_SOSC_DIV2>, <&cgc1 IMX8ULP_CLK_SOSC_TPM>;
-                assigned-clock-rates = <24000000>;
-                pinctrl-names = "default", "sleep";
-                pinctrl-0 = <&pinctrl_tpm7>;
-                pinctrl-1 = <&pinctrl_tpm7>;
-                status = "okay";
-	};
 };
 
 &per_bridge5 {
@@ -375,28 +321,6 @@
 	pinctrl-0 = <&pinctrl_lpi2c7>;
 	pinctrl-1 = <&pinctrl_lpi2c7>;
 	status = "disabled";
-
-	acodec: sgtl5000@a {
-		#sound-dai-cells = <0>;
-		compatible = "fsl,sgtl5000";
-		reg = <0xa>;
-		VDDA-supply = <&reg_1p8v>;
-		VDDIO-supply = <&reg_1p8v>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&pinctrl_sai7_mclk>;
-		clocks = <&cgc1 IMX8ULP_CLK_SPLL3_PFD1_DIV1>;
-		clock-names = "mclk";
-	};
-};
-
-&sai7 {
-	#sound-dai-cells = <0>;
-	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&pinctrl_sai7>;
-	pinctrl-1 = <&pinctrl_sai7>;
-	assigned-clocks = <&cgc2 IMX8ULP_CLK_SAI7_SEL>;
-	assigned-clock-parents = <&cgc1 IMX8ULP_CLK_SPLL3_PFD1_DIV1>;
-	status = "okay";
 };
 
 &usbotg1 {
@@ -496,39 +420,6 @@
 };
 
 &iomuxc1 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_hog_1>;
-
-	pinctrl_hog_1: hog1grp {
-		fsl,pins = <
-			MX8ULP_PAD_PTD12__PTD12		0x3
-			MX8ULP_PAD_PTD13__PTD13		0x3
-			MX8ULP_PAD_PTF1__PTF1		0x3
-		>;
-	};
-
-	pinctrl_cam: camgrp {
-		fsl,pins = <
-			MX8ULP_PAD_PTD22__PTD22		0x3 /* CAM_PWR */
-			MX8ULP_PAD_PTD23__PTD23		0x3 /* CAM_RST */
-		>;
-	};
-
-	pinctrl_tpm4: tpm4grp {
-		fsl,pins = <
-			MX8ULP_PAD_PTF16__TPM4_CH4	0x42 /* PWM1 */
-		>;
-	};
-
-	pinctrl_tpm7: tpm7grp {
-                fsl,pins = <
-                        MX8ULP_PAD_PTF25__TPM7_CH5      0x42 /* PWM2 */
-                        MX8ULP_PAD_PTF29__TPM7_CH2      0x42 /* PWM3 */
-                        MX8ULP_PAD_PTF30__TPM7_CH3      0x42 /* PWM4 */
-                        MX8ULP_PAD_PTF31__TPM7_CH4      0x42 /* PWM5 */
-                >;
-        };
-
 	pinctrl_tpm8: tpm8grp {
 		fsl,pins = <
 			MX8ULP_PAD_PTD19__TPM8_CH1      0x42
@@ -583,21 +474,6 @@
 		fsl,pins = <
 			MX8ULP_PAD_PTF0__USB1_ID	0x10003
 			MX8ULP_PAD_PTF6__USB1_OC	0x10003
-		>;
-	};
-
-	pinctrl_sai7: sai7grp {
-		fsl,pins = <
-			MX8ULP_PAD_PTD15__I2S7_TX_BCLK	0x43
-			MX8ULP_PAD_PTD16__I2S7_TX_FS	0x43
-			MX8ULP_PAD_PTD17__I2S7_TXD0	0x43
-			MX8ULP_PAD_PTD14__I2S7_RXD0	0x43
-		>;
-	};
-
-	pinctrl_sai7_mclk: sai7grp_mclk {
-		fsl,pins = <
-			MX8ULP_PAD_PTD18__I2S7_MCLK	0x43
 		>;
 	};
 

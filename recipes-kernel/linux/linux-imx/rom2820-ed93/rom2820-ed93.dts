@@ -760,3 +760,7 @@
 		status = "okay";
 	};
 };
+
+&wdog3 {
+	status = "okay";
+};

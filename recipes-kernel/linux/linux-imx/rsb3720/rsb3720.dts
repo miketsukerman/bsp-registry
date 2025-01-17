@@ -453,6 +453,16 @@
 		gpio-controller;
 		#gpio-cells = <2>;
 	};
+
+	wdt: msp430g2202@29 {
+		compatible = "fsl,adv-wdt-i2c";
+		reg = <0x29>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_wdt>;
+		wdt-en-gpio = <&gpio3 19 GPIO_ACTIVE_HIGH>;
+		wdt-ping-gpio = <&gpio4 20 GPIO_ACTIVE_HIGH>;
+		status = "okay";
+	};
 };
 
 &i2c2 {
@@ -1035,6 +1045,13 @@
 	pinctrl_wdog: wdoggrp {
 		fsl,pins = <
 			MX8MP_IOMUXC_GPIO1_IO02__WDOG1_WDOG_B	0x166
+		>;
+	};
+
+	pinctrl_wdt: wdt_grp {
+		fsl,pins = <
+			MX8MP_IOMUXC_SAI5_RXFS__GPIO3_IO19      0x10    /* WDT_EN_1V8 */
+			MX8MP_IOMUXC_SAI1_MCLK__GPIO4_IO20      0x10    /* WDT_TRIG_1V8 */
 		>;
 	};
 

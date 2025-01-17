@@ -1,28 +1,41 @@
 Advantech BSP for NXP based boards
 ==================================
+
 This reference BSP adds minimalistic changes to the NXP layers to support Advantech boards. Note that some boards may have only limited features with this BSP. However, more features can be added in another layer on top of this layer.
 
-Supported Boards 
+For build instructions, check the [README.md in the Advantech fork of the NXP imx-manifest repository](https://github.com/Advantech-EECC/imx-manifest), which adds manifests including this layer.
+
+
+Supported Boards
 ================
+
 The following boards are supported by this layer:
  * ROM-2620 (`rom2620-ed91`)
+ * ROM-2820 (`rom2820-ed93`)
+ * ROM-5722 (`rom5722-db2510`)
+ * RSB-3720 (`rsb3720`)
+
 
 Supported Linux Features
 ========
-ROM-2620
+
+
+ROM-2620 (on ROM-ED91 carrier board)
 --------
-|Device |Status|Comment| 
-|-------|------|-------| 
+
+|Device |Status|Comment|
+|-------|------|-------|
 |SDHC0  |  ✅ | eMMC |
 |SDHC2 |  ✅  | SD Card |
-|Ethernet|  ✅  |  |
-|USB A|  ⚠️ | Not Configured |
-|USB B| ✅ | Device Mode |
+|Ethernet |  ✅  | 100Mbps |
+|USB1-1| ✅ | USB 2.0 |
+|USB1-2| ✅ | USB 2.0 |
+|USB0-OTG | ❌  | |
 |MIPI-DSI| ✅ | G070VW01 panel via LVDS bridge |
 |MIPI-CSI| ⚠️ |  |
-|LPUART4 | ✅ | COM-A |
+|LPUART4 | ✅⚠️ | COM-A (2-wire, 4-wire HWFC pending) |
 |LPUART5 | ✅ | COM-D Linux Console |
-|LPUART6 | ✅ | COM-C |
+|LPUART6 | ✅ | COM-C (2-wire) |
 |LPI2C0 | ❌ | On CAM connector |
 |LPI2C6 | ✅ | Lontium LT9211 exists |
 |LPI2C7 | ✅ |  |
@@ -33,3 +46,112 @@ ROM-2620
 |LPSPI3| ❌ | Need to be accessed from M33 |
 |CAN| ❌ | Need to be accessed from M33 |
 |GPIO A,B,C| ❌ | Need to be accessed from M33 |
+|RTC | ✅ | Internal RTC, supports timer wake events |
+|Watchdog | ✅ | Internal watchdog |
+
+ROM-2820 (on ROM-ED93 carrier board)
+--------
+
+|Device |Status|Comment|
+|-------|------|-------|
+|SDHC0  |  ✅ | eMMC |
+|SDHC2 |  ✅  | SD Card |
+|ETH0 |  ✅  | 1Gbps |
+|ETH1 |  ✅  | 1Gbps |
+|USB1-1| ✅ | USB 2.0 |
+|USB1-2| ✅ | USB 2.0 |
+|USB0-OTG | ❌  | |
+|MIPI-DSI| ❌ | Pending |
+|LPUART1 | ✅ | COM-E Linux Console |
+|LPUART2 | ✅ | COM-C (2-wire) |
+|LPUART3 | ✅ | COM-D (2-wire)|
+|LPUART5 | ✅⚠️ | COM-A (2-wire, 4-wire HWFC pending) |
+|LPUART6 | ✅⚠️ | COM-B (2-wire, 4-wire HWFC pending) |
+|LPI2C0 | ✅ |  |
+|LPI2C1 | ✅ |  |
+|LPI2C2 | ✅ |  |
+|LPI2C4 | ✅ |  |
+|LPI2C7 | ✅ |  |
+|PWM0 | ⚠️ | Not tested |
+|PWM1 | ❌ |  |
+|LPSPI3| ⚠️ | Not tested |
+|NPU| ❌ |  |
+|CAN0| ✅ |  |
+|CAN1| ✅ |  |
+|GPIO  ⚠️ | Not tested |
+|PCI-E| ❌  | Pending |
+|RTC0 | ✅ | External I2C RTC (rx8900) |
+|RTC1 | ✅ | Internal RTC, supports timer wake events |
+|Watchdog | ✅ | Internal watchdog |
+
+
+ROM-5722 (on SOM-DB2510 carrier board)
+--------
+
+|Device |Status|Comment|
+|-------|------|-------|
+|SDHC2  |  ✅ | eMMC |
+|SDHC1 |  ✅  | SD Card |
+|ETH0 |  ✅  | 1Gbps |
+|ETH1 |  ✅  | 1Gbps |
+|USB1|  ✅ | USB 2.0 |
+|USB2| ✅ | USB 2.0  |
+|USB-C| ✅ | USB 3.2 |
+|HDMI| ✅ |  |
+|MIPI-DSI| ❌ |  |
+|MIPI-CSI| ❌ |  |
+|UART1 | ✅⚠️ | COM3-A (2-wire, 4-wire HWFC pending) |
+|UART2 | ✅ | COM4-A, Linux console |
+|UART3 | ✅⚠️ | COM3-B (2-wire, 4-wire HWFC pending) |
+|UART4 | ✅⚠️ | COM4-B (2-wire, 4-wire HWFC pending) |
+|LPI2C0 | ⚠️  | Not tested |
+|LPI2C1 | ⚠️  | Not tested |
+|LPI2C2 | ⚠️  | Not tested |
+|LPI2C3 | ⚠️  | Not tested |
+|LPI2C4 | ⚠️  | Not tested |
+|PWM 2| ⚠️  | Not tested |
+|PWM 3| ⚠️  | Not tested |
+|GPIO| ❌ |  |
+|PCI-E| ❌  | Pending |
+|CAN0| ✅ |  |
+|CAN1| ✅ |  |
+|RTC0 | ✅ | External I2C RTC (S35390) |
+|RTC1 | ✅ | Internal RTC, supports timer wake events |
+|Watchdog | ✅ | External I2C Advantech watchdog (MSP430-based) |
+
+Additional limitations for this module + carrier:
+- Suspend to RAM wakes up immediately
+
+
+RSB-3720
+--------
+
+|Device |Status|Comment|
+|-------|------|-------|
+|SDHC2  |  ✅ | eMMC |
+|SDHC1 |  ✅  | SD Card |
+|ETH0 |  ✅  | 1Gbps |
+|ETH1 |  ✅  | 1Gbps |
+|USB1-1|  ✅ | USB 3.2 |
+|USB1-2| ✅ | USB 2.0 |
+|HDMI| ✅ |  |
+|MIPI-DSI| ❌ |  |
+|MIPI-CSI| ❌ |  |
+|UART1 | ⚠️ | COM2, M2 connector (2-wire, 4-wire HWFC pending), not tested |
+|UART2 | ✅⚠️ | COM3, via UIO expansion (2-wire, 4-wire HWFC pending) |
+|UART3 | ✅ | COM1, Linux console|
+|UART4 | ✅⚠️ | COM4, via UIO expansion (2-wire, 4-wire HWFC pending) |
+|LPI2C0 | ⚠️  | Not tested |
+|LPI2C1 | ⚠️  | Not tested |
+|LPI2C2 | ⚠️  | Not tested |
+|LPI2C3 | ⚠️  | Not tested |
+|LPI2C6 | ⚠️  | Not tested |
+|PWM 2| ⚠️  | Not tested |
+|PWM 3| ⚠️  | Not tested |
+|GPIO| ❌ |  |
+|PCI-E| ⚠️  | Not tested |
+|CAN0| ✅ |  |
+|CAN1| ✅ |  |
+|RTC0 | ✅ | External I2C RTC (S35390) |
+|RTC1 | ✅ | Internal RTC, supports timer wake events |
+|Watchdog | ✅ | External I2C Advantech watchdog (MSP430-based) |

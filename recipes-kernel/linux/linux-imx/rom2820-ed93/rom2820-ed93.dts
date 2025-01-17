@@ -15,6 +15,11 @@
 	model = "NXP i.MX93 11X11 EVK board";
 	compatible = "fsl,imx93-11x11-evk", "fsl,imx93";
 
+	aliases {
+		rtc0 = &rx8900;
+		rtc1 = &bbnsm_rtc;
+	};
+
 	chosen {
 		stdout-path = &lpuart1;
 	};
@@ -357,7 +362,7 @@
 		#gpio-cells = <2>;
 	};
 
-	rtc0: rx8900@32 {
+	rx8900: rx8900@32 {
 		compatible = "epson,rx8900";
 		reg = <0x32>;
 		epson,vdet-disable;

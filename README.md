@@ -30,7 +30,7 @@ ROM-2620 (on ROM-ED91 carrier board)
 |Ethernet |  ✅  | 100Mbps |
 |USB1-1| ✅ | USB 2.0 |
 |USB1-2| ✅ | USB 2.0 |
-|USB0-OTG | ❌  | |
+|USB0-OTG | ⚠️  | Not tested |
 |MIPI-DSI| ✅ | G070VW01 panel via LVDS bridge |
 |MIPI-CSI| ⚠️ |  |
 |LPUART4 | ✅⚠️ | COM-A (2-wire, 4-wire HWFC pending) |
@@ -61,7 +61,8 @@ ROM-2820 (on ROM-ED93 carrier board)
 |USB1-1| ✅ | USB 2.0 |
 |USB1-2| ✅ | USB 2.0 |
 |USB0-OTG | ❌  | |
-|MIPI-DSI| ❌ | Pending |
+|MIPI-LVDS| ✅ | Tested with IDK-1107WR |
+|MIPI-DSI| ✅⚠️ | Not tested |
 |LPUART1 | ✅ | COM-E Linux Console |
 |LPUART2 | ✅ | COM-C (2-wire) |
 |LPUART3 | ✅ | COM-D (2-wire)|
@@ -79,7 +80,6 @@ ROM-2820 (on ROM-ED93 carrier board)
 |CAN0| ✅ |  |
 |CAN1| ✅ |  |
 |GPIO  ⚠️ | Not tested |
-|PCI-E| ❌  | Pending |
 |RTC0 | ✅ | External I2C RTC (rx8900) |
 |RTC1 | ✅ | Internal RTC, supports timer wake events |
 |Watchdog | ✅ | Internal watchdog |
@@ -100,10 +100,10 @@ ROM-5722 (on SOM-DB2510 carrier board)
 |HDMI| ✅ |  |
 |MIPI-DSI| ❌ |  |
 |MIPI-CSI| ❌ |  |
-|UART1 | ✅⚠️ | COM3-A (2-wire, 4-wire HWFC pending) |
+|UART1 | ✅⚠️ | COM3-A (2-wire, 4-wire HWFC not tested) |
 |UART2 | ✅ | COM4-A, Linux console |
-|UART3 | ✅⚠️ | COM3-B (2-wire, 4-wire HWFC pending) |
-|UART4 | ✅⚠️ | COM4-B (2-wire, 4-wire HWFC pending) |
+|UART3 | ✅⚠️ | COM3-B (2-wire, 4-wire HWFC not tested) |
+|UART4 | ✅ | COM4-B (2-wire) |
 |LPI2C0 | ⚠️  | Not tested |
 |LPI2C1 | ⚠️  | Not tested |
 |LPI2C2 | ⚠️  | Not tested |
@@ -111,7 +111,7 @@ ROM-5722 (on SOM-DB2510 carrier board)
 |LPI2C4 | ⚠️  | Not tested |
 |PWM 2| ⚠️  | Not tested |
 |PWM 3| ⚠️  | Not tested |
-|GPIO| ❌ |  |
+|GPIO| ✅ | Tested on SOM-DB2510 (CN9 connector) |
 |PCI-E| ❌  | Pending |
 |CAN0| ✅ |  |
 |CAN1| ✅ |  |
@@ -138,10 +138,10 @@ RSB-3720
 |HDMI| ✅ |  |
 |MIPI-DSI| ❌ |  |
 |MIPI-CSI| ❌ |  |
-|UART1 | ⚠️ | COM2, M2 connector (2-wire, 4-wire HWFC pending), not tested |
-|UART2 | ✅⚠️ | COM3, via UIO expansion (2-wire, 4-wire HWFC pending) |
-|UART3 | ✅ | COM1, Linux console|
-|UART4 | ✅⚠️ | COM4, via UIO expansion (2-wire, 4-wire HWFC pending) |
+|UART1 | ✅⚠️ | COM2, M2 connector (2-wire, 4-wire HWFC), not tested |
+|UART2 | ✅ | COM3, via UIO expansion (2-wire) |
+|UART3 | ✅⚠️  | COM1, Linux console (2-wire, 4-wire HWFC), HWFC not tested|
+|UART4 | ✅ | COM4, via UIO expansion (2-wire) |
 |LPI2C0 | ⚠️  | Not tested |
 |LPI2C1 | ⚠️  | Not tested |
 |LPI2C2 | ⚠️  | Not tested |

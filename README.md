@@ -117,7 +117,8 @@ ROM-5722 (on SOM-DB2510 carrier board)
 |CAN1| ✅ |  |
 |RTC0 | ✅ | External I2C RTC (S35390) |
 |RTC1 | ✅ | Internal RTC, supports timer wake events |
-|Watchdog | ✅ | External I2C Advantech watchdog (MSP430-based) |
+|Watchdog0 | ✅ | Internal watchdog |
+|Watchdog1 | ✅ | External I2C Advantech watchdog (MSP430-based) |
 
 Additional limitations for this module + carrier:
 - Suspend to RAM wakes up immediately
@@ -154,4 +155,5 @@ RSB-3720
 |CAN1| ✅ |  |
 |RTC0 | ✅ | External I2C RTC (S35390) |
 |RTC1 | ✅ | Internal RTC, supports timer wake events |
-|Watchdog | ✅ | External I2C Advantech watchdog (MSP430-based) |
+|Watchdog0 | ✅ | Internal watchdog |
+|Watchdog1 | ✅ | External I2C Advantech watchdog (MSP430-based) |

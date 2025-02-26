@@ -18,6 +18,11 @@
 		rtc1 = &snvs_rtc;
 	};
 
+	aliases {
+		watchdog0 = &wdog1;
+		watchdog1 = &wdt;
+	};
+
 	chosen {
 		stdout-path = &uart2;
 	};
@@ -707,7 +712,7 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_wdog>;
 	fsl,ext-reset-output;
-	status = "disabled";
+	status = "okay";
 };
 
 &iomuxc {

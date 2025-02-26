@@ -471,6 +471,7 @@
 	linux,rs485-enabled-at-boot-time;
 	rs485-rx-during-tx;
 	rs485-rts-active-low;
+	uart-has-rtscts;
 };
 
 &lpuart6 {
@@ -480,6 +481,7 @@
 	linux,rs485-enabled-at-boot-time;
 	rs485-rx-during-tx;
 	rs485-rts-active-low;
+	uart-has-rtscts;
 };
 
 &media_blk_ctrl {

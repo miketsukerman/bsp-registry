@@ -66,8 +66,8 @@ ROM-2820 (on ROM-ED93 carrier board)
 |LPUART1 | ✅ | COM-E Linux Console |
 |LPUART2 | ✅ | COM-C (2-wire) |
 |LPUART3 | ✅ | COM-D (2-wire)|
-|LPUART5 | ✅⚠️ | COM-A (2-wire, 4-wire HWFC pending) |
-|LPUART6 | ✅⚠️ | COM-B (2-wire, 4-wire HWFC pending) |
+|LPUART5 | ✅⚠️ | COM-A (2-wire, 4-wire HWFC not tested) |
+|LPUART6 | ✅⚠️ | COM-B (2-wire, 4-wire HWFC not tested) |
 |LPI2C0 | ✅ |  |
 |LPI2C1 | ✅ |  |
 |LPI2C2 | ✅ |  |

@@ -30,10 +30,10 @@ ROM-2620 (on ROM-ED91 carrier board)
 |Ethernet |  ✅  | 100Mbps |
 |USB1-1| ✅ | USB 2.0 |
 |USB1-2| ✅ | USB 2.0 |
-|USB0-OTG | ⚠️  | Not tested |
+|USB-OTG | ⚠️  | Not tested (micro-USB connector) |
 |MIPI-DSI| ✅ | G070VW01 panel via LVDS bridge |
 |MIPI-CSI| ⚠️ |  |
-|LPUART4 | ✅⚠️ | COM-A (2-wire, 4-wire HWFC pending) |
+|LPUART4 | ✅⚠️ | COM-A (2-wire, 4-wire HWFC not tested) |
 |LPUART5 | ✅ | COM-D Linux Console |
 |LPUART6 | ✅ | COM-C (2-wire) |
 |LPI2C0 | ❌ | On CAM connector |
@@ -60,7 +60,7 @@ ROM-2820 (on ROM-ED93 carrier board)
 |ETH1 |  ✅  | 1Gbps |
 |USB1-1| ✅ | USB 2.0 |
 |USB1-2| ✅ | USB 2.0 |
-|USB0-OTG | ❌  | |
+|USB-OTG | ⚠️  | Not tested (micro-USB connector) |
 |MIPI-LVDS| ✅ | Tested with IDK-1107WR |
 |MIPI-DSI| ✅⚠️ | Not tested |
 |LPUART1 | ✅ | COM-E Linux Console |
@@ -76,7 +76,8 @@ ROM-2820 (on ROM-ED93 carrier board)
 |PWM0 | ⚠️ | Not tested |
 |PWM1 | ❌ |  |
 |LPSPI3| ⚠️ | Not tested |
-|NPU| ❌ |  |
+|NPU| ⚠️ | Not tested |
+|NPU| ⚠️ | Not tested (i.MX 93 has built-in an Ethos™-U65 NPU) |
 |CAN0| ✅ |  |
 |CAN1| ✅ |  |
 |GPIO  ⚠️ | Not tested |
@@ -97,6 +98,7 @@ ROM-5722 (on SOM-DB2510 carrier board)
 |USB1|  ✅ | USB 2.0 |
 |USB2| ✅ | USB 2.0  |
 |USB-C| ✅ | USB 3.2 |
+|USB-OTG | ⚠️  | Not tested (micro-USB connector) |
 |HDMI| ✅ |  |
 |MIPI-DSI| ❌ |  |
 |MIPI-CSI| ❌ |  |
@@ -109,6 +111,7 @@ ROM-5722 (on SOM-DB2510 carrier board)
 |LPI2C2 | ⚠️  | Not tested |
 |LPI2C3 | ⚠️  | Not tested |
 |LPI2C4 | ⚠️  | Not tested |
+|NPU| ⚠️ | Not tested (i.MX8M Plus has built-in a Vivante VIP8000Nano NPU) |
 |PWM 2| ⚠️  | Not tested |
 |PWM 3| ⚠️  | Not tested |
 |GPIO| ✅ | Tested on SOM-DB2510 (CN9 connector) |
@@ -147,6 +150,7 @@ RSB-3720
 |LPI2C2 | ⚠️  | Not tested |
 |LPI2C3 | ⚠️  | Not tested |
 |LPI2C6 | ⚠️  | Not tested |
+|NPU| ⚠️ | Not tested (i.MX8M Plus has built-in a Vivante VIP8000Nano NPU) |
 |PWM 2| ⚠️  | Not tested |
 |PWM 3| ⚠️  | Not tested |
 |GPIO| ❌ |  |

@@ -489,9 +489,7 @@
 };
 
 &usbotg1 {
-	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&pinctrl_usb_en>;
-	dr_mode = "host";
+	dr_mode = "otg";
 	hnp-disable;
 	srp-disable;
 	adp-disable;
@@ -499,12 +497,11 @@
 	disable-over-current;
 	samsung,picophy-pre-emp-curr-control = <3>;
 	samsung,picophy-dc-vol-level-adjust = <7>;
-	gpio = <&gpio1 10 GPIO_ACTIVE_HIGH>;
 	status = "okay";
 };
 
 &usbotg2 {
-	dr_mode = "host";
+	dr_mode = "otg";
 	hnp-disable;
 	srp-disable;
 	adp-disable;

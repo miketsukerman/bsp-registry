@@ -2,6 +2,7 @@ require drivers/watchdog_advantech.inc
 
 SRC_URI += " \
     file://rtc-support.cfg \
+    file://rtl8211f-leds.patch \
     file://rom5722-db2510.dts;subdir=git/arch/arm64/boot/dts/freescale \
 "
 

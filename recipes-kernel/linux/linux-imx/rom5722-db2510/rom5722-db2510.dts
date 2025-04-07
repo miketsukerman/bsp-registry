@@ -327,7 +327,6 @@
 			reset-deassert-us = <80000>;
 			realtek,aldps-enable;
 			realtek,clkout-disable;
-			realtek,ssc-enable;
 		};
 	};
 };

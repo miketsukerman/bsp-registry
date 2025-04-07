@@ -1,8 +1,8 @@
 diff --git a/drivers/net/phy/realtek.c b/drivers/net/phy/realtek.c
-index 79f2cecf8e2a..af6d1689e712 100644
+index 354b367cdf64..acd393e53118 100644
 --- a/drivers/net/phy/realtek.c
 +++ b/drivers/net/phy/realtek.c
-@@ -85,6 +85,39 @@ struct rtl821x_priv {
+@@ -85,6 +85,18 @@ struct rtl821x_priv {
  	struct clk *clk;
  };
  
@@ -16,33 +16,12 @@ index 79f2cecf8e2a..af6d1689e712 100644
 +	phy_write(dev, 0x10, 0xa050);
 +	phy_write(dev, 0x11, 0x0000);
 +	phy_write(dev, 0x1f, 0x0000);
-+
-+	if (of_property_read_bool(node, "ssc-enable")) {
-+		dev_info(&dev->mdio.dev, "enable ssc\n");
-+		/* Enable rxc ssc */
-+		phy_write(dev, 0x1f, 0x0c44);
-+		phy_write(dev, 0x13, 0x5f00);
-+		phy_write(dev, 0x1f, 0x0000);
-+		phy_write(dev, 0x00, 0x9200);
-+
-+		/* Enable system clk ssc */
-+		phy_write(dev, 0x1f, 0x0c44);
-+		phy_write(dev, 0x17, 0x4f00);
-+		phy_write(dev, 0x1f, 0x0000);
-+		phy_write(dev, 0x00, 0x9200);
-+
-+		/* clk_out disable */
-+		phy_write(dev, 0x1f, 0x0a43);
-+		phy_write(dev, 0x19, 0x0862);
-+		phy_write(dev, 0x1f, 0x0000);
-+		phy_write(dev, 0x00, 0x9200);
-+	}
 +}
 +
  static int rtl821x_read_page(struct phy_device *phydev)
  {
  	return __phy_read(phydev, RTL821x_PAGE_SELECT);
-@@ -141,6 +174,10 @@ static int rtl821x_probe(struct phy_device *phydev)
+@@ -141,6 +153,10 @@ static int rtl821x_probe(struct phy_device *phydev)
  
  	phydev->priv = priv;
  
@@ -53,7 +32,7 @@ index 79f2cecf8e2a..af6d1689e712 100644
  	return 0;
  }
  
-@@ -369,6 +406,10 @@ static int rtl8211f_config_init(struct phy_device *phydev)
+@@ -369,6 +385,10 @@ static int rtl8211f_config_init(struct phy_device *phydev)
  		return ret;
  	}
  

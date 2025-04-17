@@ -10,10 +10,16 @@ Supported Boards
 ================
 
 The following boards are supported by this layer:
- * ROM-2620 (`rom2620-ed91`)
- * ROM-2820 (`rom2820-ed93`)
- * ROM-5722 (`rom5722-db2510`)
- * RSB-3720 (`rsb3720`)
+
+ * ROM-2620 (`rom2620-ed91` NXP i.MX 8ULP)
+ * ROM-2820 (`rom2820-ed93` NXP i.MX 93)
+ * ROM-5722 (`rom5722-db2510` NXP i.MX 8M Plus)
+ * RSB-3720 (`rsb3720` NXP i.MX 8M Plus)
+
+Preliminary support:
+
+ * ROM-5720 (`rom5720-db5901` NXP i.MX 8M)
+ * ROM-5721 (`rom5721-db5901` NXP i.MX 8M Mini)
 
 
 Supported Linux Features
@@ -83,6 +89,79 @@ ROM-2820 (on ROM-ED93 carrier board)
 |GPIO  ⚠️ | Not tested |
 |RTC0 | ✅ | External I2C RTC (rx8900) |
 |RTC1 | ✅ | Internal RTC, supports timer wake events |
+|Watchdog | ✅ | Internal watchdog |
+
+
+ROM-5720 (on SOM-DB5901 carrier board)
+--------
+
+MP: preliminary support
+MQ: preliminary support, issues with suspend to RAM, external watchdog
+
+|Device |Status|Comment|
+|-------|------|-------|
+|SDHC0 |  ✅ | eMMC |
+|SDHC2 |  ✅ | SD Card |
+|ETH0 |  ✅ | 1Gbps (Qualcomm AR8035-AL1B-R) |
+|ETH1 |  ✅ | 1Gbps (PCI-E, RTL8119I-CG) |
+|USB1 | ✅ | USB 3.0 |
+|USB2 | ❌ | USB 2.0 |
+|USB3 | ❌ | USB-C |
+|USB-OTG | ❌ |  |
+|HDMI |  ✅ |  |
+|MIPI-LVDS | ❌ | (DSI to LVDS bridge) |
+|UART1| ✅ | COM3 Linux Console (2-wire) |
+|UART2| ✅ | COM2 (2-wire) |
+|UART3| ✅ | COM0 (4-wire) |
+|UART4| ✅ | COM1 (2-wire) |
+|I2C1 | ⚠️  | Not tested |
+|I2C2 | ⚠️  | Not tested |
+|I2C3 | ⚠️  | Not tested |
+|I2C4 | ⚠️  | Not tested |
+|M.2 | ⚠️  | Not tested (M.2 key E connector) |
+|PWM1 | ❌ |  |
+|PWM2 | ❌ |  |
+|PWM3 | ❌ |  |
+|PWM4 | ❌ |  |
+|QSPI0| ✅ | n25q256a (jedec,spi-nor) |
+|GPIO | ⚠️ | Not tested |
+|RTC0 | ✅ | External I2C RTC (rx8900) |
+|RTC1 | ✅ | Internal RTC, supports timer wake events |
+|TPM | ❌ | (st33htpm-i2c not yet upstreamed to tpm_tis_i2c.c) |
+|Watchdog | ✅ | External I2C Advantech watchdog (MSP430-based) |
+
+
+ROM-5721 (on SOM-DB5901 carrier board)
+--------
+
+CQ: preliminary support
+
+|Device |Status|Comment|
+|-------|------|-------|
+|SDHC0 |  ✅ | eMMC |
+|SDHC2 |  ✅ | SD Card |
+|ETH |  ✅ | 1Gbps |
+|USB1 | ❌ | Pending |
+|USB2 | ❌ | Pending |
+|USB3 | ❌ | Pending |
+|USB-OTG | ❌ |  |
+|MIPI-LVDS | ❌ | (DSI to LVDS bridge) |
+|UART1| ✅ | COM3 Linux Console (2-wire) |
+|UART2| ⚠️ | M.2 (4-wire) - Not tested |
+|UART3| ❌ | Pending |
+|UART4| ❌ | Pending |
+|I2C1 | ⚠️  | Not tested |
+|I2C2 | ⚠️  | Not tested |
+|I2C3 | ⚠️  | Not tested |
+|I2C4 | ⚠️  | Not tested |
+|M.2 | ⚠️  | Not tested (M.2 key E connector) |
+|PWM1 | ❌ | |
+|PWM2 | ❌ | |
+|PWM3 | ❌ | |
+|PWM4 | ❌ | |
+|QSPI0| ✅ | n25q256a (jedec,spi-nor) |
+|GPIO | ⚠️ | Not tested |
+|RTC | ✅ | Internal RTC, supports timer wake events |
 |Watchdog | ✅ | Internal watchdog |
 
 

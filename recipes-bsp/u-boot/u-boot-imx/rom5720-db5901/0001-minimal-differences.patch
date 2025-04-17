@@ -1,0 +1,44 @@
+diff --git a/arch/arm/dts/imx8mq-evk.dts b/arch/arm/dts/imx8mq-evk.dts
+index 632a83b5d0e..0607e489ad5 100644
+--- a/arch/arm/dts/imx8mq-evk.dts
++++ b/arch/arm/dts/imx8mq-evk.dts
+@@ -27,7 +27,7 @@
+ 
+ 	memory@40000000 {
+ 		device_type = "memory";
+-		reg = <0x00000000 0x40000000 0 0xc0000000>;
++		reg = <0x00000000 0x40000000 0 0x80000000>;
+ 	};
+ 
+ 	pcie0_refclk: pcie0-refclk {
+diff --git a/board/freescale/imx8mq_evk/Makefile b/board/freescale/imx8mq_evk/Makefile
+index fd260bb1ec4..81d2d0ade76 100644
+--- a/board/freescale/imx8mq_evk/Makefile
++++ b/board/freescale/imx8mq_evk/Makefile
+@@ -8,9 +8,6 @@ obj-y += imx8mq_evk.o
+ 
+ ifdef CONFIG_SPL_BUILD
+ obj-y += spl.o
+-ifdef CONFIG_IMX8MQ_4GB_DDR_TIMING
+-obj-$(CONFIG_IMX8M_LPDDR4) += lpddr4_timing_4g.o
+-else
+-obj-$(CONFIG_IMX8M_LPDDR4) += lpddr4_timing_b0.o lpddr4_timing.o
+-endif
++obj-$(CONFIG_IMX8M_LPDDR4) += lpddr4_timing_rom5720a1_2G.o
++obj-$(CONFIG_IMX8M_LPDDR4) += lpddr4_timing_b0.o
+ endif
+diff --git a/include/configs/imx8mq_evk.h b/include/configs/imx8mq_evk.h
+index 562d56ee67a..31890d76811 100644
+--- a/include/configs/imx8mq_evk.h
++++ b/include/configs/imx8mq_evk.h
+@@ -147,9 +147,7 @@
+ 
+ #define CFG_SYS_SDRAM_BASE           0x40000000
+ #define PHYS_SDRAM                      0x40000000
+-#define PHYS_SDRAM_SIZE			0xC0000000 /* 3GB DDR */
+-#define PHYS_SDRAM_2			0x100000000
+-#define PHYS_SDRAM_2_SIZE		0x40000000 /* 1GB */
++#define PHYS_SDRAM_SIZE			0x80000000 /* 2GB DDR */
+ 
+ #define CFG_MXC_UART_BASE		UART_BASE_ADDR(1)
+ 

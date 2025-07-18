@@ -181,6 +181,7 @@
 	cpu-supply = <&buck2_reg>;
 };
 
+/* 20250714.adv: removed (Yocto 5.1)
 &csi1_bridge {
 	fsl,mipi-mode;
 	fsl,two-8bit-sensor-mode;
@@ -204,6 +205,7 @@
 		};
 	};
 };
+*/
 
 &fec1 {
 	pinctrl-names = "default";
@@ -226,6 +228,7 @@
 	};
 };
 
+/* 20250714.adv: removed (Yocto 5.1)
 &mipi_csi_1 {
 	#address-cells = <1>;
 	#size-cells = <0>;
@@ -259,6 +262,7 @@
 		};
 	};
 };
+*/
 
 &sai2 {
 	pinctrl-names = "default";
@@ -437,6 +441,7 @@
 		#gpio-cells = <2>;
 		gpio-controller;
 	};
+/* 20250714.adv: removed (Yocto 5.1)
 	ov5640_mipi: ov5640_mipi@3c {
                 compatible = "ovti,ov5640_mipi";
                 reg = <0x3c>;
@@ -459,7 +464,7 @@
                         };
                 };
         };
-
+*/
 };
 
 &i2c2 {
@@ -471,6 +476,7 @@
         sda-gpios = <&gpio5 17 GPIO_ACTIVE_HIGH>;
 	status = "okay";
 
+/* 20250714.adv: removed (Yocto 5.1)
 	ov5640_mipi2: ov5640_mipi2@3c {
 		compatible = "ovti,ov5640_mipi";
 		reg = <0x3c>;
@@ -493,6 +499,7 @@
 			};
 		};
 	};
+*/
         adv_bridge: adv7535@3d {
                 compatible = "adi,adv7535";
                 reg = <0x3d>;

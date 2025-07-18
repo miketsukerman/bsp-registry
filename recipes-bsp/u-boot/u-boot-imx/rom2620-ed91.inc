@@ -1,9 +1,11 @@
 SRC_URI += " \
-    file://lpddr4_timing_rom2620a1_1G.c;subdir=git/board/freescale/imx8ulp_evk \
-	file://0001-modify-dts.patch \
+    file://lpddr4_timing_rom2620a1_1G.c;subdir=board/freescale/imx8ulp_evk \
+    file://0001-modify-dts.patch \
 "
 
 do_configure:prepend() {
+    cp "${UNPACKDIR}/board/freescale/imx8ulp_evk/lpddr4_timing_rom2620a1_1G.c" "${S}/board/freescale/imx8ulp_evk/"
+
     sed -i "/^CONFIG_DEFAULT_FDT_FILE=/c\CONFIG_DEFAULT_FDT_FILE=\"rom2620-ed91.dtb\"" ${S}/configs/imx8ulp_evk_defconfig
     sed -i 's/lpddr4_timing.o/lpddr4_timing_rom2620a1_1G.o/g' ${S}/board/freescale/imx8ulp_evk/Makefile
     sed -i '/PHYS_SDRAM_SIZE/s/.*/#define PHYS_SDRAM_SIZE    0x40000000/' ${S}/include/configs/imx8ulp_evk.h

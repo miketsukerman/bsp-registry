@@ -1,10 +1,12 @@
 SRC_URI += " \
 	file://0001-minimal-differences.patch \
-	file://lpddr4_timing_rom5720a1_2G.c;subdir=git/board/freescale/imx8mq_evk \
-	file://lpddr4_timing_b0.c;subdir=git/board/freescale/imx8mq_evk \
+	file://lpddr4_timing_rom5720a1_2G.c;subdir=board/freescale/imx8mq_evk \
+	file://lpddr4_timing_b0.c;subdir=board/freescale/imx8mq_evk \
 "
 
 do_configure:prepend() {
+	cp "${UNPACKDIR}/board/freescale/imx8mq_evk/lpddr4_timing_rom5720a1_2G.c" "${S}/board/freescale/imx8mq_evk/"
+
 	where=${S}/configs/imx8mq_wevk_defconfig
 	tag=CONFIG_IMX8MQ_4GB_DDR_TIMING
 

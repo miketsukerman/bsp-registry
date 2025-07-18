@@ -1,3 +1,14 @@
+commit 248725a5ef70b0fb81d4b91b6b34188b9fa90013
+Author: clayderhua <clayderhua@gmail.com>
+Date:   Fri May 26 23:03:21 2023 +0800
+
+    [ALL][NET] driver: Add the setting of lan LED for the RTL8211F
+
+Observation: adapted from https://github.com/ADVANTECH-Corp/linux-imx.git
+
+Upstream-Status: Inappropriate [other]
+Signed-off-by: F. Aragon <francisco.aragon@advantech.de>
+
 diff --git a/drivers/net/phy/realtek.c b/drivers/net/phy/realtek.c
 index 354b367cdf64..acd393e53118 100644
 --- a/drivers/net/phy/realtek.c

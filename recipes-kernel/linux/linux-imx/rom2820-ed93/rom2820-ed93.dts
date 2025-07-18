@@ -748,6 +748,7 @@
 	status = "okay";
 };
 
+/* 20250714.adv: removed (Yocto 5.1)
 &cameradev {
 	status = "okay";
 };
@@ -759,6 +760,7 @@
 		status = "okay";
 	};
 };
+*/
 
 &wdog3 {
 	status = "okay";

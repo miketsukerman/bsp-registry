@@ -1,3 +1,14 @@
+commit f95e36a0cc3839f0adbab2321396c08dfcbfc518
+Author: Ebenezer Samson <ebenezer.samson@advantech.com>
+Date:   Mon Mar 17 15:15:58 2025 +0100
+
+    add support for rom-5721 2G
+
+Observation: ad hoc patch
+
+Upstream-Status: Inappropriate [other]
+Signed-off-by: F. Aragon <francisco.aragon@advantech.de>
+
 diff --git a/arch/arm/dts/imx8mm-evk.dtsi b/arch/arm/dts/imx8mm-evk.dtsi
 index 200274972f7..5f85c4df76d 100644
 --- a/arch/arm/dts/imx8mm-evk.dtsi

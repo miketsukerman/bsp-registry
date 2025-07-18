@@ -1,10 +1,10 @@
 SRC_URI += " \
-    file://drivers/watchdog_advantech.c \
+    file://watchdog/watchdog_advantech.c;subdir=drivers \
 "
 
 watchdog_advantech_patch() {
     grep -q watchdog_advantech.o "${S}/drivers/watchdog/Makefile" ||
     echo 'obj-m += watchdog_advantech.o' >>"${S}/drivers/watchdog/Makefile"
 
-    cp ${WORKDIR}/drivers/watchdog_advantech.c ${S}/drivers/watchdog/
+    cp "${UNPACKDIR}/drivers/watchdog/watchdog_advantech.c" "${S}/drivers/watchdog/"
 }

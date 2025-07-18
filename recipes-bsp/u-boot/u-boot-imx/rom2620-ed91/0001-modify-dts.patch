@@ -1,3 +1,14 @@
+commit ede5ba77c13dab904dadea14c0e1920627e891ce
+Author: Ebenezer Samson <ebenezer.samson@advantech.de>
+Date:   Wed Jun 12 12:32:04 2024 +0200
+
+    refactor to prepare layer for adding more devices
+
+Observation: ad hoc patch
+
+Upstream-Status: Inappropriate [other]
+Signed-off-by: F. Aragon <francisco.aragon@advantech.de>
+
 diff --git a/arch/arm/dts/imx8ulp-evk.dts b/arch/arm/dts/imx8ulp-evk.dts
 index eff4926c36..bba5d5f03d 100644
 --- a/arch/arm/dts/imx8ulp-evk.dts

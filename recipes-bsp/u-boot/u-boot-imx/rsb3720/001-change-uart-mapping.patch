@@ -1,3 +1,16 @@
+commit b57946685adc086be463cc15d7d1d97676d33467
+Author: Ebenezer Samson <ebenezer.samson@advantech.com>
+Date:   Fri Jun 21 18:21:48 2024 +0200
+
+    draft configuration for rsb3720
+    - bootloader can load and boot linux kernel from sd card
+    - kernel does not seem to boot but device tree configuration is correct
+
+Observation: ad hoc patch
+
+Upstream-Status: Inappropriate [other]
+Signed-off-by: F. Aragon <francisco.aragon@advantech.de>
+
 diff --git a/board/freescale/imx8mp_evk/imx8mp_evk.c b/board/freescale/imx8mp_evk/imx8mp_evk.c
 index 5a8f619763e..53832ae0177 100644
 --- a/board/freescale/imx8mp_evk/imx8mp_evk.c

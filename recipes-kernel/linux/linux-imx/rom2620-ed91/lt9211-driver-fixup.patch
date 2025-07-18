@@ -1,3 +1,14 @@
+commit ede5ba77c13dab904dadea14c0e1920627e891ce
+Author: Ebenezer Samson <ebenezer.samson@advantech.de>
+Date:   Wed Jun 12 12:32:04 2024 +0200
+
+    refactor to prepare layer for adding more devices
+
+Observation: ad hoc patch
+
+Upstream-Status: Inappropriate [other]
+Signed-off-by: F. Aragon <francisco.aragon@advantech.de>
+
 diff --git a/drivers/gpu/drm/bridge/lontium-lt9211.c b/drivers/gpu/drm/bridge/lontium-lt9211.c
 index 933ca028d612..0c1af0487378 100644
 --- a/drivers/gpu/drm/bridge/lontium-lt9211.c

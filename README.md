@@ -164,7 +164,6 @@ CQ: preliminary support
 |RTC | ✅ | Internal RTC, supports timer wake events |
 |Watchdog | ✅ | Internal watchdog |
 
-
 ROM-5722 (on SOM-DB2510 carrier board)
 --------
 

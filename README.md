@@ -64,8 +64,8 @@ ROM-2820 (on ROM-ED93 carrier board)
 |SDHC2 |  ✅  | SD Card |
 |ETH0 |  ✅  | 1Gbps |
 |ETH1 |  ✅  | 1Gbps |
-|USB1-1| ✅ | USB 2.0 |
-|USB1-2| ✅ | USB 2.0 |
+|USB1-1| ❌ | USB 2.0 (broken in Y5.1, we're checking it) |
+|USB1-2| ❌ | USB 2.0 (") |
 |USB-OTG | ⚠️  | Not tested (micro-USB connector) |
 |MIPI-LVDS| ✅ | Tested with IDK-1107WR |
 |MIPI-DSI| ✅⚠️ | Not tested |

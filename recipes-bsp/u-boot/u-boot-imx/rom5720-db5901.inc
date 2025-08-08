@@ -5,7 +5,9 @@ SRC_URI += " \
 "
 
 do_configure:prepend() {
-	cp "${UNPACKDIR}/board/freescale/imx8mq_evk/lpddr4_timing_rom5720a1_2G.c" "${S}/board/freescale/imx8mq_evk/"
+	cp -f "${UNPACKDIR}/board/freescale/imx8mq_evk/lpddr4_timing_rom5720a1_2G.c" \
+		"${UNPACKDIR}/board/freescale/imx8mq_evk/lpddr4_timing_b0.c" \
+		"${S}/board/freescale/imx8mq_evk/"
 
 	where=${S}/configs/imx8mq_wevk_defconfig
 	tag=CONFIG_IMX8MQ_4GB_DDR_TIMING

@@ -4,113 +4,23 @@ Date:   Mon Mar 17 15:15:58 2025 +0100
 
     add support for rom-5721 2G
 
-Observation: ad hoc patch
+Updates:
 
+	Date:   Tue Jul 29 14:30:45 2025 +0200
+
+	    NXP update for Yocto 5.2 (walnascar)
+
+Observation: ad hoc patch
 Upstream-Status: Inappropriate [other]
 Signed-off-by: F. Aragon <francisco.aragon@advantech.de>
 
-diff --git a/arch/arm/dts/imx8mm-evk.dtsi b/arch/arm/dts/imx8mm-evk.dtsi
-index 200274972f7..5f85c4df76d 100644
---- a/arch/arm/dts/imx8mm-evk.dtsi
-+++ b/arch/arm/dts/imx8mm-evk.dtsi
-@@ -107,31 +107,6 @@
- 		};
- 	};
- 
--	sound-wm8524 {
--		compatible = "simple-audio-card";
--		simple-audio-card,name = "wm8524-audio";
--		simple-audio-card,format = "i2s";
--		simple-audio-card,frame-master = <&cpudai>;
--		simple-audio-card,bitclock-master = <&cpudai>;
--		simple-audio-card,widgets =
--			"Line", "Left Line Out Jack",
--			"Line", "Right Line Out Jack";
--		simple-audio-card,routing =
--			"Left Line Out Jack", "LINEVOUTL",
--			"Right Line Out Jack", "LINEVOUTR";
--
--		cpudai: simple-audio-card,cpu {
--			sound-dai = <&sai3>;
--			dai-tdm-slot-num = <2>;
--			dai-tdm-slot-width = <32>;
--		};
--
--		simple-audio-card,codec {
--			sound-dai = <&wm8524>;
--			clocks = <&clk IMX8MM_CLK_SAI3_ROOT>;
--		};
--	};
--
- 	dsi_host: dsi-host {
- 		compatible = "samsung,sec-mipi-dsi";
- 		status = "okay";
-@@ -436,15 +411,6 @@
- 	status = "okay";
- };
- 
--&sai3 {
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_sai3>;
--	assigned-clocks = <&clk IMX8MM_CLK_SAI3>;
--	assigned-clock-parents = <&clk IMX8MM_AUDIO_PLL1_OUT>;
--	assigned-clock-rates = <24576000>;
--	status = "okay";
--};
--
- &snvs_pwrkey {
- 	status = "okay";
- };
-@@ -480,7 +446,7 @@
- 	pinctrl-0 = <&pinctrl_usdhc2>, <&pinctrl_usdhc2_gpio>;
- 	pinctrl-1 = <&pinctrl_usdhc2_100mhz>, <&pinctrl_usdhc2_gpio>;
- 	pinctrl-2 = <&pinctrl_usdhc2_200mhz>, <&pinctrl_usdhc2_gpio>;
--	cd-gpios = <&gpio1 15 GPIO_ACTIVE_LOW>;
-+	cd-gpios = <&gpio2 12 GPIO_ACTIVE_LOW>;
- 	bus-width = <4>;
- 	vmmc-supply = <&reg_usdhc2_vmmc>;
- 	status = "okay";
-@@ -654,15 +620,6 @@
- 		>;
- 	};
- 
--	pinctrl_sai3: sai3grp {
--		fsl,pins = <
--			MX8MM_IOMUXC_SAI3_TXFS_SAI3_TX_SYNC     0xd6
--			MX8MM_IOMUXC_SAI3_TXC_SAI3_TX_BCLK      0xd6
--			MX8MM_IOMUXC_SAI3_MCLK_SAI3_MCLK        0xd6
--			MX8MM_IOMUXC_SAI3_TXD_SAI3_TX_DATA0     0xd6
--		>;
--	};
--
- 	pinctrl_typec1: typec1grp {
- 		fsl,pins = <
- 			MX8MM_IOMUXC_SD1_STROBE_GPIO2_IO11	0x159
-@@ -671,14 +628,14 @@
- 
- 	pinctrl_uart2: uart2grp {
- 		fsl,pins = <
--			MX8MM_IOMUXC_UART2_RXD_UART2_DCE_RX	0x140
--			MX8MM_IOMUXC_UART2_TXD_UART2_DCE_TX	0x140
-+			MX8MM_IOMUXC_SAI3_TXFS_UART2_DCE_RX	0x140
-+			MX8MM_IOMUXC_SAI3_TXC_UART2_DCE_TX	0x140
- 		>;
- 	};
- 
- 	pinctrl_usdhc2_gpio: usdhc2grpgpiogrp {
- 		fsl,pins = <
--			MX8MM_IOMUXC_GPIO1_IO15_GPIO1_IO15	0x1c4
-+			MX8MM_IOMUXC_SD2_CD_B_GPIO2_IO12	0x1c4
- 		>;
- 	};
- 
 diff --git a/board/freescale/imx8mm_evk/Makefile b/board/freescale/imx8mm_evk/Makefile
-index b3f1c185a3f..9bb6bad77a6 100644
+index 3c4aff98923..4d354cb754c 100644
 --- a/board/freescale/imx8mm_evk/Makefile
 +++ b/board/freescale/imx8mm_evk/Makefile
 @@ -8,10 +8,5 @@ obj-y += imx8mm_evk.o
  
- ifdef CONFIG_SPL_BUILD
+ ifdef CONFIG_XPL_BUILD
  obj-y += spl.o
 -ifdef CONFIG_IMX8M_4G_LPDDR4
 -obj-y += lpddr4_timing_4g.o
@@ -121,7 +31,7 @@ index b3f1c185a3f..9bb6bad77a6 100644
 +obj-$(CONFIG_IMX8M_LPDDR4) += lpddr4_timing_rom5721a1_2G.o
  endif
 diff --git a/board/freescale/imx8mm_evk/imx8mm_evk.c b/board/freescale/imx8mm_evk/imx8mm_evk.c
-index a2452992151..1902a56cded 100644
+index 8ca1d19b236..bade63557dd 100644
 --- a/board/freescale/imx8mm_evk/imx8mm_evk.c
 +++ b/board/freescale/imx8mm_evk/imx8mm_evk.c
 @@ -27,14 +27,23 @@ DECLARE_GLOBAL_DATA_PTR;
@@ -172,4 +82,99 @@ index a2452992151..1902a56cded 100644
 +
  	return 0;
  }
+ 
+diff --git a/dts/upstream/src/arm64/freescale/imx8mm-evk.dtsi b/dts/upstream/src/arm64/freescale/imx8mm-evk.dtsi
+index 5f8336217bb..97907bf307f 100644
+--- a/dts/upstream/src/arm64/freescale/imx8mm-evk.dtsi
++++ b/dts/upstream/src/arm64/freescale/imx8mm-evk.dtsi
+@@ -141,31 +141,6 @@
+ 		};
+ 	};
+ 
+-	sound-wm8524 {
+-		compatible = "simple-audio-card";
+-		simple-audio-card,name = "wm8524-audio";
+-		simple-audio-card,format = "i2s";
+-		simple-audio-card,frame-master = <&cpudai>;
+-		simple-audio-card,bitclock-master = <&cpudai>;
+-		simple-audio-card,widgets =
+-			"Line", "Left Line Out Jack",
+-			"Line", "Right Line Out Jack";
+-		simple-audio-card,routing =
+-			"Left Line Out Jack", "LINEVOUTL",
+-			"Right Line Out Jack", "LINEVOUTR";
+-
+-		cpudai: simple-audio-card,cpu {
+-			sound-dai = <&sai3>;
+-			dai-tdm-slot-num = <2>;
+-			dai-tdm-slot-width = <32>;
+-		};
+-
+-		simple-audio-card,codec {
+-			sound-dai = <&wm8524>;
+-			clocks = <&clk IMX8MM_CLK_SAI3_ROOT>;
+-		};
+-	};
+-
+ 	sound-micfil {
+ 		compatible = "fsl,imx-audio-card";
+ 		model = "micfil-audio";
+@@ -554,15 +529,6 @@
+ 	status = "okay";
+ };
+ 
+-&sai3 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_sai3>;
+-	assigned-clocks = <&clk IMX8MM_CLK_SAI3>;
+-	assigned-clock-parents = <&clk IMX8MM_AUDIO_PLL1_OUT>;
+-	assigned-clock-rates = <24576000>;
+-	status = "okay";
+-};
+-
+ &snvs_pwrkey {
+ 	status = "okay";
+ };
+@@ -620,7 +586,7 @@
+ 	pinctrl-0 = <&pinctrl_usdhc2>, <&pinctrl_usdhc2_gpio>;
+ 	pinctrl-1 = <&pinctrl_usdhc2_100mhz>, <&pinctrl_usdhc2_gpio>;
+ 	pinctrl-2 = <&pinctrl_usdhc2_200mhz>, <&pinctrl_usdhc2_gpio>;
+-	cd-gpios = <&gpio1 15 GPIO_ACTIVE_LOW>;
++	cd-gpios = <&gpio2 12 GPIO_ACTIVE_LOW>;
+ 	bus-width = <4>;
+ 	vmmc-supply = <&reg_usdhc2_vmmc>;
+ 	status = "okay";
+@@ -745,15 +711,6 @@
+ 		>;
+ 	};
+ 
+-	pinctrl_sai3: sai3grp {
+-		fsl,pins = <
+-			MX8MM_IOMUXC_SAI3_TXFS_SAI3_TX_SYNC     0xd6
+-			MX8MM_IOMUXC_SAI3_TXC_SAI3_TX_BCLK      0xd6
+-			MX8MM_IOMUXC_SAI3_MCLK_SAI3_MCLK        0xd6
+-			MX8MM_IOMUXC_SAI3_TXD_SAI3_TX_DATA0     0xd6
+-		>;
+-	};
+-
+ 	pinctrl_spdif1: spdif1grp {
+ 		fsl,pins = <
+ 			MX8MM_IOMUXC_SPDIF_TX_SPDIF1_OUT	0xd6
+@@ -769,14 +726,14 @@
+ 
+ 	pinctrl_uart2: uart2grp {
+ 		fsl,pins = <
+-			MX8MM_IOMUXC_UART2_RXD_UART2_DCE_RX	0x140
+-			MX8MM_IOMUXC_UART2_TXD_UART2_DCE_TX	0x140
++			MX8MM_IOMUXC_SAI3_TXFS_UART2_DCE_RX	0x140
++			MX8MM_IOMUXC_SAI3_TXC_UART2_DCE_TX	0x140
+ 		>;
+ 	};
+ 
+ 	pinctrl_usdhc2_gpio: usdhc2grpgpiogrp {
+ 		fsl,pins = <
+-			MX8MM_IOMUXC_GPIO1_IO15_GPIO1_IO15	0x1c4
++			MX8MM_IOMUXC_SD2_CD_B_GPIO2_IO12	0x1c4
+ 		>;
+ 	};
  

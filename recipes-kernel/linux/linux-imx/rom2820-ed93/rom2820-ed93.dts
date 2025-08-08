@@ -489,11 +489,10 @@
 };
 
 &usbotg1 {
-	dr_mode = "otg";
+	dr_mode = "host";
 	hnp-disable;
 	srp-disable;
 	adp-disable;
-	usb-role-switch;
 	disable-over-current;
 	samsung,picophy-pre-emp-curr-control = <3>;
 	samsung,picophy-dc-vol-level-adjust = <7>;
@@ -501,11 +500,10 @@
 };
 
 &usbotg2 {
-	dr_mode = "otg";
+	dr_mode = "host";
 	hnp-disable;
 	srp-disable;
 	adp-disable;
-	usb-role-switch;
 	disable-over-current;
 	samsung,picophy-pre-emp-curr-control = <3>;
 	samsung,picophy-dc-vol-level-adjust = <7>;

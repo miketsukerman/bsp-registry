@@ -36,7 +36,7 @@
 			linux,cma-default;
 		};
 
-		m33_reserved: m33_noncacheable_section@a8600000 {
+		m33_reserved: noncacheable-section@a8600000 {
 			reg = <0 0xa8600000 0 0x1000000>;
 			no-map;
 		};
@@ -117,6 +117,14 @@
 		#clock-cells = <0>;
 	};
 
+	clock_ext_ts: clock-ext-ts {
+		compatible = "fixed-clock";
+		/* External ts clock is 50MHZ from PHY on EVK board. */
+		clock-frequency = <50000000>;
+		clock-output-names = "ext_ts_clk";
+		#clock-cells = <0>;
+	};
+
 	lt9211_1v8: regulator-lt9211 {
 		compatible = "regulator-fixed";
 		regulator-name = "LVDS_BRIDGE";
@@ -182,11 +190,10 @@
 	status = "okay";
 };
 
-/* 20250714.adv: removed (Yocto 5.1)
-&ele_mu {
+&ele_fw2 {
 	memory-region = <&ele_reserved>;
 };
-*/
+
 
 &epxp {
 	status = "okay";
@@ -406,7 +413,7 @@
 		 <&clock_ext_rmii>;
 	clock-names = "ipg", "ahb", "ptp", "enet_clk_ref";
 	assigned-clocks = <&cgc1 IMX8ULP_CLK_ENET_TS_SEL>;
-	assigned-clock-parents = <&clock_ext_rmii>;
+	assigned-clock-parents = <&clock_ext_ts>;
 	phy-mode = "rmii";
 	phy-handle = <&ethphy>;
 	status = "okay";

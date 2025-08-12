@@ -64,9 +64,9 @@ ROM-2820 (on ROM-ED93 carrier board)
 |SDHC2 |  ✅  | SD Card |
 |ETH0 |  ✅  | 1Gbps |
 |ETH1 |  ✅  | 1Gbps |
-|USB1-1| ❌ | USB 2.0 (broken in Y5.1, we're checking it) |
-|USB1-2| ❌ | USB 2.0 (") |
-|USB-OTG | ⚠️  | Not tested (micro-USB connector) |
+|USB1-1| ✅ | USB 2.0 |
+|USB1-2| ✅ | USB 2.0 |
+|USB-OTG | ❌ |  |
 |MIPI-LVDS| ✅ | Tested with IDK-1107WR |
 |MIPI-DSI| ✅⚠️ | Not tested |
 |LPUART1 | ✅ | COM-E Linux Console |
@@ -200,9 +200,6 @@ ROM-5722 (on SOM-DB2510 carrier board)
 |RTC1 | ✅ | Internal RTC, supports timer wake events |
 |Watchdog0 | ✅ | Internal watchdog |
 |Watchdog1 | ✅ | External I2C Advantech watchdog (MSP430-based) |
-
-Additional limitations for this module + carrier:
-- Suspend to RAM wakes up immediately
 
 
 RSB-3720

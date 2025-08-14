@@ -1,0 +1,26 @@
+From 50baa81f8f7dbe2e8950c7018f693ff82e4d62bf Mon Sep 17 00:00:00 2001
+From: clayderhua <clayderhua@gmail.com>
+Date: Thu, 18 Jan 2024 15:43:35 +0800
+Subject: [PATCH] Add ROM5721 1G
+
+---
+ plat/imx/imx8m/imx8mm/platform.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Observation: ad hoc patch
+Upstream-Status: Inappropriate [other]
+Signed-off-by: F. Aragon <francisco.aragon@advantech.de>
+
+diff --git a/plat/imx/imx8m/imx8mm/platform.mk b/plat/imx/imx8m/imx8mm/platform.mk
+index f5e892916..c7bfa16cc 100644
+--- a/plat/imx/imx8m/imx8mm/platform.mk
++++ b/plat/imx/imx8m/imx8mm/platform.mk
+@@ -178,7 +178,7 @@ ifneq (${PRELOADED_BL33_BASE},)
+ $(eval $(call add_define_val,PLAT_NS_IMAGE_OFFSET,${PRELOADED_BL33_BASE}))
+ endif
+ 
+-BL32_BASE		?=	0xbe000000
++BL32_BASE		?=	0x7e000000
+ $(eval $(call add_define,BL32_BASE))
+ 
+ BL32_SIZE		?=	0x2000000

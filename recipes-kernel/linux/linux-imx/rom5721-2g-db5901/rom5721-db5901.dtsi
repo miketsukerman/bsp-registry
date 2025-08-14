@@ -21,11 +21,6 @@
 		stdout-path = &uart2;
 	};
 
-	memory@40000000 {
-		device_type = "memory";
-		reg = <0x0 0x40000000 0 0x80000000>;
-	};
-
 	pcie0_refclk: pcie0-refclk {
 		compatible = "fixed-clock";
 		#clock-cells = <0>;
@@ -82,7 +77,7 @@
 		num-interpolated-steps = <255>;
 		default-brightness-level = <250>;
 	};
-	
+
 	gpio-keys {
 		compatible = "gpio-keys";
 		#address-cells = <1>;
@@ -114,7 +109,7 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_flexspi>;
 	status = "okay";
-	
+
 	w25q64fwssig@0 {
 		reg = <0>;
 		#address-cells = <1>;
@@ -149,7 +144,7 @@
 	pinctrl-0 = <&pinctrl_ecspi2>;
 	cs-gpios = <&gpio5 13 GPIO_ACTIVE_LOW>;
 	status = "okay";
-	
+
 	flash0: m25p80@0 {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -340,13 +335,13 @@
 	scl-gpios = <&gpio5 16 GPIO_ACTIVE_HIGH>;
 	sda-gpios = <&gpio5 17 GPIO_ACTIVE_HIGH>;
 	status = "okay";
-	
+
 	s35390a: s35390a@30 {
 		compatible = "sii,s35390a";
 		reg = <0x30>;
 		status = "okay";
 	};
-	
+
 	usb2514b@2c {
 		compatible = "microchip,usb2514b";
 		reg = <0x2c>;
@@ -360,7 +355,7 @@
 	scl-gpios = <&gpio5 18 GPIO_ACTIVE_HIGH>;
 	sda-gpios = <&gpio5 19 GPIO_ACTIVE_HIGH>;
 	status = "okay";
-	
+
 	i2c-switcih@70 {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -372,7 +367,7 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 		};
-		
+
 		i2c@1 {
 			reg = <1>;
 			#address-cells = <1>;
@@ -580,7 +575,7 @@
 			MX8MM_IOMUXC_SAI5_RXD0_GPIO3_IO21			0x19
 		>;
 	};
-	
+
 	pinctrl_ecspi3: ecspi3grp {
 		fsl,pins = <
 			MX8MM_IOMUXC_UART1_RXD_ECSPI3_SCLK		0x82

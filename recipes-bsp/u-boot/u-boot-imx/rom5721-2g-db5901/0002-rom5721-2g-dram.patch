@@ -1,0 +1,36 @@
+commit f95e36a0cc3839f0adbab2321396c08dfcbfc518
+Author: Ebenezer Samson <ebenezer.samson@advantech.com>
+Date:   Mon Mar 17 15:15:58 2025 +0100
+
+    add support for rom-5721 2G
+
+Updates:
+
+	Date:   Thu Aug 14 13:31:45 2025 +0200
+
+	   DRAM training from the 0001-minimal-differences.patch
+
+	Date:   Tue Jul 29 14:30:45 2025 +0200
+
+	    NXP update for Yocto 5.2 (walnascar)
+
+Observation: ad hoc patch
+Upstream-Status: Inappropriate [other]
+Signed-off-by: F. Aragon <francisco.aragon@advantech.de>
+
+diff --git a/board/freescale/imx8mm_evk/Makefile b/board/freescale/imx8mm_evk/Makefile
+index 3c4aff98923..4d354cb754c 100644
+--- a/board/freescale/imx8mm_evk/Makefile
++++ b/board/freescale/imx8mm_evk/Makefile
+@@ -8,10 +8,5 @@ obj-y += imx8mm_evk.o
+ 
+ ifdef CONFIG_XPL_BUILD
+ obj-y += spl.o
+-ifdef CONFIG_IMX8M_4G_LPDDR4
+-obj-y += lpddr4_timing_4g.o
+-else
+-obj-$(CONFIG_IMX8M_LPDDR4) += lpddr4_timing.o
+-obj-$(CONFIG_IMX8M_DDR4) += ddr4_timing.o
+-endif
++obj-$(CONFIG_IMX8M_LPDDR4) += lpddr4_timing_rom5721a1_2G.o
+ endif

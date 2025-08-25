@@ -1,0 +1,40 @@
+From 07bb5255dd9cc4e3bcc4f33221f77996bd7fce3a Mon Sep 17 00:00:00 2001
+From: clayderhua <clayderhua@gmail.com>
+Date: Wed, 13 Mar 2024 19:01:50 +0800
+Subject: [PATCH] rom5720
+
+---
+ plat/imx/imx8m/imx8mq/include/platform_def.h | 2 +-
+ plat/imx/imx8m/imx8mq/platform.mk            | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+Observation: ad hoc patch
+Upstream-Status: Inappropriate [other]
+Signed-off-by: F. Aragon <francisco.aragon@advantech.de>
+
+diff --git a/plat/imx/imx8m/imx8mq/include/platform_def.h b/plat/imx/imx8m/imx8mq/include/platform_def.h
+index 60aa67888..3acc0ee23 100644
+--- a/plat/imx/imx8m/imx8mq/include/platform_def.h
++++ b/plat/imx/imx8m/imx8mq/include/platform_def.h
+@@ -89,7 +89,7 @@
+ #define IMX_DDR_IPS_BASE		U(0x3d000000)
+ #define IMX_DDR_IPS_SIZE		U(0x1800000)
+ #define IMX_DRAM_BASE			U(0x40000000)
+-#define IMX_DRAM_SIZE			U(0xc0000000)
++#define IMX_DRAM_SIZE			U(0x80000000)
+ #define IMX_NS_OCRAM_BASE		U(0x900000)
+ #define IMX_NS_OCRAM_SIZE		U(0x20000)
+ #define IMX_CAAM_RAM_BASE		U(0x100000)
+diff --git a/plat/imx/imx8m/imx8mq/platform.mk b/plat/imx/imx8m/imx8mq/platform.mk
+index bee2025a9..a0e148acd 100644
+--- a/plat/imx/imx8m/imx8mq/platform.mk
++++ b/plat/imx/imx8m/imx8mq/platform.mk
+@@ -90,7 +90,7 @@ ifneq (${PRELOADED_BL33_BASE},)
+ $(eval $(call add_define_val,PLAT_NS_IMAGE_OFFSET,${PRELOADED_BL33_BASE}))
+ endif
+ 
+-BL32_BASE		?=	0xfe000000
++BL32_BASE		?=	0xbe000000
+ $(eval $(call add_define,BL32_BASE))
+ 
+ BL32_SIZE		?=	0x2000000

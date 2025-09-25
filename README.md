@@ -11,15 +11,16 @@ Supported Boards
 
 The following boards are supported by this layer:
 
- * ROM-2620 (`rom2620-ed91` NXP i.MX 8ULP)
- * ROM-2820 (`rom2820-ed93` NXP i.MX 93)
- * ROM-5722 (`rom5722-db2510` NXP i.MX 8M Plus)
- * RSB-3720 (`rsb3720` NXP i.MX 8M Plus)
+ * ROM-2620-CD-A1 1GB (MACHINE=`rom2620-ed91` NXP i.MX 8ULP)
+ * ROM-2820-CD-A1 2GB (`rom2820-ed93` NXP i.MX 93)
+ * ROM-5722-CQ-A1 6GB (`rom5722-db2510` NXP i.MX 8M Plus)
+ * RSB-3720-CQ-A1/A2 6GB A1,A2 (`rsb3720` NXP i.MX 8M Plus)
 
 Preliminary support:
 
- * ROM-5720 (`rom5720-db5901` NXP i.MX 8M)
- * ROM-5721 (`rom5721-db5901` NXP i.MX 8M Mini)
+ * ROM-5720-CD/CQ-A2 2GB (`rom5720-db5901` NXP i.MX 8M)
+ * ROM-5721-CD-A1/A2 1GB (`rom5721-db5901-1g` NXP i.MX 8M Mini)
+ * ROM-5721-CQ-A1/A2 2GB (`rom5721-db5901-2g` NXP i.MX 8M Mini)
 
 
 Supported Linux Features
@@ -54,6 +55,7 @@ ROM-2620 (on ROM-ED91 carrier board)
 |GPIO A,B,C| ❌ | Need to be accessed from M33 |
 |RTC | ✅ | Internal RTC, supports timer wake events |
 |Watchdog | ✅ | Internal watchdog |
+|Secure Boot AHAB | ❌ | Not tested |
 
 ROM-2820 (on ROM-ED93 carrier board)
 --------
@@ -82,7 +84,6 @@ ROM-2820 (on ROM-ED93 carrier board)
 |PWM0 | ⚠️ | Not tested |
 |PWM1 | ❌ |  |
 |LPSPI3| ⚠️ | Not tested |
-|NPU| ⚠️ | Not tested |
 |NPU| ⚠️ | Not tested (i.MX 93 has built-in an Ethos™-U65 NPU) |
 |CAN0| ✅ |  |
 |CAN1| ✅ |  |
@@ -90,6 +91,7 @@ ROM-2820 (on ROM-ED93 carrier board)
 |RTC0 | ✅ | External I2C RTC (rx8900) |
 |RTC1 | ✅ | Internal RTC, supports timer wake events |
 |Watchdog | ✅ | Internal watchdog |
+|Secure Boot AHAB | ❌ | Not tested |
 
 
 ROM-5720 (on SOM-DB5901 carrier board)
@@ -129,6 +131,7 @@ MQ: preliminary support, issues with suspend to RAM, external watchdog
 |RTC1 | ✅ | Internal RTC, supports timer wake events |
 |TPM | ❌ | (st33htpm-i2c not yet upstreamed to tpm_tis_i2c.c) |
 |Watchdog | ✅ | External I2C Advantech watchdog (MSP430-based) |
+|Secure Boot HABv4 | ⚠️ | Not tested, likely to work (similar to ROM-5721) |
 
 
 ROM-5721 (on SOM-DB5901 carrier board)
@@ -163,6 +166,7 @@ CQ: preliminary support
 |GPIO | ⚠️ | Not tested |
 |RTC | ✅ | Internal RTC, supports timer wake events |
 |Watchdog | ✅ | Internal watchdog |
+|Secure Boot HABv4 | ✅ | Tested (full chain of trust + locked boot loader) |
 
 ROM-5722 (on SOM-DB2510 carrier board)
 --------
@@ -200,6 +204,7 @@ ROM-5722 (on SOM-DB2510 carrier board)
 |RTC1 | ✅ | Internal RTC, supports timer wake events |
 |Watchdog0 | ✅ | Internal watchdog |
 |Watchdog1 | ✅ | External I2C Advantech watchdog (MSP430-based) |
+|Secure Boot HABv4 | ⚠️ | Not tested, likely to work (similar to ROM-5721) |
 
 
 RSB-3720
@@ -236,3 +241,4 @@ RSB-3720
 |RTC1 | ✅ | Internal RTC, supports timer wake events |
 |Watchdog0 | ✅ | Internal watchdog |
 |Watchdog1 | ✅ | External I2C Advantech watchdog (MSP430-based) |
+|Secure Boot HABv4 | ⚠️ | Not tested, likely to work (similar to ROM-5721) |

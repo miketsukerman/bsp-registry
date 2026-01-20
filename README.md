@@ -14,7 +14,8 @@ The following boards are supported by this layer:
  * ROM-2620-CD-A1 1GB (MACHINE=`rom2620-ed91` NXP i.MX 8ULP)
  * ROM-2820-CD-A1 2GB (`rom2820-ed93` NXP i.MX 93)
  * ROM-5722-CQ-A1 6GB (`rom5722-db2510` NXP i.MX 8M Plus)
- * RSB-3720-CQ-A1/A2 6GB A1,A2 (`rsb3720` NXP i.MX 8M Plus)
+ * RSB-3720-CD/CQ-A1/A2 6GB A1,A2 (`rsb3720` `rsb3720-6g` NXP i.MX 8M Plus)
+ * RSB-3720-CD/CQ-A2 4GB A2 (`rsb3720-4g` NXP i.MX 8M Plus)
 
 Preliminary support:
 

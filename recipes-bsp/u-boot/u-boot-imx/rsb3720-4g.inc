@@ -21,9 +21,11 @@ do_configure:prepend() {
 				"${S}/$i"
 	done
 
+	RAM_SIZE=0x80000000 RAM2_SIZE=0x80000000 RAM2_OFFSET=0xc0000000
+
 	sed -i "/^CONFIG_DEFAULT_FDT_FILE=/c\CONFIG_DEFAULT_FDT_FILE=\"rsb3720.dtb\"" ${S}/configs/imx8mp_evk_defconfig
 	sed -i 's/lpddr4_timing.o/lpddr4_timing_rsb3720a2_4G.o/g' ${S}/board/freescale/imx8mp_evk/Makefile
-	sed -i '/PHYS_SDRAM_SIZE/s/.*/#define PHYS_SDRAM_SIZE	0x80000000/' ${S}/include/configs/imx8mp_evk.h
-	sed -i '/PHYS_SDRAM_2/s/.*/#define PHYS_SDRAM_2  	0xC000000/' ${S}/include/configs/imx8mp_evk.h
-	sed -i '/PHYS_SDRAM_2_SIZE/s/.*/#define PHYS_SDRAM_2_SIZE 	0x80000000/' ${S}/include/configs/imx8mp_evk.h
+	sed -i "/^#define[[:space:]]\+PHYS_SDRAM_SIZE[[:space:]]/c#define PHYS_SDRAM_SIZE ${RAM_SIZE}" "${S}/include/configs/imx8mp_evk.h"
+	sed -i "/^#define[[:space:]]\+PHYS_SDRAM_2[[:space:]]\+/c#define PHYS_SDRAM_2 ${RAM2_OFFSET}" "${S}/include/configs/imx8mp_evk.h"
+	sed -i "/^#define[[:space:]]\+PHYS_SDRAM_2_SIZE[[:space:]]\+/c#define PHYS_SDRAM_2_SIZE ${RAM2_SIZE}" "${S}/include/configs/imx8mp_evk.h"
 }

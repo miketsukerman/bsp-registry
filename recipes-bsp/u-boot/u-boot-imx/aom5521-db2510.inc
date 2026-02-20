@@ -1,15 +1,11 @@
 SRC_URI += " \
-    file://aom5521-db2510.dts;subdir=arch/arm/dts \
     file://0001-aom5521a1-update-imx95_evk.h.patch \
 "
 
 do_configure:prepend() {
 
-	cp "${UNPACKDIR}/arch/arm/dts/aom5521-db2510.dts" \
-		   "${S}/arch/arm/dts/aom5521-db2510.dts"
-
     # Point to custom device tree
-    sed -i "/^CONFIG_DEFAULT_FDT_FILE=/c\CONFIG_DEFAULT_FDT_FILE=\"imx95-aom5521-a2.dtb\"" \
+    sed -i "/^CONFIG_DEFAULT_FDT_FILE=/c\CONFIG_DEFAULT_FDT_FILE=\"aom5521-db2510.dtb\"" \
         ${S}/configs/imx95_19x19_evk_defconfig
 
     # Adjust SPI flash speed for AOM-5521 hardware

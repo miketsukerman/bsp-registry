@@ -19,6 +19,7 @@ declare -A QEMU_BIN=(
     ["qemuarm"]="qemu-system-arm"
     ["qemuarm64"]="qemu-system-aarch64"
     ["qemux86"]="qemu-system-i386"
+    ["qemuamd64"]="qemu-system-x86_64"
     ["qemux86-64"]="qemu-system-x86_64"
     ["qemuppc"]="qemu-system-ppc"
     ["qemumips"]="qemu-system-mips"
@@ -33,6 +34,7 @@ declare -A QEMU_MACHINE=(
     ["qemuarm64"]="virt"
     ["qemux86"]="pc"
     ["qemux86-64"]="pc"
+    ["qemuamd64"]="pc"
     ["qemuppc"]="mac99"
     ["qemumips"]="malta"
     ["qemumips64"]="malta"
@@ -46,6 +48,7 @@ declare -A CONSOLE_DEV=(
     ["qemuarm64"]="ttyAMA0"
     ["qemux86"]="ttyS0"
     ["qemux86-64"]="ttyS0"
+    ["qemuamd64"]="ttyS0"
     ["qemuppc"]="ttyS0"
     ["qemumips"]="ttyS0"
     ["qemumips64"]="ttyS0"
@@ -111,6 +114,8 @@ while [ $# -gt 0 ]; do
     esac
 done
 
+DEPLOY_DIR="tmp/deploy/images/${MACHINE}"
+
 # Check if DEPLOY_DIR exists
 if [ ! -d "${DEPLOY_DIR}" ]; then
     echo "ERROR: Deployment directory '${DEPLOY_DIR}' not found."
@@ -125,6 +130,16 @@ if [ -z "${QEMU_BIN_NAME}" ]; then
 fi
 QEMU_MACHINE_TYPE="${QEMU_MACHINE[${MACHINE}]:-virt}"
 CONSOLE="${CONSOLE_DEV[${MACHINE}]:-ttyS0}"
+
+# Select virtio device model depending on bus type
+# - "virt" machines use virtio-mmio: virtio-*-device
+# - "pc" machines use virtio-pci: virtio-*-pci
+NET_DEVICE="virtio-net-device"
+BLK_DEVICE="virtio-blk-device"
+if [ "${QEMU_MACHINE_TYPE}" = "pc" ]; then
+    NET_DEVICE="virtio-net-pci"
+    BLK_DEVICE="virtio-blk-pci"
+fi
 
 # Check if QEMU binary is available
 if ! command -v "${QEMU_BIN_NAME}" >/dev/null 2>&1; then
@@ -257,12 +272,12 @@ esac
 # Network
 case "${QEMU_NETWORK}" in
     user)
-        cmd+=("-netdev" "user,id=net0")
-        cmd+=("-device" "virtio-net-device,netdev=net0")
+        cmd+=("-netdev" "user,id=net0,hostfwd=tcp::2222-:22")
+        cmd+=("-device" "${NET_DEVICE},netdev=net0")
         ;;
     tap)
         cmd+=("-netdev" "tap,id=net0,ifname=tap0,script=no,downscript=no")
-        cmd+=("-device" "virtio-net-device,netdev=net0")
+        cmd+=("-device" "${NET_DEVICE},netdev=net0")
         echo "Assuming tap0 is already configured. Use 'sudo ip tuntap add tap0 mode tap' if needed."
         ;;
     none)
@@ -270,13 +285,13 @@ case "${QEMU_NETWORK}" in
     *)
         echo "Warning: unknown network mode '${QEMU_NETWORK}', using user."
         cmd+=("-netdev" "user,id=net0")
-        cmd+=("-device" "virtio-net-device,netdev=net0")
+        cmd+=("-device" "${NET_DEVICE},netdev=net0")
         ;;
 esac
 
 # Add drive with rootfs
 cmd+=("-drive" "if=none,file=${ROOTFS},format=raw,id=hd0")
-cmd+=("-device" "virtio-blk-device,drive=hd0")
+cmd+=("-device" "${BLK_DEVICE},drive=hd0")
 
 # If using kernel+initrd, add them and append root= parameter
 if [ ${USE_KERNEL_BOOT} -eq 1 ]; then
@@ -284,10 +299,10 @@ if [ ${USE_KERNEL_BOOT} -eq 1 ]; then
     cmd+=("-initrd" "${INITRD}")
 
     # Determine root partition: try to guess from wic partition layout
-    # We'll assume root is on /dev/vda2 (common for wic images with boot partition vda1)
+    # We'll assume root is on /dev/vda1 (common for wic images with boot partition vda1)
     # But we can try to be smarter: use fdisk -l to find Linux partition?
-    # For simplicity, we'll use root=/dev/vda2 and rootwait.
-    ROOT_DEV="/dev/vda2"
+    # For simplicity, we'll use root=/dev/vda1 and rootwait.
+    ROOT_DEV="/dev/vda1"
     # If it's an ext4 image (not partitioned), root is /dev/vda
     if [[ "${ROOTFS}" == *.ext4 ]]; then
         ROOT_DEV="/dev/vda"

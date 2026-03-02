@@ -5,6 +5,6 @@ header:
 
 machine: qemuarm64
 
-local_conf_header:
-  image: |
-    IMAGER_INSTALL:append = " grub-efi-arm64-bin"
+# local_conf_header:
+#   image: |
+#     IMAGER_INSTALL:append = " grub-efi-arm64-bin"

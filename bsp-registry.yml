@@ -1087,6 +1087,8 @@ registry:
       description: "QEMU ARM64 Isar ubuntu noble BSP"
       build:
         path: build/qemuarm64-isar-ubuntu-noble
+        copy:
+          - isar/scripts/isar-runqemu.sh: build/
         environment:
           container: "isar-debian-13"
           runtime_args: "--device=/dev/net/tun --cap-add=NET_ADMIN"
@@ -1099,6 +1101,8 @@ registry:
       description: "QEMU ARM64 Isar ubuntu jammy BSP"
       build:
         path: build/qemuarm64-isar-ubuntu-jammy
+        copy:
+          - isar/scripts/isar-runqemu.sh: build/
         environment:
           container: "isar-debian-13"
           runtime_args: "--device=/dev/net/tun --cap-add=NET_ADMIN"
@@ -1111,6 +1115,8 @@ registry:
       description: "QEMU ARM64 Isar ubuntu focal BSP"
       build:
         path: build/qemuarm64-isar-ubuntu-focal
+        copy:
+          - isar/scripts/isar-runqemu.sh: build/
         environment:
           container: "isar-debian-13"
           runtime_args: "--device=/dev/net/tun --cap-add=NET_ADMIN" 
@@ -1147,4 +1153,19 @@ registry:
         configuration:
           - isar/distro/debian-trixie.yaml
           - isar/qemu/qemuarm64.yaml
+          - isar/isar.yaml
+
+    - name: isar-qemux86-64-debian-trixie
+      description: "QEMU x86_64 Isar debian trixie BSP"
+      build:
+        path: build/qemu-x86-64-isar-debian-trixie
+        copy:
+          - isar/scripts/isar-runqemu.sh: build/
+        environment:
+          container: "isar-debian-13"
+          # SSH port forwarding and TUN device for networking in QEMU
+          runtime_args: "-p 2222:2222 --device=/dev/net/tun --cap-add=NET_ADMIN"
+        configuration:
+          - isar/distro/debian-trixie.yaml
+          - isar/qemu/qemux86-64.yaml
           - isar/isar.yaml

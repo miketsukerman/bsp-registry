@@ -14,9 +14,11 @@ repos:
       meta-isar:
       meta-test:
 
-bblayers_conf_header:
+local_conf_header:
   image: |
     IMAGE_FSTYPES = "wic"
+
+bblayers_conf_header:
   standard: |
     BBPATH = "${TOPDIR}"
     BBFILES ?= ""

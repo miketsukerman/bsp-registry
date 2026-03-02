@@ -653,7 +653,7 @@ For all options, environment variables, boot modes, and troubleshooting, see [is
                    ▼
 ┌─────────────────────────────────────────────────────────────┐
 │            Privileged Docker Container                      │
-│  Image: advantech/bsp-registry/isar/debian-13/kas:5.1       │
+│  Image: advantech/bsp-registry/isar/debian-13/kas:5.2       │
 │  Base: ghcr.io/siemens/kas/kas-isar:5.0-debian-bookworm    │
 │                                                             │
 │  ┌───────────────────────────────────────────────────────┐ │

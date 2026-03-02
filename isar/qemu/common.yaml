@@ -27,7 +27,7 @@ local_conf_header:
     USERS += "root"
     USER_root[password] = ""
     USER_root[flags] = "allow-empty-password"
-  preintall: |
+  preinstall: |
     IMAGE_PREINSTALL += " \
       iproute2         \
       net-tools        \

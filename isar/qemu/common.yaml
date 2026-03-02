@@ -45,3 +45,17 @@ local_conf_header:
     IMAGE_INSTALL += "   \
         sshd-regen-keys  \
     " 
+
+    IMAGE_PREINSTALL += " \
+        libxml2 \ 
+        libx11-6 \
+        libxext6  \
+        libxtst6  \
+        libmosquitto1 \   
+        sqlite3 \
+        xterm \
+        ethtool \ 
+        lua5.1 \
+        sshpass \
+        x11vnc \
+    "

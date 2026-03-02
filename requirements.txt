@@ -1,3 +1,4 @@
+-e git+ssh://git@github.com/Advantech-EECC/bsp-registry.git@dac348b5bb26edbf22665066149bdcb42750421d#egg=advantech_bsp_registry
 alembic==1.17.2
 attrs==25.3.0
 autobahn==25.11.1
@@ -12,9 +13,11 @@ cbor2==5.7.1
 certifi==2025.11.12
 cffi==2.0.0
 charset-normalizer==3.4.4
+colorama==0.4.6
 constantly==23.10.4
 croniter==6.0.0
 cryptography==46.0.3
+dacite==1.9.2
 distro==1.9.0
 gitdb==4.0.12
 GitPython==3.1.45

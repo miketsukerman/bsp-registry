@@ -145,11 +145,11 @@ CQ: preliminary support
 |SDHC0 |  ✅ | eMMC |
 |SDHC2 |  ✅ | SD Card |
 |ETH |  ✅ | 1Gbps |
-|USB1 | ❌ | Pending |
-|USB2 | ❌ | Pending |
-|USB3 | ❌ | Pending |
+|USB1 | ⚠️ | Not tested |
+|USB2 | ⚠️ | Not tested |
+|USB3 | ⚠️ | Not tested |
 |USB-OTG | ❌ |  |
-|MIPI-LVDS | ❌ | (DSI to LVDS bridge) |
+|MIPI-LVDS | ✅ | AUO G070 and G215 |
 |UART1| ✅ | COM3 Linux Console (2-wire) |
 |UART2| ⚠️ | M.2 (4-wire) - Not tested |
 |UART3| ❌ | Pending |
@@ -162,11 +162,15 @@ CQ: preliminary support
 |PWM1 | ❌ | |
 |PWM2 | ❌ | |
 |PWM3 | ❌ | |
-|PWM4 | ❌ | |
+|PWM4 | ✅ | LVDS backlight |
 |QSPI0| ✅ | n25q256a (jedec,spi-nor) |
 |GPIO | ⚠️ | Not tested |
 |RTC | ✅ | Internal RTC, supports timer wake events |
-|Watchdog | ✅ | Internal watchdog |
+|RTC0 | ✅ | External I2C RTC (S35390) |
+|RTC1 | ✅ | Internal RTC, supports timer wake events |
+|TPM | ⚠️  | Not tested (st33htpm-i2c) |
+|Watchdog0 | ✅ | Internal watchdog |
+|Watchdog1 | ✅ | External I2C Advantech watchdog (MSP430-based) |
 |Secure Boot HABv4 | ✅ | Tested (full chain of trust + locked boot loader) |
 
 ROM-5722 (on SOM-DB2510 carrier board)

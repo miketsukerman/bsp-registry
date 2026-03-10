@@ -14,11 +14,30 @@
 
 	aliases {
 		rtc0 = &s35390a;
+		rtc1 = &snvs_rtc;
 		spi0 = &flexspi;
+		watchdog0 = &wdog1;
+		watchdog1 = &wdt;
 	};
 
 	chosen {
 		stdout-path = &uart2;
+	};
+
+	lvds_backlight0: lvds_backlight@0 {
+		status = "disabled";
+		compatible = "pwm-backlight";
+		pwms = <&pwm4 0 1000000 0>;
+		brightness-levels = <0 100>;
+		num-interpolated-steps = <100>;
+		default-brightness-level = <80>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_lcd0>, <&pinctrl_lvds>;
+		lvds-bkl-enable-gpio = <&gpio4 29 GPIO_ACTIVE_HIGH>;
+		lvds-vcc-enable-gpio = <&gpio4 30 GPIO_ACTIVE_LOW>;
+		lvds-reset-gpio = <&gpio3 23 GPIO_ACTIVE_LOW>;
+		lvds-stby-gpio = <&gpio3 24 GPIO_ACTIVE_LOW>;
+		lvds-bkl-delay-time = <10>;
 	};
 
 	pcie0_refclk: pcie0-refclk {
@@ -68,14 +87,6 @@
 		regulator-max-microvolt = <5000000>;
 		gpio = <&gpio1 12 GPIO_ACTIVE_HIGH>;
 		enable-active-high;
-	};
-
-	backlight: backlight {
-		compatible = "pwm-backlight";
-		pwms = <&pwm1 0 5000000 0>;
-		brightness-levels = <0 255>;
-		num-interpolated-steps = <255>;
-		default-brightness-level = <250>;
 	};
 
 	gpio-keys {
@@ -219,6 +230,7 @@
 	clock-frequency = <400000>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_i2c1>;
+	pinctrl-1 = <&pinctrl_i2c1_gpio>;
 	scl-gpios = <&gpio5 14 GPIO_ACTIVE_HIGH>;
 	sda-gpios = <&gpio5 15 GPIO_ACTIVE_HIGH>;
 	status = "okay";
@@ -254,6 +266,7 @@
 			};
 
 			buck3_reg: BUCK3 {
+				// BUCK5 in datasheet
 				regulator-name = "BUCK3";
 				regulator-min-microvolt = <700000>;
 				regulator-max-microvolt = <1350000>;
@@ -262,6 +275,7 @@
 			};
 
 			buck4_reg: BUCK4 {
+				// BUCK6 in datasheet
 				regulator-name = "BUCK4";
 				regulator-min-microvolt = <3000000>;
 				regulator-max-microvolt = <3300000>;
@@ -270,6 +284,7 @@
 			};
 
 			buck5_reg: BUCK5 {
+				// BUCK7 in datasheet
 				regulator-name = "BUCK5";
 				regulator-min-microvolt = <1605000>;
 				regulator-max-microvolt = <1995000>;
@@ -278,6 +293,7 @@
 			};
 
 			buck6_reg: BUCK6 {
+				// BUCK8 in datasheet
 				regulator-name = "BUCK6";
 				regulator-min-microvolt = <800000>;
 				regulator-max-microvolt = <1400000>;
@@ -317,8 +333,8 @@
 				regulator-always-on;
 			};
 
-			ldo5_reg: LDO5 {
-				regulator-name = "LDO5";
+			ldo6_reg: LDO6 {
+				regulator-name = "LDO6";
 				regulator-min-microvolt = <900000>;
 				regulator-max-microvolt = <1800000>;
 				regulator-boot-on;
@@ -332,14 +348,34 @@
 	clock-frequency = <400000>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_i2c2>;
+	pinctrl-1 = <&pinctrl_i2c2_gpio>;
 	scl-gpios = <&gpio5 16 GPIO_ACTIVE_HIGH>;
 	sda-gpios = <&gpio5 17 GPIO_ACTIVE_HIGH>;
 	status = "okay";
+
+	wdt: msp430g2202@29 {
+		compatible = "fsl,adv-wdt-i2c";
+		reg = <0x29>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_wdt>;
+		wdt-en-gpio = <&gpio1 9 GPIO_ACTIVE_HIGH>;
+		wdt-ping-gpio = <&gpio1 15 GPIO_ACTIVE_HIGH>;
+		status = "okay";
+	};
 
 	s35390a: s35390a@30 {
 		compatible = "sii,s35390a";
 		reg = <0x30>;
 		status = "okay";
+	};
+
+	st33htpi: st33htpi@2e{
+		compatible = "tcg,tpm-tis-i2c";
+		reg= <0x2e>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_tpm>;
+		interrupt-parent = <&gpio5>;
+		interrupts = <7 IRQ_TYPE_LEVEL_HIGH>;
 	};
 
 	usb2514b@2c {
@@ -352,6 +388,7 @@
 	clock-frequency = <100000>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_i2c3>;
+	pinctrl-1 = <&pinctrl_i2c3_gpio>;
 	scl-gpios = <&gpio5 18 GPIO_ACTIVE_HIGH>;
 	sda-gpios = <&gpio5 19 GPIO_ACTIVE_HIGH>;
 	status = "okay";
@@ -372,6 +409,12 @@
 			reg = <1>;
 			#address-cells = <1>;
 			#size-cells = <0>;
+			battery: bq40z50@b {
+				compatible = "sbs,sbs-battery";
+				reg = <0x0b>;
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_battery>;
+			};
 		};
 
 		i2c@2 {
@@ -384,6 +427,17 @@
 			reg = <3>;
 			#address-cells = <1>;
 			#size-cells = <0>;
+			tca9538: pca9538@73 {
+				compatible = "nxp,pca9538";
+				reg = <0x73>;
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_i2c_switch>;
+				#gpio-cells = <2>;
+				gpio-controller;
+				interrupt-controller;
+				interrupt-parent = <&gpio1>;
+				interrupts = <7 IRQ_TYPE_LEVEL_LOW>;
+			};
 		};
 	};
 };
@@ -395,10 +449,6 @@
 	scl-gpios = <&gpio5 20 GPIO_ACTIVE_HIGH>;
 	sda-gpios = <&gpio5 21 GPIO_ACTIVE_HIGH>;
 	status = "okay";
-};
-
-&lcdif {
-       status = "okay";
 };
 
 &pcie_phy {
@@ -535,21 +585,10 @@
 	status = "okay";
 };
 
-&pwm1 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_backlight>;
-};
-
 &pwm2 {
 	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_pwm2>;
-};
-
-&pwm4 {
-	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_pwm4>;
 };
 
 &gpu {
@@ -586,6 +625,15 @@
 		>;
 	};
 
+	pinctrl_battery: battery_grp {
+		fsl,pins = <
+			MX8MM_IOMUXC_SAI2_TXC_GPIO4_IO25		0x159	/* BATLOW */
+			MX8MM_IOMUXC_SAI3_TXD_GPIO5_IO1			0x159	/* CHARGING */
+			MX8MM_IOMUXC_SAI5_MCLK_GPIO3_IO25		0x159	/* SMB_ALERT_1V8 */
+			MX8MM_IOMUXC_NAND_READY_B_GPIO3_IO16		0x159	/* CHARGER_PRSNT */
+		>;
+	};
+
 	pinctrl_fec1: fec1grp {
 		fsl,pins = <
 			MX8MM_IOMUXC_ENET_MDC_ENET1_MDC				0x3
@@ -602,7 +650,7 @@
 			MX8MM_IOMUXC_ENET_RXC_ENET1_RGMII_RXC		0x91
 			MX8MM_IOMUXC_ENET_RX_CTL_ENET1_RGMII_RX_CTL	0x91
 			MX8MM_IOMUXC_ENET_TX_CTL_ENET1_RGMII_TX_CTL	0x1f
-			MX8MM_IOMUXC_SAI2_RXC_GPIO4_IO22			0x19
+			MX8MM_IOMUXC_GPIO1_IO06_GPIO1_IO6               0x19    /* RGMII0_INT# */
 		>;
 	};
 
@@ -625,35 +673,90 @@
 
 	pinctrl_pwm4: pwm4grp {
 		fsl,pins = <
-			MX8MM_IOMUXC_SAI3_MCLK_PWM4_OUT				0x06
+			MX8MM_IOMUXC_SAI3_MCLK_PWM4_OUT		0x06	/* LCD0_BKLT_PWM */
 		>;
 	};
 
+	pinctrl_lvds: lvdsgrp {
+                fsl,pins = <
+			MX8MM_IOMUXC_SAI5_RXD2_GPIO3_IO23	0x19	/* LVDS_STBY */
+			MX8MM_IOMUXC_SAI5_RXD3_GPIO3_IO24	0x19	/* LVDS_RESET */
+                >;
+        };
+
+        pinctrl_lcd0: lcd0_grp {
+                fsl,pins = <
+			MX8MM_IOMUXC_SAI3_RXD_GPIO4_IO30	0x10		/* LCD0_VDD_EN */
+			MX8MM_IOMUXC_SAI3_RXC_GPIO4_IO29	0x19		/* LCD0_BKLT_EN */
+                >;
+        };
+
+        pinctrl_lcd1: lcd1_grp {
+                fsl,pins = <
+			MX8MM_IOMUXC_SAI2_TXD0_GPIO4_IO26	0x19		/* LCD0_VDD_EN */
+			MX8MM_IOMUXC_SAI2_MCLK_GPIO4_IO27	0x19		/* LCD0_BKLT_EN */
+                >;
+        };
+
 	pinctrl_i2c1: i2c1grp {
 		fsl,pins = <
-			MX8MM_IOMUXC_I2C1_SCL_GPIO5_IO14			0x19
-			MX8MM_IOMUXC_I2C1_SDA_GPIO5_IO15			0x19
+			MX8MM_IOMUXC_I2C1_SCL_I2C1_SCL                  0x400001c3
+			MX8MM_IOMUXC_I2C1_SDA_I2C1_SDA                  0x400001c3
+		>;
+	};
+
+	pinctrl_i2c1_gpio: i2c1_gpio_grp {
+		fsl,pins = <
+			MX8MM_IOMUXC_I2C1_SCL_GPIO5_IO14		0x19
+			MX8MM_IOMUXC_I2C1_SDA_GPIO5_IO15		0x19
 		>;
 	};
 
 	pinctrl_i2c2: i2c2grp {
 		fsl,pins = <
-			MX8MM_IOMUXC_I2C2_SCL_GPIO5_IO16			0x19
-			MX8MM_IOMUXC_I2C2_SDA_GPIO5_IO17			0x19
+			MX8MM_IOMUXC_I2C2_SCL_I2C2_SCL			0x400001c3
+			MX8MM_IOMUXC_I2C2_SDA_I2C2_SDA			0x400001c3
+		>;
+	};
+
+	pinctrl_i2c2_gpio: i2c2_gpio_grp {
+		fsl,pins = <
+			MX8MM_IOMUXC_I2C2_SCL_GPIO5_IO16		0x19
+			MX8MM_IOMUXC_I2C2_SDA_GPIO5_IO17		0x19
 		>;
 	};
 
 	pinctrl_i2c3: i2c3grp {
 		fsl,pins = <
-			MX8MM_IOMUXC_I2C3_SCL_GPIO5_IO18			0x19
-			MX8MM_IOMUXC_I2C3_SDA_GPIO5_IO19			0x19
+			MX8MM_IOMUXC_I2C3_SCL_I2C3_SCL			0x400001c3
+			MX8MM_IOMUXC_I2C3_SDA_I2C3_SDA			0x400001c3
+		>;
+	};
+
+	pinctrl_i2c3_gpio: i2c3_gpio_grp {
+		fsl,pins = <
+			MX8MM_IOMUXC_I2C3_SCL_GPIO5_IO18		0x19
+			MX8MM_IOMUXC_I2C3_SDA_GPIO5_IO19		0x19
 		>;
 	};
 
 	pinctrl_i2c4: i2c4grp {
 		fsl,pins = <
+			MX8MM_IOMUXC_I2C4_SCL_I2C4_SCL			0x400001c3	/* I2C_GP_CK */
+			MX8MM_IOMUXC_I2C4_SDA_I2C4_SDA			0x400001c3	/* I2C_GP_DAT */
+		>;
+	};
+
+	pinctrl_i2c4_gpio: i2c4_gpio_grp {
+		fsl,pins = <
 			MX8MM_IOMUXC_I2C4_SCL_GPIO5_IO20		0x19
 			MX8MM_IOMUXC_I2C4_SDA_GPIO5_IO21		0x19
+		>;
+	};
+
+	pinctrl_mipi_dsi_en: mipi_dsi_en {
+		fsl,pins = <
+			MX8MM_IOMUXC_GPIO1_IO08_GPIO1_IO8		0x16
 		>;
 	};
 
@@ -684,10 +787,10 @@
 
 	pinctrl_uart1: uart1grp {
 		fsl,pins = <
-			MX8MM_IOMUXC_UART1_RXD_UART1_DCE_RX     0x140
-			MX8MM_IOMUXC_UART1_TXD_UART1_DCE_TX     0x140
-			MX8MM_IOMUXC_UART3_RXD_UART1_DCE_CTS_B  0x140
-			MX8MM_IOMUXC_UART3_TXD_UART1_DCE_RTS_B  0x140
+			MX8MM_IOMUXC_SAI2_RXFS_UART1_DCE_TX     0x140
+			MX8MM_IOMUXC_SAI2_RXC_UART1_DCE_RX     0x140
+			MX8MM_IOMUXC_SAI2_RXD0_UART1_DCE_RTS_B  0x140
+			MX8MM_IOMUXC_SAI2_TXFS_UART1_DCE_CTS_B  0x140
 		>;
 	};
 
@@ -716,6 +819,13 @@
 	pinctrl_sleep_key: gpio_userkeygrp-2 {
 		fsl,pins = <
 			MX8MM_IOMUXC_GPIO1_IO01_GPIO1_IO1		0x19
+		>;
+	};
+
+	pinctrl_wdt: wdt_grp {
+		fsl,pins = <
+			MX8MM_IOMUXC_GPIO1_IO09_GPIO1_IO9		0x19    /* WDT_EN */
+			MX8MM_IOMUXC_GPIO1_IO15_GPIO1_IO15		0x19    /* WDOG_TRIG */
 		>;
 	};
 
@@ -851,15 +961,21 @@
 
 	pinctrl_wdog: wdoggrp {
 		fsl,pins = <
-			MX8MM_IOMUXC_GPIO1_IO02_WDOG1_WDOG_B	0x166
+			MX8MM_IOMUXC_GPIO1_IO02_WDOG1_WDOG_B	0xc6 /* PMIC_WDOG */
 		>;
 	};
 
-	pinctrl_backlight: backlightgrp {
+	pinctrl_tpm: tpm_grp {
 		fsl,pins = <
-			MX8MM_IOMUXC_GPIO1_IO02_WDOG1_WDOG_B	0x06
+			MX8MM_IOMUXC_ECSPI1_MOSI_GPIO5_IO7		0x159	/* TPM_IRQ */
 		>;
 	};
+
+        pinctrl_i2c_switch: i2c_switch_grp {
+                fsl,pins = <
+			MX8MM_IOMUXC_GPIO1_IO07_GPIO1_IO7		0x159	/* I2C_INT */
+                >;
+        };
 
 	pinctrl_usbotg: usbotggrp {
 		fsl,pins = <
@@ -867,3 +983,160 @@
 		>;
 	};
 };
+
+&pwm4 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_pwm4>;
+};
+
+&lvds_backlight0 {
+	status = "okay";
+};
+
+&lcdif {
+	status = "okay";
+};
+
+
+#ifdef DTS_LVDS_AUO_G215HVN01
+
+// AUO G215HVN0 LVDS panel (21.5" LCD, 1920x1080)
+
+&mipi_dsi {
+	status = "okay";
+	panel@0 {
+		compatible = "auo,g215hvn01";
+		reg = <0>;
+		backlight=<&lvds_backlight0>;
+		panel-init-sequence = [
+			29 00 06 3C 01 0C 00 0A 00
+			29 00 06 14 01 08 00 00 00
+			29 00 06 64 01 0B 00 00 00
+			29 00 06 68 01 0B 00 00 00
+			29 00 06 6C 01 0B 00 00 00
+			29 00 06 70 01 0B 00 00 00
+			29 00 06 34 01 1F 00 00 00
+			29 00 06 10 02 1F 00 00 00
+			29 00 06 04 01 01 00 00 00
+			29 00 06 04 02 01 00 00 00
+			29 00 06 50 04 20 01 F0 03
+			29 00 06 54 04 0A 00 14 00
+			29 00 06 58 04 80 07 96 00
+			29 00 06 5C 04 0A 00 14 00
+			29 00 06 60 04 38 04 14 00
+			29 00 06 64 04 01 00 00 00
+			29 01 06 A0 04 06 80 44 00
+			29 00 06 A0 04 06 80 04 00
+			29 00 06 04 05 04 00 00 00
+			29 00 06 80 04 00 01 02 03
+			29 00 06 84 04 04 07 05 08
+			29 00 06 88 04 09 0A 0E 0F
+			29 00 06 8C 04 0B 0C 0D 10
+			29 00 06 90 04 16 17 11 12
+			29 00 06 94 04 13 14 15 1B
+			29 14 06 98 04 18 19 1A 06
+			29 78 06 9C 04 63 02 00 00
+		];
+	};
+};
+
+#elif defined DTS_LVDS_AUO_G150XGE_L05
+
+// AUO G150XGE-L05 LVDS panel (15" LCD, 1024x768)
+
+&mipi_dsi {
+	status = "okay";
+	panel@0 {
+		compatible = "auo,g150xgel05";
+		reg = <0>;
+		backlight=<&lvds_backlight0>;
+		panel-init-sequence = [
+			29 00 06 3C 01 05 00 03 00
+			29 00 06 14 01 03 00 00 00
+			29 00 06 64 01 04 00 00 00
+			29 00 06 68 01 04 00 00 00
+			29 00 06 6C 01 04 00 00 00
+			29 00 06 70 01 04 00 00 00
+			29 00 06 34 01 1F 00 00 00
+			29 00 06 10 02 1F 00 00 00
+			29 00 06 04 01 01 00 00 00
+			29 00 06 04 02 01 00 00 00
+			29 00 06 50 04 20 01 F0 03
+			29 00 06 54 04 0A 00 0A 00
+			29 00 06 58 04 00 04 2C 01
+			29 00 06 5C 04 04 00 04 00
+			29 00 06 60 04 00 03 1E 00
+			29 00 06 64 04 01 00 00 00
+			29 01 06 A0 04 06 80 44 00
+			29 00 06 A0 04 06 80 04 00
+			29 00 06 04 05 04 00 00 00
+			29 00 06 80 04 00 01 02 03
+			29 00 06 84 04 04 07 05 08
+			29 00 06 88 04 09 0A 0E 0F
+			29 00 06 8C 04 0B 0C 0D 10
+			29 00 06 90 04 16 17 11 12
+			29 00 06 94 04 13 14 15 1B
+			29 14 06 98 04 18 19 1A 06
+			29 78 06 9C 04 31 00 00 00
+		];
+	};
+};
+
+#elif defined DTS_LVDS_DISABLED
+
+&pwm4 {
+	status = "disabled";
+};
+
+&lvds_backlight0 {
+	status = "disabled";
+};
+
+&lcdif {
+	status = "disabled";
+};
+
+#else
+
+// AUO G070VW01 LVDS panel (7" LCD, 800x480)
+
+&mipi_dsi {
+	status = "okay";
+	panel@0 {
+		compatible = "auo,g070vw01v0";
+		backlight=<&lvds_backlight0>;
+		reg = <0>;
+		panel-init-sequence = [
+			29 00 06 3C 01 03 00 02 00
+			29 00 06 14 01 02 00 00 00
+			29 00 06 64 01 00 00 00 00
+			29 00 06 68 01 00 00 00 00
+			29 00 06 6C 01 00 00 00 00
+			29 00 06 70 01 00 00 00 00
+			29 00 06 34 01 1F 00 00 00
+			29 00 06 10 02 1F 00 00 00
+			29 00 06 04 01 01 00 00 00
+			29 00 06 04 02 01 00 00 00
+			29 00 06 50 04 20 01 F0 03
+			29 00 06 54 04 06 00 32 00
+			29 00 06 58 04 20 03 C8 00
+			29 00 06 5C 04 04 00 04 00
+			29 00 06 60 04 E0 01 14 00
+			29 00 06 64 04 01 00 00 00
+			29 01 06 A0 04 2D 80 44 00
+			29 00 06 A0 04 2D 80 04 00
+			29 00 06 04 05 04 00 00 00
+			29 00 06 80 04 00 01 02 03
+			29 00 06 84 04 04 07 05 08
+			29 00 06 88 04 09 0A 0E 0F
+			29 00 06 8C 04 0B 0C 0D 10
+			29 00 06 90 04 16 17 11 12
+			29 00 06 94 04 13 14 15 1B
+			29 14 06 98 04 18 19 1A 06
+			29 78 06 9C 04 31 00 00 00
+		];
+	};
+};
+
+#endif

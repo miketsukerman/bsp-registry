@@ -61,6 +61,28 @@ registry:
           - adv-mbsp-isar-debian-trixie-rsb3720.yaml
 
     # =====================================
+    # Advantech QCS6490 BSPs
+    # =====================================
+
+    - name: bsp-oeqcom-scarthgap-qcs6490-evk
+      description: "Qualcomm QCS6490 Scarthgap BSP"
+      build:
+        path: build/bsp-oeqcom-scarthgap-qcs6490-evk
+        environment:
+          container: "ubuntu-22.04"
+        configuration:
+          - bsp-oeqcom-scarthgap-qcs6490.yaml
+
+    - name: bsp-oeqcom-scarthgap-aom2721
+      description: "Qualcomm QCS6490 AOM2721 Scarthgap BSP"
+      build:
+        path: build/bsp-oeqcom-scarthgap-aom2721
+        environment:
+          container: "ubuntu-22.04"
+        configuration:
+          - bsp-oeqcom-scarthgap-aom2721.yaml
+
+    # =====================================
     # Mediatek BSPs
     # =====================================
 

@@ -107,21 +107,21 @@ The BSP build system is designed to support a wide range of hardware platforms, 
 
 Table describes in which combinations yocto releases could be used together with boards.
 
-| Board \ Yocto  | walnascar | styhead | scarthgap | mickledore | langdale | kirkstone | Status        |
-| -------------- | :-------: | :-----: | :-------: | :--------: | :------: | :-------: | ------------- |
-| **RSB3720**    |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     🟡     | 🟢 Stable      |
-| **RSB3720 4G** |     ✅     |    ❌    |     ❌     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
-| **RSB3720 6G** |     ✅     |    ❌    |     ❌     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
-| **RSB3730**    |     ❌     |    ❌    |     ❌     |     ✅      |    ❌     |     ❌     | 🟡 Development |
-| **ROM2620**    |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
-| **ROM5720**    |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
-| **ROM5721**    |     ✅     |    ✅    |     ✅     |     ✅      |    ❌     |     ❌     | 🟢 Stable      |
-| **ROM5721 1G** |     ✅     |    ❌    |     ✅     |     ✅      |    ❌     |     ❌     | 🟢 Stable      |
-| **ROM5721 2G** |     ✅     |    ❌    |     ✅     |     ✅      |    ❌     |     ❌     | 🟢 Stable      |
-| **ROM5722**    |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
-| **ROM2820**    |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
-| **AOM5521 A1** |     🟡     |    ❌    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
-| **AOM5521 A2** |     ✅     |    ❌    |     ❌     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
+| Board \ Yocto  | whinlatter | walnascar | styhead | scarthgap | mickledore | langdale | kirkstone | Status        |
+| -------------- | :--------: | :-------: | :-----: | :-------: | :--------: | :------: | :-------: | ------------- |
+| **RSB3720**    |     ✅      |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     🟡     | 🟢 Stable      |
+| **RSB3720 4G** |     ✅      |     ✅     |    ❌    |     ❌     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
+| **RSB3720 6G** |     ✅      |     ✅     |    ❌    |     ❌     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
+| **RSB3730**    |     ❌      |     ❌     |    ❌    |     ❌     |     ✅      |    ❌     |     ❌     | 🟡 Development |
+| **ROM2620**    |     ✅      |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
+| **ROM5720**    |     ✅      |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
+| **ROM5721**    |     ✅      |     ✅     |    ✅    |     ✅     |     ✅      |    ❌     |     ❌     | 🟢 Stable      |
+| **ROM5721 1G** |     ✅      |     ✅     |    ❌    |     ✅     |     ✅      |    ❌     |     ❌     | 🟢 Stable      |
+| **ROM5721 2G** |     ✅      |     ✅     |    ❌    |     ✅     |     ✅      |    ❌     |     ❌     | 🟢 Stable      |
+| **ROM5722**    |     ✅      |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
+| **ROM2820**    |     ✅      |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
+| **AOM5521 A1** |     ❌      |     🟡     |    ❌    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
+| **AOM5521 A2** |     ❌      |     ✅     |    ❌    |     ❌     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
 
 **Status Legend:**
 
@@ -133,17 +133,17 @@ Table describes in which combinations yocto releases could be used together with
 
 | **Hardware**   | **Supported Releases** | **Status** | **Documentation** |
 |----------------|-------------------------|------------|-------------------|
-| **RSB3720**    | walnascar, styhead, scarthgap | 🟢 Stable | [Advantech RSB-3720 Product Page](https://www.advantech.com/en-us/products/5912096e-f242-4b17-993a-1acdcaada6f6/rsb-3720/mod_d2f1b0bc-650b-449a-8ef7-b65ce4f69949) · [User Manual](https://www.manualslib.com/manual/2293645/Advantech-Rsb-3720.html) |
-| **RSB3720 4G** | walnascar | 🟢 Stable | *(Same as RSB3720, variant-specific)* |
-| **RSB3720 6G** | walnascar | 🟢 Stable | *(Same as RSB3720, variant-specific)* |
+| **RSB3720**    | whinlatter, walnascar, styhead, scarthgap | 🟢 Stable | [Advantech RSB-3720 Product Page](https://www.advantech.com/en-us/products/5912096e-f242-4b17-993a-1acdcaada6f6/rsb-3720/mod_d2f1b0bc-650b-449a-8ef7-b65ce4f69949) · [User Manual](https://www.manualslib.com/manual/2293645/Advantech-Rsb-3720.html) |
+| **RSB3720 4G** | whinlatter, walnascar | 🟢 Stable | *(Same as RSB3720, variant-specific)* |
+| **RSB3720 6G** | whinlatter, walnascar | 🟢 Stable | *(Same as RSB3720, variant-specific)* |
 | **RSB3730**    | mickledore | 🟡 Development | [Advantech RSB-3730 Product Page](https://www.advantech.com/en-eu/products/5912096e-f242-4b17-993a-1acdcaada6f6/rsb-3730/mod_5d7887e6-b7e3-427c-8729-b81ac7d89ccd) · [RSB-3730 User Manual (PDF)](https://advdownload.advantech.com/productfile/Downloadfile4/1-2HACYHA/RSB-3730_User_Manual_Eng_yocto%20Ed.1_FINAL.pdf) · [Yocto BSP Guide](https://ess-wiki.advantech.com.tw/view/Yocto_Linux_BSP_Ver.A_User_Guide_for_RSB-3730_series-Yocto_4.2) |
-| **ROM2620**    | walnascar, styhead, scarthgap | 🟢 Stable | [Advantech ROM-2620 Product Page](https://www.advantech.com/en-eu/products/8fc6f753-ca1d-49f9-8676-10d53129570f/rom-2620/mod_294031c8-4a21-4b95-adf2-923c412ef761) |
-| **ROM5720**    | walnascar, styhead, scarthgap | 🟢 Stable | [Advantech ROM-5720 Product Page](https://www.advantech.com/en-eu/products/77b59009-31a9-4751-bee1-45827a844421/rom-5720/mod_4fbfe9fa-f5b2-4ba8-940e-e47585ad0fef) |
-| **ROM5721**    | walnascar, styhead, scarthgap, mickledore | 🟢 Stable | [Advantech ROM-5721 Product Page](https://www.advantech.com/en-eu/products/77b59009-31a9-4751-bee1-45827a844421/rom-5721/mod_271dbc68-878b-486d-85cf-30cc9f1f8f16) |
-| **ROM5721 1G** | walnascar, scarthgap, mickledore | 🟢 Stable | *(Same as ROM5721, variant-specific)* |
-| **ROM5721 2G** | walnascar, scarthgap, mickledore | 🟢 Stable | *(Same as ROM5721, variant-specific)* |
-| **ROM5722**    | walnascar, styhead, scarthgap | 🟢 Stable | [Advantech ROM-5722 Product Page](https://www.advantech.com/en-eu/products/77b59009-31a9-4751-bee1-45827a844421/rom-5722/mod_11aa0c77-868e-4014-8151-ac7a7a1c5c1b) |
-| **ROM2820**    | walnascar, styhead, scarthgap | 🟢 Stable | [Advantech ROM-2820 Product Page](https://www.advantech.com/en-eu/products/8fc6f753-ca1d-49f9-8676-10d53129570f/rom-2820/mod_bb82922e-d3a2-49d7-80ff-dc57f400185e) |
+| **ROM2620**    | whinlatter, walnascar, styhead, scarthgap | 🟢 Stable | [Advantech ROM-2620 Product Page](https://www.advantech.com/en-eu/products/8fc6f753-ca1d-49f9-8676-10d53129570f/rom-2620/mod_294031c8-4a21-4b95-adf2-923c412ef761) |
+| **ROM5720**    | whinlatter, walnascar, styhead, scarthgap | 🟢 Stable | [Advantech ROM-5720 Product Page](https://www.advantech.com/en-eu/products/77b59009-31a9-4751-bee1-45827a844421/rom-5720/mod_4fbfe9fa-f5b2-4ba8-940e-e47585ad0fef) |
+| **ROM5721**    | whinlatter, walnascar, styhead, scarthgap, mickledore | 🟢 Stable | [Advantech ROM-5721 Product Page](https://www.advantech.com/en-eu/products/77b59009-31a9-4751-bee1-45827a844421/rom-5721/mod_271dbc68-878b-486d-85cf-30cc9f1f8f16) |
+| **ROM5721 1G** | whinlatter, walnascar, scarthgap, mickledore | 🟢 Stable | *(Same as ROM5721, variant-specific)* |
+| **ROM5721 2G** | whinlatter, walnascar, scarthgap, mickledore | 🟢 Stable | *(Same as ROM5721, variant-specific)* |
+| **ROM5722**    | whinlatter, walnascar, styhead, scarthgap | 🟢 Stable | [Advantech ROM-5722 Product Page](https://www.advantech.com/en-eu/products/77b59009-31a9-4751-bee1-45827a844421/rom-5722/mod_11aa0c77-868e-4014-8151-ac7a7a1c5c1b) |
+| **ROM2820**    | whinlatter, walnascar, styhead, scarthgap | 🟢 Stable | [Advantech ROM-2820 Product Page](https://www.advantech.com/en-eu/products/8fc6f753-ca1d-49f9-8676-10d53129570f/rom-2820/mod_bb82922e-d3a2-49d7-80ff-dc57f400185e) |
 | **AOM5521 A1** | scarthgap | 🟢 Stable | [Advantech AOM-5521 Product Page](https://www.advantech.com/en-eu/products/77b59009-31a9-4751-bee1-45827a844421/aom-5521/mod_75b36e99-ac3f-4801-8b2b-1706ade1025d) |
 | **AOM5521 A1** | walnascar | 🟡 Development | *(Same as above)* |
 | **AOM5521 A2** | walnascar | 🟢 Stable | *(Same as above)* |
@@ -152,6 +152,7 @@ Table describes in which combinations yocto releases could be used together with
 
 This list below covers the most recent and commonly referenced Yocto releases:
 
+* [Whinlatter (Yocto 5.3)](https://docs.yoctoproject.org/whinlatter/releases.html)  
 * [Walnascar (Yocto 5.2)](https://docs.yoctoproject.org/walnascar/releases.html)  
 * [Styhead (Yocto 5.1)](https://docs.yoctoproject.org/dev/migration-guides/release-5.1.html)  
 * [Scarthgap (Yocto 5.0 LTS)](https://docs.yoctoproject.org/scarthgap/releases.html)  
@@ -197,11 +198,6 @@ The registry includes Isar-based BSP configurations for the following targets:
 ### 2.2.3. Building Isar BSPs
 
 Isar builds require privileged container execution to support Debian package management operations. The registry handles this automatically when using Isar-enabled containers.
-
-**Example: Build RSB3720 with Debian Trixie**
-```bash
-bsp build adv-mbsp-isar-debian-rsb3720
-```
 
 **Example: Build QEMU ARM64 with Debian Trixie**
 ```bash
@@ -257,15 +253,15 @@ The following boards support OTA updates with the indicated technologies and Yoc
 
 | Board | RAUC | SWUpdate | OSTree | Supported Releases |
 |-------|:----:|:--------:|:------:|-------------------|
-| **RSB3720** | ✅ | ✅ | ✅ | walnascar, styhead, scarthgap |
-| **RSB3720-4G** | ✅ | ✅ | ❌ | walnascar |
-| **RSB3720-6G** | ✅ | ✅ | ❌ | walnascar |
-| **ROM2620-ED91** | ✅ | ✅ | ✅ | walnascar, styhead, scarthgap |
-| **ROM2820-ED93** | ✅ | ✅ | ✅ | walnascar, styhead, scarthgap |
-| **ROM5720-DB5901** | ✅ | ✅ | ✅ | walnascar, styhead, scarthgap |
-| **ROM5721-1G-DB5901** | ✅ | ✅ | ✅ | walnascar |
-| **ROM5721-2G-DB5901** | ✅ | ✅ | ✅ | walnascar |
-| **ROM5722-DB2510** | ✅ | ✅ | ✅ | walnascar, styhead, scarthgap |
+| **RSB3720** | ✅ | ✅ | ✅ | whinlatter, walnascar, styhead, scarthgap |
+| **RSB3720-4G** | ✅ | ✅ | ❌ | whinlatter, walnascar |
+| **RSB3720-6G** | ✅ | ✅ | ❌ | whinlatter, walnascar |
+| **ROM2620-ED91** | ✅ | ✅ | ✅ | whinlatter, walnascar, styhead, scarthgap |
+| **ROM2820-ED93** | ✅ | ✅ | ✅ | whinlatter, walnascar, styhead, scarthgap |
+| **ROM5720-DB5901** | ✅ | ✅ | ✅ | whinlatter, walnascar, styhead, scarthgap |
+| **ROM5721-1G-DB5901** | ✅ | ✅ | ✅ | whinlatter, walnascar |
+| **ROM5721-2G-DB5901** | ✅ | ✅ | ✅ | whinlatter, walnascar |
+| **ROM5722-DB2510** | ✅ | ✅ | ✅ | whinlatter, walnascar, styhead, scarthgap |
 
 #### 2.1.2.3. Building Images with OTA Support
 
@@ -616,14 +612,7 @@ export SSTATE_DIR=$HOME/cache/sstate/
 
 # run the build
 # kas build <path-to-kas-yaml-file>
-<<<<<<< Updated upstream
-kas build adv-mbsp-oenxp-walnascar-rsb3720-6g.yaml
-
-# Build RSB3720 4G variant
-kas build adv-mbsp-oenxp-walnascar-rsb3720-4g.yaml
-=======
 kas build kas-configuration.yaml
->>>>>>> Stashed changes
 ```
 
 ### 4.3.1. Building a BSP image using KAS in a container
@@ -642,14 +631,7 @@ Container image should have `kas` tool installed inside and use [scripts/kas/con
 To run build inside a docker container use `kas-container` tool
 
 ```bash
-<<<<<<< Updated upstream
-kas-container build adv-mbsp-oenxp-walnascar-rsb3720-6g.yaml
-
-# Build RSB3720 4G variant
-kas-container build adv-mbsp-oenxp-walnascar-rsb3720-4g.yaml
-=======
 kas-container build kas-configuration.yaml
->>>>>>> Stashed changes
 ```
 
 ### 4.3.2. Bitbake development shell
@@ -657,27 +639,13 @@ kas-container build kas-configuration.yaml
 Using pure `kas` it is possible to enter bitbake shell via command:
 
 ```bash
-<<<<<<< Updated upstream
-kas shell adv-mbsp-oenxp-walnascar-rsb3720-6g.yaml
-
-# Or for RSB3720 4G variant
-kas shell adv-mbsp-oenxp-walnascar-rsb3720-4g.yaml
-=======
 kas shell kas-configuration.yaml
->>>>>>> Stashed changes
 ```
 
 or in a `docker` container using following command:
 
 ```bash
-<<<<<<< Updated upstream
-kas-container shell adv-mbsp-oenxp-walnascar-rsb3720-6g.yaml
-
-# Or for RSB3720 4G variant
-kas-container shell adv-mbsp-oenxp-walnascar-rsb3720-4g.yaml
-=======
 kas-container shell kas-configuration.yaml
->>>>>>> Stashed changes
 ```
 
 ## 4.4. HowTo build a BSP using Repo Tool
@@ -712,14 +680,7 @@ This chapter provides overview of advanced topics working with KAS build configu
 kas tool can dump final configuration in standart output with `kas dump` command
 
 ```bash
-<<<<<<< Updated upstream
-kas dump adv-mbsp-oenxp-walnascar-rsb3720-6g.yaml > final.yaml
-
-# Or for RSB3720 4G variant
-kas dump adv-mbsp-oenxp-walnascar-rsb3720-4g.yaml > final.yaml
-=======
 kas dump kas-configuration-file.yaml > final.yaml
->>>>>>> Stashed changes
 ```
 
 For details check https://kas.readthedocs.io/en/latest/userguide/plugins.html#module-kas.plugins.dump
@@ -742,7 +703,7 @@ header:
   version: 19
   includes:
     - repo: bsp-registry
-      file: adv-mbsp-oenxp-walnascar-rsb3720-6g.yaml
+      file: adv-mbsp-oenxp-whinlatter-rsb3720-6g.yaml
 
 repos:
   this:
@@ -803,7 +764,7 @@ The BSP registry uses patches to fix build issues, add hardware support, and ens
 The repository contains **16 patches** organized into:
 
 * **NXP vendor patches** (12 patches): Address build failures, dependency corrections, and hardware-specific configurations for NXP i.MX platforms
-* **OTA feature patches** (2 patches): Enable OSTree-based over-the-air updates for Styhead and Walnascar releases
+* **OTA feature patches** (2 patches): Enable OSTree-based over-the-air updates for Styhead, Walnascar, and Whinlatter releases
 * **MediaTek vendor patches** (2 patches): Fix recipe and git checkout issues specific to the MediaTek Rity Scarthgap BSP
 
 All patches are documented with:

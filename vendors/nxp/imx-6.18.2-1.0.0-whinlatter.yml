@@ -1,0 +1,124 @@
+header:
+  version: 14
+  includes:
+    - vendors/nxp/common.yml
+    - compilers/clang/clang.yml
+    - features/sbom/timesys.yml
+    - features/browser/browser.yml
+    - features/qt/qt6.9.3.yml
+
+repos:
+  this:
+    layers:
+      .: "disabled"
+
+  openembedded-core:
+    commit: "9964fa3da2fa1e7243fba1a826e59f7bb1813706"
+
+  meta-yocto:
+    commit: "d02d3faaf4d6075ea03e9eb47654ec7639f929a0"
+
+  bitbake:
+    commit: "6e511d035a3d1e4129dab7b0dfbf216bd8e99b47"
+
+  meta-openembedded:
+    commit: "a4e768dcfae181dd99e39c4286fa0729ca7f4e47"
+
+  meta-clang:
+    commit: "cf20f8bd1366d41094c945597b95dd746e87b871"
+
+  meta-arm:
+    commit: "3752c4e4478a6dbdf7a722a261d16ebc7a4a99e5"
+
+  meta-browser:
+    commit: "26ce9f7e67880ffb819c4012e89a8863c5f853ba"
+
+  meta-virtualization:
+    url: "https://git.yoctoproject.org/meta-virtualization"
+    commit: "b9a29d2423407c1e50f19dc3f3e154d164c5f0ec"
+    path: "layers/meta-virtualization"
+    layers:
+      .:
+
+  meta-security:
+    url: "https://git.yoctoproject.org/meta-security"
+    commit: "3b93a09d528fd93995a15c4994de92759b057b15"
+    path: "layers/meta-security"
+    layers:
+      meta-parsec:
+      meta-tpm:
+
+  meta-timesys:
+    commit: "e0ce07084184e33d68058858276a0b9400c0d0c1"
+    branch: "master"
+
+  meta-freescale:
+    url: "https://github.com/Freescale/meta-freescale.git"
+    commit: "2781242e499e601ef9454009aceed16186a48d9e"
+    path: "layers/meta-freescale"
+    layers:
+      .:
+
+  meta-freescale-3rdparty:
+    url: "https://github.com/Freescale/meta-freescale-3rdparty.git"
+    commit: "b2b1987841018013006f909f817a3e9b034c6227"
+    path: "layers/meta-freescale-3rdparty"
+    layers:
+      .:
+
+  meta-freescale-distro:
+    url: "https://github.com/Freescale/meta-freescale-distro.git"
+    commit: "8001652aa3e2c6436c2bfce744e99f398c680858"
+    path: "layers/meta-freescale-distro"
+    layers:
+      .:
+
+  meta-freescale-ml:
+    url: "https://github.com/Freescale/meta-freescale-ml.git"
+    branch: "master"
+    commit: "b364d313706d247fadf12feb68136559d7ff3d52"
+    path: "layers/meta-freescale-ml"
+    layers:
+      .:
+
+  meta-nxp-connectivity:
+    url: "https://github.com/nxp-imx/meta-nxp-connectivity.git"
+    # tag: "refs/tags/rel_imx_6.18.2_1.0.0"
+    branch: "imx_matter_2025_q4-post"
+    commit: "4439026fea59f5f8d530fd9a4dac14504bb613e5"
+    path: "layers/meta-connectivity"
+    layers:
+      meta-nxp-matter-baseline:
+      meta-nxp-openthread:
+
+  meta-nxp-demo-experience:
+    url: "https://github.com/nxp-imx-support/meta-nxp-demo-experience.git"
+    branch: "whinlatter-6.18.2-1.0.0"
+    commit: "45e27d01df4272f29380a4e385962d3fc723428b"
+    path: "layers/meta-nxp-demo-experience"
+    layers:
+      .:
+
+  meta-imx:
+    url: "https://github.com/nxp-imx/meta-imx.git"
+    commit: "06a02a1fc0eec95d0a2a7753e48cedd7e5a56879"
+    # tag: "refs/tags/rel_imx_6.18.2_1.0.0"
+    branch: ""
+    path: "layers/meta-imx"
+    layers:
+      meta-imx-bsp:
+      meta-imx-cockpit:
+      meta-imx-ml:
+      meta-imx-sdk:
+      meta-imx-v2x:
+    patches: 
+      imx95evk-device-name:
+        repo: this
+        path: patches/nxp/whinlatter/0001-fix-device-name-for-imx95-evk.patch
+      alsa-tools-imx9:
+        repo: this
+        path: patches/nxp/walnascar/0010-Add-alsa-tools-to-dependencies-for-imx9.patch
+
+local_conf_header:
+  fsl-imx: | 
+    DISTRO_FEATURES += "opencl ipv6"

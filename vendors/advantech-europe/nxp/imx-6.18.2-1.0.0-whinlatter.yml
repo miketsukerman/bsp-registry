@@ -1,0 +1,11 @@
+header:
+  version: 14
+  includes:
+    - vendors/nxp/imx-6.18.2-1.0.0-whinlatter.yml
+
+repos:
+  meta-modular-bsp-nxp:
+    commit: "9ef7bf04c7373d0edd3a2cc33169cb0804be841e"
+
+  meta-nxp-security-reference-design:
+    branch: "walnascar-6.12.49-2.2.0-adv"

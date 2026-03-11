@@ -739,6 +739,18 @@ registry:
       yocto_version: "5.3"
       includes:
         - yocto/releases/whinlatter.yml
+      vendor_overrides:               
+        - vendor: advantech-europe
+          soc_vendors:
+            - vendor: nxp
+              distro: fsl-imx-xwayland
+              includes:
+                - vendors/advantech-europe/nxp/modular-bsp-nxp.yml
+              releases:  
+                - slug: imx-6.18.2-1.0.0
+                  description: "i.MX8 Release 1.0.0 Yocto 5.3 Kernel 6.18.2"
+                  includes:
+                    - vendors/advantech-europe/nxp/imx-6.18.2-1.0.0-whinlatter.yml
 
     - slug: wrynose
       distro: poky
@@ -998,7 +1010,7 @@ registry:
     - name: modular-bsp-rom2620-ed91
       description: "Advantech ROM-2620 (i.MX8)"
       device: rom2620-ed91
-      releases: [scarthgap, styhead, walnascar]
+      releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6]
       build:
         path: build/modular-bsp-rom2620-ed91
@@ -1008,7 +1020,7 @@ registry:
     - name: modular-bsp-rom2820-ed93
       description: "Advantech ROM-2820 (i.MX9)"
       device: rom2820-ed93
-      releases: [scarthgap, styhead, walnascar]
+      releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6]
       build:
         path: build/modular-bsp-rom2820-ed93
@@ -1113,7 +1125,7 @@ registry:
     - name: modular-bsp-rsb3720
       description: "Advantech RSB-3720 (i.MX8)"
       device: rsb3720
-      releases: [scarthgap, styhead, walnascar]
+      releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6, usrmerge]
       build:
         path: build/modular-bsp-rsb3720
@@ -1121,23 +1133,23 @@ registry:
     - name: modular-bsp-rsb3720-4g
       description: "Advantech RSB-3720 4GB (i.MX8)"
       device: rsb3720-4g
-      releases: [walnascar]
-      features: [systemd, security, virtualization, ipv6, usrmerge]
+      releases: [walnascar, whinlatter]
+      features: [systemd, security, virtualization, ipv6, usrmerge, root-login]
       build:
         path: build/modular-bsp-rsb3720-4g
 
     - name: modular-bsp-rsb3720-6g
       description: "Advantech RSB-3720 6GB (i.MX8)"
       device: rsb3720-6g
-      releases: [walnascar]
-      features: [systemd, security, virtualization, ipv6, usrmerge]
+      releases: [walnascar, whinlatter]
+      features: [systemd, security, virtualization, ipv6, usrmerge, root-login]
       build:
         path: build/modular-bsp-rsb3720-6g
 
     - name: modular-bsp-rauc-rsb3720
       description: "Advantech RSB-3720 6GB (i.MX8) with RAUC support"
       device: rsb3720
-      releases: [scarthgap, styhead, walnascar]
+      releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6, usrmerge, rauc]
       build:
         path: build/modular-bsp-rauc-rsb3720
@@ -1145,7 +1157,7 @@ registry:
     - name: modular-bsp-swupdate-rsb3720
       description: "Advantech RSB-3720 6GB (i.MX8) with SWUpdate support"
       device: rsb3720
-      releases: [scarthgap, styhead, walnascar]
+      releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6, swupdate]
       build:
         path: build/modular-bsp-swupdate-rsb3720
@@ -1153,7 +1165,7 @@ registry:
     - name: modular-bsp-ostree-rsb3720
       description: "Advantech RSB-3720 6GB (i.MX8) with OSTree support"
       device: rsb3720
-      releases: [scarthgap, styhead, walnascar]
+      releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6, ostree]
       build:
         path: build/modular-bsp-ostree-rsb3720
@@ -1163,7 +1175,7 @@ registry:
     - name: modular-bsp-rom5720-db5901
       description: "Advantech ROM-5720 DB5901 (i.MX8)"
       device: rom5720-db5901
-      releases: [scarthgap, styhead, walnascar]
+      releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6]
       build:
         container: "ubuntu-22.04"
@@ -1174,7 +1186,7 @@ registry:
     - name: modular-bsp-rom5721-db5901
       description: "Advantech ROM-5721 DB5901 (i.MX8)"
       device: rom5721-db5901
-      releases: [scarthgap, styhead, walnascar]
+      releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6]
       build:
         container: "ubuntu-22.04"
@@ -1203,7 +1215,7 @@ registry:
     - name: modular-bsp-rom5722-db2510
       description: "Advantech ROM-5722 DB2510 (i.MX8)"
       device: rom5722-db2510
-      releases: [scarthgap, styhead, walnascar]
+      releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6]
       build:
         container: "ubuntu-22.04"

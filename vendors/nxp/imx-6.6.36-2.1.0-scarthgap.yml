@@ -61,4 +61,5 @@ repos:
       meta-imx-v2x:
 
   meta-browser:
+    branch: "master"
     commit: "dc31889c0899971def535dc1c040edf18bc16691"

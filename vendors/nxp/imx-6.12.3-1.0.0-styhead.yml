@@ -13,6 +13,7 @@ repos:
       .: "disabled"
 
   meta-browser:
+    branch: "master"
     commit: "f988d616d37ddf160d3d747ed54d0a66d549f499"
 
   meta-freescale:

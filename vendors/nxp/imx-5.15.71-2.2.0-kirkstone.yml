@@ -9,6 +9,7 @@ header:
 
 repos:
   meta-browser:
+    branch: "master"
     commit: "e232c2e21b96dc092d9af8bea4b3a528e7a46dd6"
 
   meta-freescale:

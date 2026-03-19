@@ -342,22 +342,6 @@ registry:
       includes:
         - vendors/advantech/nxp/machine/imx8/imx8mmrom5721a1-2g.yml
 
-    # --- Advantech RSB3810 ---
-
-    - slug: rsb3810
-      description: "Advantech RSB-3810 (Mediatek)"
-      vendor: advantech-europe
-      soc_vendor: mediatek
-      includes:
-        - vendors/advantech-europe/mediatek/machine/rsb3810.yaml
-
-    - slug: genio-1200-evk
-      description: "Mediatek genio-1200-evk"
-      vendor: mediatek
-      soc_vendor: mediatek
-      includes:
-        - vendors/mediatek/machine/genio-1200-evk.yml
-
     # --- Advantech RSB3720 ---
 
     - slug: imx8mprsb3720a1
@@ -412,6 +396,44 @@ registry:
       soc_vendor: nxp
       includes:
         - vendors/advantech/nxp/machine/imx9/imx95aom5521a2.yml
+
+    # --- Advantech Mediatek Devices ---
+    # --- Advantech RSB3810 ---
+
+    - slug: rsb3810
+      description: "Advantech RSB-3810 (Mediatek)"
+      vendor: advantech-europe
+      soc_vendor: mediatek
+      includes:
+        - vendors/advantech-europe/mediatek/machine/rsb3810.yaml
+
+    # --- Mediatek Devices ---
+
+    - slug: genio-1200-evk
+      description: "Mediatek genio-1200-evk"
+      vendor: mediatek
+      soc_vendor: mediatek
+      includes:
+        - vendors/mediatek/machine/genio-1200-evk.yml
+
+    # --- Advantech Qualcomm Devices ---
+    # --- Advantech AOM2721 ---
+
+    - slug: aom2721
+      description: "Advantech AOM-2721 (Qualcomm)"
+      vendor: advantech-europe
+      soc_vendor: qualcomm
+      includes:
+        - vendors/advantech-europe/qualcomm/machine/aom2721.yaml
+
+    # --- Qualcomm Devices ---
+
+    - slug: qcs6490-rb3gen2-vision-kit
+      description: "Qualcomm QCS6490 RB3 Gen2 Vision Kit"
+      vendor: qualcomm
+      soc_vendor: qualcomm
+      includes:
+        - vendors/qualcomm/machine/qcs6490-rb3gen2-vision-kit.yml
 
   # =====================================
   # Releases
@@ -520,6 +542,13 @@ registry:
               description: "Mediatek RITY v25.0 Scarthgap (Yocto 5.0 LTS Kernel 6.6.23)"
               includes:
                 - vendors/mediatek/mtk-rity-v25.0-scarthgap.yml
+        - vendor: qualcomm
+          distro: 
+          releases:
+            - slug: qcs6490-rb3gen2-vision-kit
+              description: "Qualcomm QCS6490 RB3 Gen2 Vision Kit (Yocto 5.0 LTS Kernel 6.6.97)"
+              includes:
+                - vendors/qualcomm/qcom-6.6.97-qli.1.6-ver.1.2-scarthgap.yml
         - vendor: advantech
           soc_vendors:
             - vendor: nxp
@@ -823,6 +852,16 @@ registry:
         container: "isar-debian-13"
         path: build/isar-qemuarm64
 
+    # --- Qualcomm QCS6490 RB3 Gen2 Vision Kit ---    
+
+    - name: qcs6490-rb3gen2-vision-kit
+      description: "Qualcomm QCS6490 RB3 Gen2 Vision Kit"
+      device: qcs6490-rb3gen2-vision-kit
+      releases: [scarthgap]
+      features: [systemd, security, virtualization, ipv6]
+      build:
+        path: build/qcs6490-rb3gen2-vision-kit
+
     # --- Mediatek Genio 1200 EVK ---    
 
     - name: mediatek-genio-1200-evk
@@ -891,7 +930,7 @@ registry:
       device: imx8mprsb3730a2
       release: mickledore
       vendor_release: imx-6.1.22-2.0.0
-      features: [systemd, debug-tweaks, virtualization, ipv6]
+      features: [systemd, security, debug-tweaks, virtualization, ipv6]
       build:
         container: "ubuntu-20.04"
         build: build/advantech-rsb3730-mickledore
@@ -945,7 +984,7 @@ registry:
       device: rsb3720
       releases: [ros2-humble-scarthgap]
       features: [systemd, security, virtualization, ipv6, usrmerge, x11, wayland]
-      targets: [ros-image-core, ros-image-desktop]
+      targets: [ros-image-core]
       build:
         path: build/modular-ros-bsp-rsb3720
 

@@ -38,6 +38,27 @@ repos:
     layers:
       .:
 
+  meta-security:
+    url: "https://git.yoctoproject.org/meta-security"
+    path: "layers/meta-security"
+    layers:
+      .: "disabled"
+      meta-parsec: "disabled" 
+      meta-tpm: "disabled"
+
+  meta-arm:
+    url: "https://git.yoctoproject.org/meta-arm"
+    path: "layers/meta-arm"
+    layers:
+      meta-arm:
+      meta-arm-toolchain:
+
+  meta-virtualization:
+    url: "https://git.yoctoproject.org/meta-virtualization"
+    path: "layers/meta-virtualization"
+    layers:
+      .: "disabled"
+
 local_conf_header:
   distro: |
     WARN_QA:remove = "license-exists"

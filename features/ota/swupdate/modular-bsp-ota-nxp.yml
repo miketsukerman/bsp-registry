@@ -1,5 +1,6 @@
 header:
   version: 14
+  includes:
     - features/ota/swupdate/common.yml
 
 repos:

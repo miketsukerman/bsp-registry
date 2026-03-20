@@ -9,8 +9,8 @@ repos:
       .:
 
   # INFO: swupdate demo layer
-  meta-swupdate-boards:
-    url: "https://github.com/sbabic/meta-swupdate-boards.git"
-    path: "layers/meta-swupdate-boards"
-    layers:
-      .: "disabled"
+  # meta-swupdate-boards:
+  #   url: "https://github.com/sbabic/meta-swupdate-boards.git"
+  #   path: "layers/meta-swupdate-boards"
+  #   layers:
+  #     .: "disabled"

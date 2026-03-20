@@ -1,7 +1,5 @@
 header:
   version: 14
-  includes:
-    - features/ota/ostree/walnascar.yml
 
 repos:
   meta-modular-bsp-ota:

@@ -741,7 +741,7 @@ registry:
       includes:
         - features/ota/rauc/rauc.yml
       vendor_overrides:               
-        - vendor: advantech
+        - vendor: advantech-europe
           soc_vendors:
             - vendor: nxp
               includes:
@@ -753,7 +753,7 @@ registry:
       includes:
         - features/ota/swupdate/swupdate.yml
       vendor_overrides:               
-        - vendor: advantech
+        - vendor: advantech-europe
           soc_vendors:
             - vendor: nxp
               includes:
@@ -764,8 +764,18 @@ registry:
       compatible_with: [yocto]   # This feature is only compatible with the Yocto framework
       includes:
         - features/ota/ostree/ostree.yml
+      release_overrides:
+        - release: scarthgap
+          includes:
+            - features/ota/ostree/ostree-scarthgap.yml
+        - release: styhead
+          includes:
+            - features/ota/ostree/ostree-styhead.yml
+        - release: walnascar
+          includes:
+            - features/ota/ostree/ostree-walnascar.yml
       vendor_overrides:               
-        - vendor: advantech
+        - vendor: advantech-europe
           soc_vendors:
             - vendor: nxp
               includes:
@@ -1018,7 +1028,7 @@ registry:
       releases: [scarthgap, styhead, walnascar]
       features: [systemd, security, virtualization, ipv6, usrmerge, rauc]
       build:
-        path: build/modular-bsp-rsb3720-6g
+        path: build/modular-bsp-rauc-rsb3720
 
     - name: modular-bsp-swupdate-rsb3720
       description: "Advantech RSB-3720 6GB (i.MX8) with SWUpdate support"
@@ -1026,7 +1036,7 @@ registry:
       releases: [scarthgap, styhead, walnascar]
       features: [systemd, security, virtualization, ipv6, swupdate]
       build:
-        path: build/modular-bsp-rsb3720-6g
+        path: build/modular-bsp-swupdate-rsb3720
 
     - name: modular-bsp-ostree-rsb3720
       description: "Advantech RSB-3720 6GB (i.MX8) with OSTree support"
@@ -1034,7 +1044,7 @@ registry:
       releases: [scarthgap, styhead, walnascar]
       features: [systemd, security, virtualization, ipv6, ostree]
       build:
-        path: build/modular-bsp-rsb3720-6g
+        path: build/modular-bsp-ostree-rsb3720
 
     # --- Advantech Europe Modular BSP ROM-5720 DB5901 ---
 

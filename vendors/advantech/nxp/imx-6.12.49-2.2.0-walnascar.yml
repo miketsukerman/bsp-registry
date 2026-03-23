@@ -7,7 +7,7 @@ repos:
   meta-modular-bsp-nxp:
     url: "https://github.com/Advantech-EECC/meta-modular-bsp-nxp.git"
     branch: "walnascar"
-    commit: "09a3b496cc885d1a2b43cbb8dae3eca069f0eca6"
+    commit: "e859f718fb899d7d6dca903860a0432d169d8725"
     path: "layers/meta-modular-bsp-nxp"
     layers:
       .:

@@ -1,0 +1,140 @@
+#
+# azure-pipelines-all.yml
+#
+# Builds ALL BSP variants defined in the registry using a dynamic matrix.
+# Uses bsp-registry-tools to discover and build variants.
+#
+
+pool:
+  name: aeu.de
+
+trigger: none
+
+jobs:
+  # -----------------------------------------------------------------------------
+  # Job 1: Generate the build matrix by listing all BSPs
+  # -----------------------------------------------------------------------------
+  - job: GenerateMatrix
+    displayName: "Discover BSP Variants"
+    timeoutInMinutes: 10
+    steps:
+      - checkout: self
+        fetchDepth: 1
+        clean: true
+        displayName: 'Checkout repository'
+
+      - script: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install --user bsp-registry-tools
+          echo "##vso[task.prependpath]$HOME/.local/bin"
+          which bsp || true
+          bsp --help || true
+        displayName: "Install bsp-registry-tools and expose bsp on PATH"
+        
+      - task: PythonScript@0
+        displayName: 'Generate Build Matrix'
+        inputs:
+          scriptSource: 'inline'
+          script: |
+            import subprocess
+            import json
+            import re
+            import sys
+
+            print("Listing available BSPs...")
+            try:
+                # Run 'bsp list --no-color' to get the list of variants
+                result = subprocess.run(
+                    ['bsp', '--no-color', 'list'], 
+                    capture_output=True, 
+                    text=True, 
+                    check=True
+                )
+                
+                output = result.stdout
+                bsp_list = []
+                
+                # Parse output lines formatted like "- bsp-name: Description"
+                for line in output.splitlines():
+                    line = line.strip()
+                    if line.startswith("- "):
+                        # Extract name between "- " and ":"
+                        match = re.match(r'- ([^:]+):', line)
+                        if match:
+                            bsp_name = match.group(1).strip()
+                            bsp_list.append(bsp_name)
+                
+                print(f"Found {len(bsp_list)} variants.")
+
+                # Construct Azure DevOps matrix dictionary
+                # Format: { "JobNameSuffix": { "VAR_NAME": "value" }, ... }
+                matrix = {}
+                for bsp in bsp_list:
+                    # Create a safe job name (alphanumeric only)
+                    safe_name = re.sub(r'[^a-zA-Z0-9]', '_', bsp)
+                    matrix[safe_name] = { "BSP_NAME": bsp }
+
+                # Convert to JSON
+                matrix_json = json.dumps(matrix)
+                
+                # Set the output variable 'matrix' for the next job
+                print(f"##vso[task.setvariable variable=matrix;isOutput=true]{matrix_json}")
+                
+            except subprocess.CalledProcessError as e:
+                print(f"Error running bsp list: {e.stderr}")
+                sys.exit(1)
+        name: 'generator'
+
+  # -----------------------------------------------------------------------------
+  # Job 2: Build each BSP variant in parallel
+  # -----------------------------------------------------------------------------
+  - job: BuildBSP
+    displayName: "Build BSP"
+    dependsOn: GenerateMatrix
+    # Use the dynamic matrix output from the generator job
+    strategy:
+      matrix: $[ dependencies.GenerateMatrix.outputs['generator.matrix'] ]
+    
+    timeoutInMinutes: 500 # Adjust based on typical Yocto build times
+    
+    variables:
+      # Map Azure Pipelines variables to environment variables for bsp-registry-tools
+      # The tool supports $ENV{VAR} expansion
+      DL_DIR: "$(Build.SourcesDirectory)/../downloads"
+      SSTATE_DIR: "$(Build.SourcesDirectory)/../sstate-data"
+
+    steps:
+      - checkout: self
+        fetchDepth: 1
+        clean: true
+        displayName: 'Checkout repository'
+
+      - script: |
+          echo "Building Variant: $(BSP_NAME)"
+        displayName: 'Display Variant Info'
+
+      - script: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install --user bsp-registry-tools
+          echo "##vso[task.prependpath]$HOME/.local/bin"
+          which bsp || true
+          bsp --help || true
+        displayName: "Install bsp-registry-tools and expose bsp on PATH"
+
+      # Build the BSP using the tool
+      # Using --local ensures it uses the bsp-registry.yml from the current repo (PR content)
+      - script: |
+          bsp --local build $(BSP_NAME)
+        displayName: 'Run bsp build'
+        env:
+          # Pass required env vars if referenced in bsp-registry.yml environment section
+          DL_DIR: $(DL_DIR)
+          SSTATE_DIR: $(SSTATE_DIR)
+
+      # Optional: Publish artifacts if build produces them in a predictable path
+      # The 'bsp' tool usually outputs to build/<bsp_name>
+      # - task: PublishPipelineArtifact@1
+      #   condition: always()
+      #   inputs:
+      #     targetPath: 'build/$(BSP_NAME)/tmp/deploy/images'
+      #     artifact: 'images-$(BSP_NAME)'

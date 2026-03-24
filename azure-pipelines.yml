@@ -1,9 +1,8 @@
 #
-# azure-pipelines.yml
+# azure-pipelines-all.yml
 #
-# Advantech Modular BSP KAS image builder pipeline
-#
-# Copyright (c) 2023-2026 Advantech Co., Ltd. All rights reserved.
+# Builds ALL BSP variants defined in the registry using a dynamic matrix.
+# Uses bsp-registry-tools to discover and build variants.
 #
 
 pool:
@@ -11,256 +10,131 @@ pool:
 
 trigger: none
 
-resources:
-  repositories:
-  - repository: meta-modular-bsp-ota
-    type: github
-    name: Advantech-EECC/meta-modular-bsp-ota
-    endpoint: adv-github
-
-parameters:
-- name: MACHINE
-  displayName: 'Machine'
-  type: string
-  default: 'rsb3720'
-  values:
-    - 'rom2620-ed91'
-    - 'rom2820-ed93'
-    - 'rsb3720'
-    - 'rom5720-db5901'
-    - 'rom5721-db5901'
-    - 'rom5721-1g-db5901'
-    - 'rom5721-2g-db5901'
-    - 'rom5722-db2510'
-    - 'aom5521a1'
-    - 'aom5521a2'
-    - 'none'
-- name: YOCTO_BRANCH
-  displayName: 'Yocto release'
-  type: string
-  default: 'scarthgap'
-  values:
-    - 'master'         # YX
-    - 'whinlatter'     # Y5.3
-    - 'walnascar'      # Y5.2
-    - 'styhead'        # Y5.1
-    - 'scarthgap'      # Y5.0
-    - 'nanbield'       # Y4.3
-    - 'mickledore'     # Y4.2
-    - 'langdale'       # Y4.1
-    - 'kirkstone'      # Y4.0.28
-- name: usePreProductionRepositories
-  displayName: 'Use pre-production repositories'
-  type: boolean
-  default: true
-- name: includeOTA
-  displayName: 'Include Software Update'
-  type: boolean
-  default: false
-- name: OTA_TYPE
-  displayName: 'Include Software Update'
-  type: string
-  default: 'rauc'
-  values:
-    - 'rauc'       # Use RAUC
-    - 'swupdate'   # Use SWUpdate
-    - 'ostree'     # Use OSTree
-- name: DISTRO
-  displayName: 'NXP Distribution'
-  type: string
-  default: 'fsl-imx-xwayland'
-  values:
-    - 'fsl-imx-xwayland' # Wayland with X11 support
-    - 'fsl-imx-wayland' # Wayland
-    - 'fsl-imx-fb' # framebuffer, not supported for mx8
-- name: includeROS
-  displayName: 'Include ROS2'
-  type: boolean
-  default: false
-- name: ROS_VERSION
-  displayName: 'ROS2 release'
-  type: string
-  default: 'humble'
-  values:
-    - 'kilted'    # ROS2 Kilted
-    - 'jazzy'     # ROS2 Jazzy
-    - 'iron'      # ROS2 Iron
-    - 'rolling'   # ROS2 Rolling
-    - 'humble'    # ROS2 Humble 
-    - 'galactic'  # ROS2 Galactic
-- name: BSP_TYPE
-  displayName: 'BSP type'
-  type: string
-  default: 'mbsp'
-  values:
-    - 'bsp'      # ACL BSP
-    - 'mbsp'     # Modular BSP
-- name: publishBuildArtifacts
-  displayName: "Publish build artifacts"
-  type: boolean
-  default: false
-
 jobs:
+  # -----------------------------------------------------------------------------
+  # Job 1: Generate the build matrix by listing all BSPs
+  # -----------------------------------------------------------------------------
+  - job: GenerateMatrix
+    displayName: "Discover BSP Variants"
+    timeoutInMinutes: 10
+    steps:
+      - checkout: self
+        fetchDepth: 1
+        clean: true
+        displayName: 'Checkout repository'
 
-- job: PRE_CHECKOUT
-  timeoutInMinutes: 10
-  variables:
-     WORKSPACE: "$(Build.SourcesDirectory)/image"
-     WORKSPACE_YOCTO: "$(WORKSPACE)/tmp/yocto"
-  steps:
-  - checkout: self
-    fetchDepth: 1
-    clean: false
-    displayName: 'Pre-checkout (chown-related cleanup)'
-  - bash: |
-       echo "[$(date)] Cleaning previous build artifacts... $PWD [$BUILD_MODE]"
-    displayName: "Cleanup"
+      - script: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install --user bsp-registry-tools
+          echo "##vso[task.prependpath]$HOME/.local/bin"
+          which bsp || true
+          bsp --help || true
+        displayName: "Install bsp-registry-tools and expose bsp on PATH"
+        
+      - task: PythonScript@0
+        displayName: 'Generate Build Matrix'
+        inputs:
+          scriptSource: 'inline'
+          script: |
+            import subprocess
+            import json
+            import re
+            import sys
 
-- job: CHECKOUT
-  dependsOn: PRE_CHECKOUT
-  timeoutInMinutes: 10
-  steps:
-  - checkout: self
-    fetchDepth: 1
-    clean: true
-    displayName: 'Checkout repository'
+            print("Listing available BSPs...")
+            try:
+                # Run 'bsp list --no-color' to get the list of variants
+                result = subprocess.run(
+                    ['bsp', '--no-color', 'list'], 
+                    capture_output=True, 
+                    text=True, 
+                    check=True
+                )
+                
+                output = result.stdout
+                bsp_list = []
+                
+                # Parse output lines formatted like "- bsp-name: Description"
+                for line in output.splitlines():
+                    line = line.strip()
+                    if line.startswith("- "):
+                        # Extract name between "- " and ":"
+                        match = re.match(r'- ([^:]+):', line)
+                        if match:
+                            bsp_name = match.group(1).strip()
+                            bsp_list.append(bsp_name)
+                
+                print(f"Found {len(bsp_list)} variants.")
 
-- job: BUILD_BSP
-  dependsOn: CHECKOUT
-  timeoutInMinutes: 500
-  variables:
-     OTA: ${{ parameters.OTA_TYPE }}
-     ROS: ${{ parameters.ROS_VERSION }}
-     BSP: ${{ parameters.BSP_TYPE }}
-     MACHINE: ${{ parameters.MACHINE }}
-     YOCTO_BRANCH: ${{ parameters.YOCTO_BRANCH }}
-     WORKSPACE: "$(Build.SourcesDirectory)"
-     WORKSPACE_YOCTO: "$(WORKSPACE)"
-     YOCTO_WD: "build-$(BSP)-$(YOCTO_BRANCH)-$(MACHINE)"
-     BUILD_INFO: build_info.txt
-     BUILD_FOLDER: "$(WORKSPACE_YOCTO)/$(YOCTO_WD)"
-     TMP_FOLDER: "$(BUILD_FOLDER)/tmp"
-     IMAGE_FOLDER: "$(TMP_FOLDER)/deploy/images/$(MACHINE)"
-     IMG_LOG: "$(IMAGE_FOLDER)/$(MACHINE)-image-build.log"
-     KAS_BUILD_DIR: "$(BUILD_FOLDER)"
-     KAS_CONTAINER_ENGINE: "docker"
-     KAS_CONTAINER_IMAGE: "kas:latest"
-     DL_DIR: "$(Build.SourcesDirectory)/../downloads/$(YOCTO_BRANCH)"
-     SSTATE_DIR: "$(Build.SourcesDirectory)/../sstate-data/$(YOCTO_BRANCH)"
+                # Construct Azure DevOps matrix dictionary
+                # Format: { "JobNameSuffix": { "VAR_NAME": "value" }, ... }
+                matrix = {}
+                for bsp in bsp_list:
+                    # Create a safe job name (alphanumeric only)
+                    safe_name = re.sub(r'[^a-zA-Z0-9]', '_', bsp)
+                    matrix[safe_name] = { "BSP_NAME": bsp }
 
-  steps:
-  - checkout: none # Done in the previous job, for allowing faster restart/rebuild
-    fetchDepth: 1
-    displayName: 'Checkout repository'
+                # Convert to JSON
+                matrix_json = json.dumps(matrix)
+                
+                # Set the output variable 'matrix' for the next job
+                print(f"##vso[task.setvariable variable=matrix;isOutput=true]{matrix_json}")
+                
+            except subprocess.CalledProcessError as e:
+                print(f"Error running bsp list: {e.stderr}")
+                sys.exit(1)
+        name: 'generator'
 
-  - bash: | # prepare python virtual environment
-      python3 -m venv venv
-      . venv/bin/activate && pip3 install -r requirements.txt
-    name: "init_python_venv"
-  
-  - bash: | # generate initial .config.yml for KAS
-      echo "
-      header:
-        version: 19
-        includes:
-          - adv-${BSP}-oenxp-${YOCTO_BRANCH}-${MACHINE}.yaml" > ${WORKSPACE}/.config.yml
-      cat ${WORKSPACE}/.config.yml
-    name: "initial_kas_config"
+  # -----------------------------------------------------------------------------
+  # Job 2: Build each BSP variant in parallel
+  # -----------------------------------------------------------------------------
+  - job: BuildBSP
+    displayName: "Build BSP"
+    dependsOn: GenerateMatrix
+    # Use the dynamic matrix output from the generator job
+    strategy:
+      matrix: $[ dependencies.GenerateMatrix.outputs['generator.matrix'] ]
+    
+    timeoutInMinutes: 500 # Adjust based on typical Yocto build times
+    
+    variables:
+      # Map Azure Pipelines variables to environment variables for bsp-registry-tools
+      # The tool supports $ENV{VAR} expansion
+      DL_DIR: "$(Build.SourcesDirectory)/../downloads"
+      SSTATE_DIR: "$(Build.SourcesDirectory)/../sstate-data"
 
-  # include ROS configs
-  - ${{ if eq(parameters.includeROS, true) }}:
-    - bash: |
-        echo "    - features/ros2/${ROS}.yml" >> ${WORKSPACE}/.config.yml
-        cat ${WORKSPACE}/.config.yml
-      name: "include_ros"
+    steps:
+      - checkout: self
+        fetchDepth: 1
+        clean: true
+        displayName: 'Checkout repository'
 
-  # include ROS OTA configs
-  - ${{ if eq(parameters.includeOTA, true) }}:
-    - bash: |
-        echo "    - features/ota/${OTA}/adv-ota-${YOCTO_BRANCH}.yml" >> ${WORKSPACE}/.config.yml
-        cat ${WORKSPACE}/.config.yml
-      name: "include_ota"
+      - script: |
+          echo "Building Variant: $(BSP_NAME)"
+        displayName: 'Display Variant Info'
 
-    # override meta-modular-bsp-ota github url to use ssh
-    - bash: |
-        echo "
-        repos:
-          meta-modular-bsp-ota:
-            url: 'git@github.com:Advantech-EECC/meta-modular-bsp-ota.git'
-        " >> ${WORKSPACE}/.config.yml
-        cat ${WORKSPACE}/.config.yml
-      name: "github_private_access"
+      - script: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install --user bsp-registry-tools
+          echo "##vso[task.prependpath]$HOME/.local/bin"
+          which bsp || true
+          bsp --help || true
+        displayName: "Install bsp-registry-tools and expose bsp on PATH"
 
-  # switch to preproduction repositories
-  - ${{ if eq(parameters.usePreProductionRepositories, true) }}:
-    - bash: |
-        echo "
-        repos:
-          meta-modular-bsp-nxp:
-            url: 'git@ssh.dev.azure.com:v3/AdvEECC/EECC_Internal/preprod-meta-modular-bsp-nxp'
+      # Build the BSP using the tool
+      # Using --local ensures it uses the bsp-registry.yml from the current repo (PR content)
+      - script: |
+          bsp --local build $(BSP_NAME)
+        displayName: 'Run bsp build'
+        env:
+          # Pass required env vars if referenced in bsp-registry.yml environment section
+          DL_DIR: $(DL_DIR)
+          SSTATE_DIR: $(SSTATE_DIR)
 
-          meta-modular-bsp-ota:
-            url: 'git@ssh.dev.azure.com:v3/AdvEECC/EECC_Internal/preprod-meta-modular-bsp-ota'
-        " >> ${WORKSPACE}/.config.yml
-        cat ${WORKSPACE}/.config.yml
-      name: "use_preprod_repositories"
-
-  # checkout yocto layers
-  #FIXME: we run kas without docker because of private repositories access issues
-  - bash: |
-      . venv/bin/activate && kas checkout ${WORKSPACE}/.config.yml
-    name: "checkout_yocto_layers"
-
-  # generate final KAS yaml configuration
-  - bash: |
-      . venv/bin/activate && kas-container dump ${WORKSPACE}/.config.yml
-    name: "dump_kas_config"
-
-  # Fetch image dependencies
-  - bash: |
-      . venv/bin/activate && kas-container build ${WORKSPACE}/.config.yml -- --runall=fetch
-    name: "fetch_dependencies"
-    displayName: "Fetch dependencies"
-
-  # build image
-  - bash: |
-      . venv/bin/activate && kas-container build --provenance=mode=max ${WORKSPACE}/.config.yml
-    name: "build_image"
-    displayName: "Build image"
-
-  - ${{ if eq(parameters.publishBuildArtifacts, true) }}:
-    - task: CopyFiles@2
-      displayName: 'Copy files to staging directory. $(IMAGE_FOLDER) -> $(Build.ArtifactStagingDirectory)'
-      inputs:
-        SourceFolder: '$(IMAGE_FOLDER)'
-        Contents: |
-          *.bmap
-          *.bzip2
-          *.txt
-          *.xz
-          *.zip
-          *.zst
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-    - task: PublishPipelineArtifact@0
-      displayName: 'Publish pipeline artifacts'
-      inputs:
-        artifactName: 'drop-$(YOCTO_WD)-$(Build.SourceVersion)-$(Build.BuildId)'
-        targetPath: '$(Build.ArtifactStagingDirectory)'
-
-    - bash: |
-        export AZURE_STORAGE_CONNECTION_STRING="$(AZURE_STORAGE_CONNECTION_STRING)"
-        if ((PRODUCTION)) ; then
-          export AZURE_STORAGE_CONTAINER="$(AZURE_STORAGE_CONTAINER)"
-        else
-          export AZURE_STORAGE_CONTAINER="$(AZURE_STORAGE_CONTAINER_PREPROD)"
-        fi
-
-        if [ "$AZURE_STORAGE_CONNECTION_STRING" = "" ] ; then
-          echo "Variable AZURE_STORAGE_CONNECTION_STRING undefined: skipping"
-          exit 0
-        fi
-
-      name: "upload_build_artifacts"
-
-
+      # Optional: Publish artifacts if build produces them in a predictable path
+      # The 'bsp' tool usually outputs to build/<bsp_name>
+      # - task: PublishPipelineArtifact@1
+      #   condition: always()
+      #   inputs:
+      #     targetPath: 'build/$(BSP_NAME)/tmp/deploy/images'
+      #     artifact: 'images-$(BSP_NAME)'

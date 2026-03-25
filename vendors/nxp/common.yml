@@ -1,6 +1,35 @@
 header:
   version: 14
 
+repos:
+  meta-freescale:
+    url: "https://github.com/Freescale/meta-freescale.git"
+    path: "layers/meta-freescale"
+    layers:
+      .:
+
+  meta-freescale-3rdparty:
+    url: "https://github.com/Freescale/meta-freescale-3rdparty.git"
+    path: "layers/meta-freescale-3rdparty"
+    layers:
+      .:
+
+  meta-freescale-distro:
+    url: "https://github.com/Freescale/meta-freescale-distro.git"
+    path: "layers/meta-freescale-distro"
+    layers:
+      .:
+
+  meta-nxp-demo-experience:
+    url: "https://github.com/nxp-imx-support/meta-nxp-demo-experience.git"
+    path: "layers/meta-nxp-demo-experience"
+    layers:
+      .:
+
+  meta-imx:
+    url: "https://github.com/nxp-imx/meta-imx.git"
+    path: "layers/meta-imx"
+
 local_conf_header:
   nxp: |
     ACCEPT_FSL_EULA = "1"

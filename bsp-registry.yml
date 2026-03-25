@@ -61,6 +61,14 @@ containers:
           value: "ubuntu:22.04"
         - name: "KAS_VERSION"
           value: "5.2"
+  - debian-12:
+      file: Dockerfile.debian
+      image: "advantech/bsp-registry/debian-12/kas:5.2"
+      args:
+        - name: "KAS_VERSION"
+          value: "5.2"
+        - name: "DISTRO" 
+          value: "debian-bookworm"
   - debian-13:
       file: Dockerfile.debian
       image: "advantech/bsp-registry/debian-13/kas:5.2"
@@ -380,6 +388,15 @@ registry:
       soc_vendor: nxp
       includes:
         - vendors/advantech/nxp/machine/imx8/imx8mprsb3730a2-4g.yml
+
+    # --- Advantech ROM2820 A1 ---
+
+    - slug: imx93rom2820a1
+      description: "i.MX93 ROM-2820 A1 (i.MX9)"
+      vendor: advantech
+      soc_vendor: nxp
+      includes:
+        - vendors/advantech/nxp/machine/imx9/imx93rom2820a1.yml
 
     # --- Advantech AOM5521 ---
 
@@ -805,10 +822,10 @@ registry:
     - name: poky-harden-qemux86-64-scarthgap
       description: "Poky Hardened QEMU x86-64 Scarthgap (Yocto 5.0 LTS)"
       device: qemux86-64
-      release: scarthgap-harden
+      release: poky-harden
       features: [systemd, yocto-ssh, security]
       build:
-        container: "debian-bookworm"
+        container: "debian-12"
         path: build/poky-harden-qemux86-64-scarthgap
 
     - name: poky-qemux86-64
@@ -829,7 +846,7 @@ registry:
       release: styhead
       features: [systemd]
       build:
-        container: "debian-bookworm"
+        container: "debian-12"
         path: build/poky-qemux86-64-styhead
 
     # --- QEMU ARM (32-bit) ---
@@ -839,7 +856,7 @@ registry:
       release: scarthgap
       features: [systemd]
       build:
-        container: "debian-bookworm"
+        container: "debian-12"
         path: build/poky-qemuarm-scarthgap
 
     # --- QEMU Debian / Ubuntu
@@ -932,6 +949,18 @@ registry:
       build:
         container: "ubuntu-20.04"
         path: build/advantech-rom5721-db5901-2g-mickledore
+
+    # --- Advantech RSB-3730 ---
+
+    - name: advantech-rom2820-a1-mickledore
+      description: "Advantech ROM-2820 A1 (i.MX9) Mickledore (Yocto 4.2)"
+      device: imx93rom2820a1
+      release: mickledore
+      vendor_release: imx-6.6.36-2.1.0
+      features: [systemd, security, debug-tweaks, virtualization, ipv6]
+      build:
+        container: "ubuntu-20.04"
+        build: build/advantech-rom2820-a1-mickledore
 
     # --- Advantech RSB-3730 ---
 

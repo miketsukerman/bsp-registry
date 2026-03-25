@@ -1,0 +1,50 @@
+header:
+  version: 14
+  includes:
+    - vendors/nxp/imx-6.1.36-2.1.0-mickledore.yml
+
+repos:
+  meta-advantech2:
+    branch: "aim36-mickledore2"
+    commit: "058663a0cd88ed344f2fd046302c5f6efb542690"
+
+  poky:
+    commit: "0a98281d37b0bd8dc1548c390216cb3978e36e0e"
+
+  meta-clang:
+    commit: "af4dcba009ba98250315520f3003fde4ee164cce"
+
+  meta-security:
+    commit: "d7db0a3bd1a8639df7570483f003ce00cbe274a2"
+
+  meta-virtualization:
+    commit: "56593e277a377157944a6676e57497066b770a35"
+
+  meta-timesys:
+    branch: "master"
+    commit: "a0c1f045016fd54406888f3750c1355188ffed63"
+
+  meta-openembedded:
+    commit: "75cf318cef3b4ee81fad2782cf063ecd69ba8842"
+
+  meta-qt6:
+    tag: "v6.5.0"
+    branch: ""
+    commit: "1406d0a85525a71fe5d7892d7f915404290a78ad"
+
+  meta-nxp-demo-experience:
+    branch: "mickledore-6.1.36-2.1.0"
+    commit: "7f34a32c7877e55e87b6a99e90da4128ed632bf2"
+
+  meta-imx:
+    commit: "6efe87f014c5bdcbda30f06156ee11d8bc3dc7fe"
+
+  meta-browser:
+    commit: "e232c2e21b96dc092d9af8bea4b3a528e7a46dd6"
+
+  meta-arm:
+    commit: "0e043288fd0b17fbf31cf00ae33045107a991144"
+
+local_conf_header:
+  acl-bsp: |
+    DISTRO_FEATURES:append = " pulseaudio bluetooth"

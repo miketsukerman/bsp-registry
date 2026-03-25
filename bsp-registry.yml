@@ -536,6 +536,10 @@ registry:
                   description: "i.MX8 Release 2.0.0 Yocto 4.2 Kernel 6.1.22"
                   includes:
                     - vendors/advantech/nxp/imx-6.1.22-2.0.0-mickledore.yml
+                - slug: imx-6.1.36-2.1.0
+                  description: "i.MX9 Release 2.1.0 Yocto 4.2 Kernel 6.1.36"
+                  includes:
+                    - vendors/advantech/nxp/imx-6.1.36-2.1.0-mickledore.yml
 
     - slug: nanbield
       distro: poky

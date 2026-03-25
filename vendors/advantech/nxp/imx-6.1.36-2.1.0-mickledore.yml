@@ -18,6 +18,7 @@ repos:
     commit: "d7db0a3bd1a8639df7570483f003ce00cbe274a2"
 
   meta-virtualization:
+    branch: "master"
     commit: "56593e277a377157944a6676e57497066b770a35"
 
   meta-timesys:
@@ -43,6 +44,7 @@ repos:
     commit: "e232c2e21b96dc092d9af8bea4b3a528e7a46dd6"
 
   meta-arm:
+    branch: "master"
     commit: "0e043288fd0b17fbf31cf00ae33045107a991144"
 
 local_conf_header:

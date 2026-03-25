@@ -960,11 +960,11 @@ registry:
       description: "Advantech ROM-2820 A1 (i.MX9) Mickledore (Yocto 4.2)"
       device: imx93rom2820a1
       release: mickledore
-      vendor_release: imx-6.6.36-2.1.0
+      vendor_release: imx-6.1.36-2.1.0
       features: [systemd, security, debug-tweaks, virtualization, ipv6]
       build:
         container: "ubuntu-20.04"
-        build: build/advantech-rom2820-a1-mickledore
+        path: build/advantech-rom2820-a1-mickledore
 
     # --- Advantech RSB-3730 ---
 

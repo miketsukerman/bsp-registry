@@ -5,7 +5,7 @@ header:
 
 repos:
   meta-modular-bsp-nxp:
-    commit: "09a3b496cc885d1a2b43cbb8dae3eca069f0eca6"
+    commit: "e859f718fb899d7d6dca903860a0432d169d8725"
 
   meta-nxp-security-reference-design:
     branch: "walnascar-6.12.49-2.2.0-adv"

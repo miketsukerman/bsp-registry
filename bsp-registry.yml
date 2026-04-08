@@ -936,7 +936,7 @@ registry:
       description: "Advantech ROM-5721 DB5901 (i.MX8) Mickledore (Yocto 4.2)"
       device: imx8mmrom5721a1-1g
       release: mickledore
-      features: [systemd, debug-tweaks, virtualization, ipv6]
+      features: [systemd, debug-tweaks, virtualization, ipv6, security]
       build:
         container: "ubuntu-20.04"
         path: build/advantech-rom5721-db5901-1g-mickledore
@@ -945,18 +945,18 @@ registry:
       description: "Advantech ROM-5721 DB5901 (i.MX8) Mickledore (Yocto 4.2)"
       device: imx8mmrom5721a1-2g
       release: mickledore
-      features: [systemd, debug-tweaks, virtualization, ipv6]
+      features: [systemd, debug-tweaks, virtualization, ipv6, security]
       build:
         container: "ubuntu-20.04"
         path: build/advantech-rom5721-db5901-2g-mickledore
 
-    # --- Advantech RSB-3730 ---
+    # --- Advantech ROM-2820 A1 ---
 
     - name: advantech-rom2820-a1-mickledore
       description: "Advantech ROM-2820 A1 (i.MX9) Mickledore (Yocto 4.2)"
       device: imx93rom2820a1
       release: mickledore
-      vendor_release: imx-6.6.36-2.1.0
+      vendor_release: imx-6.1.22-2.0.0
       features: [systemd, security, debug-tweaks, virtualization, ipv6]
       build:
         container: "ubuntu-20.04"

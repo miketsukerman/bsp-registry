@@ -822,8 +822,8 @@ registry:
     - name: poky-harden-qemux86-64-scarthgap
       description: "Poky Hardened QEMU x86-64 Scarthgap (Yocto 5.0 LTS)"
       device: qemux86-64
-      release: poky-harden
-      features: [systemd, yocto-ssh, security]
+      release: scarthgap
+      features: [systemd, yocto-ssh, security, usrmerge]
       build:
         container: "debian-12"
         path: build/poky-harden-qemux86-64-scarthgap

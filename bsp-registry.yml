@@ -588,6 +588,10 @@ registry:
               includes:
                 - vendors/advantech-europe/nxp/modular-bsp-nxp.yml
               releases:  
+                - slug: imx-6.6.52-2.2.2
+                  description: "i.MX8 Release 2.2.2 Yocto 5.0 LTS Kernel 6.6.52"
+                  includes:
+                    - vendors/advantech-europe/nxp/imx-6.6.52-2.2.2-scarthgap.yml
                 - slug: imx-6.6.52-2.2.0
                   description: "i.MX8 Release 2.2.0 Yocto 5.0 LTS Kernel 6.6.52"
                   includes:

@@ -1,0 +1,9 @@
+header:
+  version: 14
+  includes:
+    - vendors/nxp/imx-6.6.52-2.2.0-scarthgap.yml
+
+repos:
+  meta-imx:
+    branch: "scarthgap-6.6.52-2.2.2"
+    commit: "e1ec1a20d573e3913f4ad90fa36546ed2bc87715"

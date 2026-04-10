@@ -607,14 +607,23 @@ To assemble BSP images using KAS tool following commands can be used
 source venv/bin/activate
 
 # add proper KAS configuration variables to your environment
-source .env
+export KAS_CONTAINER_ENGINE=docker
+export KAS_CONTAINER_IMAGE=advantech/bsp-registry/ubuntu:22.04
+export GITCONFIG_FILE=$HOME/.gitconfig
+export DL_DIR=$HOME/cache/downloads/
+export SSTATE_DIR=$HOME/cache/sstate/
+ 
 
 # run the build
 # kas build <path-to-kas-yaml-file>
+<<<<<<< Updated upstream
 kas build adv-mbsp-oenxp-walnascar-rsb3720-6g.yaml
 
 # Build RSB3720 4G variant
 kas build adv-mbsp-oenxp-walnascar-rsb3720-4g.yaml
+=======
+kas build kas-configuration.yaml
+>>>>>>> Stashed changes
 ```
 
 ### 4.3.1. Building a BSP image using KAS in a container
@@ -633,10 +642,14 @@ Container image should have `kas` tool installed inside and use [scripts/kas/con
 To run build inside a docker container use `kas-container` tool
 
 ```bash
+<<<<<<< Updated upstream
 kas-container build adv-mbsp-oenxp-walnascar-rsb3720-6g.yaml
 
 # Build RSB3720 4G variant
 kas-container build adv-mbsp-oenxp-walnascar-rsb3720-4g.yaml
+=======
+kas-container build kas-configuration.yaml
+>>>>>>> Stashed changes
 ```
 
 ### 4.3.2. Bitbake development shell
@@ -644,19 +657,27 @@ kas-container build adv-mbsp-oenxp-walnascar-rsb3720-4g.yaml
 Using pure `kas` it is possible to enter bitbake shell via command:
 
 ```bash
+<<<<<<< Updated upstream
 kas shell adv-mbsp-oenxp-walnascar-rsb3720-6g.yaml
 
 # Or for RSB3720 4G variant
 kas shell adv-mbsp-oenxp-walnascar-rsb3720-4g.yaml
+=======
+kas shell kas-configuration.yaml
+>>>>>>> Stashed changes
 ```
 
 or in a `docker` container using following command:
 
 ```bash
+<<<<<<< Updated upstream
 kas-container shell adv-mbsp-oenxp-walnascar-rsb3720-6g.yaml
 
 # Or for RSB3720 4G variant
 kas-container shell adv-mbsp-oenxp-walnascar-rsb3720-4g.yaml
+=======
+kas-container shell kas-configuration.yaml
+>>>>>>> Stashed changes
 ```
 
 ## 4.4. HowTo build a BSP using Repo Tool
@@ -691,10 +712,14 @@ This chapter provides overview of advanced topics working with KAS build configu
 kas tool can dump final configuration in standart output with `kas dump` command
 
 ```bash
+<<<<<<< Updated upstream
 kas dump adv-mbsp-oenxp-walnascar-rsb3720-6g.yaml > final.yaml
 
 # Or for RSB3720 4G variant
 kas dump adv-mbsp-oenxp-walnascar-rsb3720-4g.yaml > final.yaml
+=======
+kas dump kas-configuration-file.yaml > final.yaml
+>>>>>>> Stashed changes
 ```
 
 For details check https://kas.readthedocs.io/en/latest/userguide/plugins.html#module-kas.plugins.dump

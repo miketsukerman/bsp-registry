@@ -50,11 +50,6 @@ The registry supports two build systems:
       - [4.1.2. Setting up Docker engine](#412-setting-up-docker-engine)
       - [4.1.2.1. Docker `buildx`](#4121-docker-buildx)
   - [4.2. Building BSP](#42-building-bsp)
-    - [4.2.1. Setup build environment](#421-setup-build-environment)
-    - [4.2.2. Overview of shortcuts available in Justfile](#422-overview-of-shortcuts-available-in-justfile)
-    - [4.2.3. Running BSP build](#423-running-bsp-build)
-    - [4.2.4. Running Modular BSP build](#424-running-modular-bsp-build)
-    - [4.2.5. Bitbake development shell](#425-bitbake-development-shell)
   - [4.3. HowTo build a BSP using KAS](#43-howto-build-a-bsp-using-kas)
     - [4.3.1. Building a BSP image using KAS in a container](#431-building-a-bsp-image-using-kas-in-a-container)
     - [4.3.2. Bitbake development shell](#432-bitbake-development-shell)
@@ -80,9 +75,9 @@ The build system follows a layered architecture that ensures reproducibility, is
 ┌─────────────────────────────────────────┐
 │         BSP Registry Manager            │  # BSP management and container orchestration
 ├─────────────────────────────────────────┤
-│            Justfile Recipes             │  # User-facing commands
+│         BSP Registry Configuration      │  # BSP Registry model definition
 ├─────────────────────────────────────────┤
-│          KAS Configuration Files        │  # Build definitions
+│         KAS Configuration Files         │  # Build definitions
 ├─────────────────────────────────────────┤
 │         Docker Container Engine         │  # Isolated build environment
 ├─────────────────────────────────────────┤
@@ -97,7 +92,6 @@ The build system follows a layered architecture that ensures reproducibility, is
 | Layer | Purpose | Key Components |
 |-------|---------|----------------|
 | **BSP Registry Manager** | BSP management and container orchestration | `bsp` CLI tool (`bsp-registry-tools` package), YAML configuration, container definitions |
-| **Justfile Recipes** | User-friendly command interface | `just bsp`, `just mbsp`, `just ota-mbsp` commands |
 | **KAS Configuration Files** | Build definitions and dependencies | YAML configs for boards, distros, and features |
 | **Docker Container Engine** | Isolated build environment | Consistent toolchains, isolated dependencies |
 | **Yocto Project / Isar Build System** | Core build systems | Yocto: BitBake, OpenEmbedded, meta-layers; Isar: apt, dpkg, Debian packages |
@@ -275,33 +269,17 @@ The following boards support OTA updates with the indicated technologies and Yoc
 
 #### 2.1.2.3. Building Images with OTA Support
 
-To build a BSP image with OTA support, use the `just ota-mbsp` command:
-
-```bash
-# Build with RAUC OTA support
-just ota-mbsp rsb3720 rauc walnascar
-
-# Build with RAUC OTA support for RSB3720 4G variant
-just ota-mbsp rsb3720-4g rauc walnascar
-
-# Build with SWUpdate OTA support
-just ota-mbsp rsb3720 swupdate scarthgap
-
-# Build with OSTree OTA support
-just ota-mbsp rom5722-db2510 ostree styhead
-```
-
-Alternatively, you can use the `bsp` CLI tool directly:
+To build a BSP image with OTA support, use the `bsp` command:
 
 ```bash
 # List all available OTA configurations
-bsp list | grep ota
+bsp list | grep rauc
 
-# Build a specific OTA configuration
-bsp build adv-ota-mbsp-oenxp-rauc-walnascar-rsb3720-6g
+# Build RSB3720 6G variant with RAUC support
+bsp build modular-bsp-rauc-rsb3720-6g-walnascar
 
-# Build RSB3720 4G variant with RAUC OTA support
-bsp build adv-ota-mbsp-oenxp-rauc-walnascar-rsb3720-4g
+# Build RSB3720 6G variant with SWUpdate support
+bsp build modular-bsp-swupdate-rsb3720-styhead
 ```
 
 ## 2.3. MediaTek Boards Compatibility Matrix
@@ -330,16 +308,13 @@ set. For detailed configuration, see the [MediaTek vendor README](vendors/mediat
 
 ```bash
 # List available MediaTek BSPs
-bsp list | grep -i oemtk
+bsp list | grep -i mediatek
 
 # Build MediaTek Genio 1200 EVK (scarthgap)
-bsp build oemtk-scarthgap-genio-1200-evk
+bsp build mediatek-genio-1200-evk-scarthgap
 
 # Build Advantech RSB-3810 (scarthgap)
-bsp build adv-mbsp-oemtk-scarthgap-rsb3810
-
-# Or use the Justfile shortcut for RSB-3810
-just mtk-bsp rsb3810 scarthgap
+bsp build modular-bsp-rsb3810-scarthgap:
 ```
 
 ---
@@ -370,15 +345,11 @@ the [Advantech Qualcomm overlay README](vendors/advantech/qualcomm/README.md).
 
 ```bash
 # List available Qualcomm BSPs
-python bsp.py list | grep -i qcom
+bsp list | grep -i qcs
 
 # Build Qualcomm QCS6490 RB3gen2 EVK (scarthgap)
-python bsp.py build bsp-oeqcom-scarthgap-qcs6490-evk
-
-# Or use the Justfile shortcut
-just qcom-bsp qcs6490-rb3gen2-vision-kit scarthgap
+bsp build qcs6490-rb3gen2-vision-kit-scarthgap
 ```
-
 ---
 
 # 3. BSP Registry Manager
@@ -566,7 +537,6 @@ The host system must provide essential tools and libraries required for building
 * `pip` package manager is available
 * Docker
 * Git
-* Just
 
 The build have been tested on the following host systems: `Ubuntu 22.04`, `Ubuntu 24.04`
 
@@ -627,119 +597,6 @@ To download `buildx` binary for your host system use link below:
 Building a Board Support Package (BSP) combining Yocto, KAS, and Docker. Yocto provides the framework for creating custom Linux distributions tailored to specific hardware platforms. KAS simplifies the process by managing layered build configurations through YAML files, ensuring reproducibility and modularity. Docker adds portability by encapsulating the build environment, eliminating host system inconsistencies and making it easy to run builds across different machines.
 
 Together, these tools enable developers to assemble BSP images in a consistent, automated, and scalable way. By defining configurations in KAS, leveraging Yocto recipes, and running builds inside Docker containers, teams can ensure reliable results while reducing setup complexity and dependency issues.
-
-### 4.2.1. Setup build environment
-
-To prepare build environment for the [KAS](https://kas.readthedocs.io/en/latest/) build tool, [Just](https://just.systems/man/en/functions.html#environment-variables) scripts use `.env` file in the root directory of current repository. `.env` file contains a set of typical environment variables used by `kas` tool. 
-
-**Example `.env` file:**
-
-```bash
-KAS_WORKDIR=<path-to>/modular-bsp-build
-KAS_CONTAINER_ENGINE=docker
-KAS_CONTAINER_IMAGE=advantech/bsp-registry/ubuntu:20.04
-GITCONFIG_FILE=<path-to>/.gitconfig
-DL_DIR=<path-to>/data/cache/downloads/
-SSTATE_DIR=<path-to>/data/cache/sstate/
-```
-
-is populated automatically by `just env` rule. 
-
-Path to the `.gitconfig` file can be adjusted
-
-```bash
-GITCONFIG_FILE=<absolute-path>/.gitconfig
-```
-
-and paths to the yocto cache
-
-```bash
-DL_DIR=<absolute-path>/cache/downloads/
-SSTATE_DIR=<absolute-path>/cache/sstate/ 
-```
-
-in the `Justfile`.
-
-### 4.2.2. Overview of shortcuts available in Justfile
-
-```bash
-Available recipes:
-    help                                           # Print available commands
-
-    [docker]
-    env distro="debian:12"                         # Populate .env file
-    docker-debian distro="debian:12"               # Build official KAS Docker image based on Debian Linux
-    docker-ubuntu distro="ubuntu:20.04" kas="4.7"  # Build KAS Docker image based on Ubuntu Linux
-
-    [yocto]
-    yocto action="build" bsp="mbsp" machine="rsb3720" version="walnascar" docker="ubuntu:22.04" kas="5.0" args="" # Build a Yocto BSP for a specified machine
-    walnascar bsp="mbsp" machine="rsb3720"         # Build Yocto Walnascar BSP for a specified machine
-    styhead bsp="mbsp" machine="rsb3720"           # Build Yocto Styhead BSP for a specified machine
-    scarthgap bsp="mbsp" machine="rsb3720"         # Build Yocto Scathgap BSP for a specified machine
-    mickledore bsp="bsp" machine="rsb3730"         # Build Yocto Mickledore BSP for a specified machine
-    kirkstone bsp="bsp" machine="rsb3720"          # Build Yocto Kirkstone BSP for a specified machine
-
-    [bsp]
-    bsp machine="rsb3720" yocto="scarthgap" docker="ubuntu:22.04" kas="5.0" # Build BSP for a specified machine
-    bsp-shell machine="rsb3720" yocto="scarthgap" docker="ubuntu:22.04" kas="5.0" # Enter a BSP build environment shell for a machine
-
-    [mbsp]
-    mbsp machine="rsb3720" yocto="walnascar"       # Build Modular BSP for a specified machine
-    mbsp-shell machine="rsb3720" yocto="walnascar" # Enter a "Modular BSP" build environment shell for a machine
-
-    [ota]
-    ota-mbsp machine="rsb3720" ota="rauc" yocto="walnascar" # Build Modular BSP with OTA support for a specified machine
-    ota-shell machine="rsb3720" ota="rauc" yocto="walnascar" # Enter a "Modular BSP" build environment shell with OTA support for a machine
-
-    [ros]
-    ros-mbsp machine="rsb3720" ros="humble" yocto="walnascar" # Enter a "Modular BSP" build environment shell for a machine
-    ros-shell machine="rsb3720" ros="humble" yocto="walnascar" # Enter a "Modular BSP" build environment shell with ROS support for a machine
-
-    [mtk]
-    mtk-bsp machine="rsb3810" yocto="scarthgap" docker="ubuntu:22.04" kas="5.2" # Build Mediatek BSP for a specified machine
-```
-
-### 4.2.3. Running BSP build
-
-Use command below to build basic BSP image
-
-```bash
-# just bsp {{board name}} {{yocto release}}
-just bsp rsb3720 scarthgap
-```
-
-### 4.2.4. Running Modular BSP build
-
-BSP registry repository contains a Justfile with shortcuts to simplify assembling of BSP images. 
-To build a BSP image for a specific Yocto release use command below:
-
-```bash
-# just mbsp {{board name}} {{yocto release}}
-just mbsp rsb3720 scarthgap
-```
-
-Use command below to build i.MX images with OTA support
-
-```bash
-# just ota-mbsp {{board name}} {{ota}} {{yocto release}}
-just ota-mbsp rsb3720 rauc scarthgap
-```
-
-Use command below to build i.MX images with ROS2 support
-
-```bash
-# just ros-mbsp {{board name}} {{ros}} {{yocto release}}
-just ros-mbsp rsb3720 humble scarthgap
-```
-
-### 4.2.5. Bitbake development shell
-
-To enter a docker container shell initialized with yocto bitbake environment run a `just` shortcut:
-
-```bash
-# just mbsp {{board name}} {{yocto release}}
-just mbsp-shell rsb3720 scarthgap
-```
 
 ## 4.3. HowTo build a BSP using KAS
 

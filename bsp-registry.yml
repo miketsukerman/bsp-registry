@@ -1,6 +1,22 @@
 specification:
   version: "2.0"
 
+deploy:
+  provider: azure                                   # "azure" (default) or "aws"
+  account_url: $ENV{AZURE_STORAGE_ACCOUNT_URL}      # Azure only; supports $ENV{} expansion
+  container: bsp-registry-artifacts                 # Azure container name
+  prefix: "{vendor}/{device}/{release}/{date}"      # remote path prefix template
+  patterns:                                         # glob patterns for files to upload
+    - "**/*.wic.gz"
+    - "**/*.wic.bz2"
+    - "**/*.tar.bz2"
+    - "**/*.ext4"
+    - "**/*.sdimg"
+  artifact_dirs:                                    # subdirs under build_path to search
+    - tmp/deploy/images
+    - tmp/deploy/sdk
+  include_manifest: true                            # upload a JSON manifest of all artifacts
+
 # Global environment variables for all builds (base layer – applied to every build)
 # Use $ENV{VAR_NAME} syntax to reference system environment variables
 environment:

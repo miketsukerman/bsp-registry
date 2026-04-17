@@ -12,10 +12,24 @@ deploy:
     - "**/*.tar.bz2"
     - "**/*.ext4"
     - "**/*.sdimg"
+    - "**/*.img"
+    - "**/*.bin"
+    - "**/*.zip"
+    - "**/bzImage"
+    - "**/uImage"
   artifact_dirs:                                    # subdirs under build_path to search
-    - tmp/deploy/images
-    - tmp/deploy/sdk
+    - build/tmp/deploy/images
+    - build/tmp/deploy/sdk
   include_manifest: true                            # upload a JSON manifest of all artifacts
+
+# Registry-level LAVA connection settings
+lava:
+  server: "$ENV{LAVA_SERVER}"                            # e.g. https://lava.example.com
+  token: "$ENV{LAVA_TOKEN}"                              # LAVA API authentication token
+  username: "$ENV{LAVA_USER}"                            # LAVA username (optional)
+  artifact_server_url: "$ENV{LAVA_ARTIFACT_SERVER_URL}"  # Base URL where LAVA serves build artifacts (optional)
+  wait_timeout: 3600                                     # max seconds to wait for a job (default: 1 h)
+  poll_interval: 30                                      # polling interval in seconds
 
 # Global environment variables for all builds (base layer – applied to every build)
 # Use $ENV{VAR_NAME} syntax to reference system environment variables
@@ -27,31 +41,7 @@ environment:
       value: "$ENV{HOME}/data/cache/downloads"
     - name: "SSTATE_DIR"
       value: "$ENV{HOME}/data/cache/sstate"
-
-# Named environments: each entry bundles a container reference + variables.
-# The special name "default" is used for any release that does not specify an environment.
-# A release can override by setting its "environment:" field to a different name.
-environments:
-  default:
-    container: ubuntu-22.04
-  ubuntu-24.04:
-    container: ubuntu-24.04
-  ubuntu-20.04:
-    container: ubuntu-20.04
-  debian-13:
-    container: debian-13
-  isar-debian-13:
-    container: isar-debian-13
-    # Copy the QEMU run script into every Isar build directory
-    copy:
-      - isar/scripts/isar-runqemu.sh: build/
-    variables:
-      - name: "DL_DIR"
-        value: "$ENV{HOME}/data/isar/cache/downloads"
-      - name: "SSTATE_DIR"
-        value: "$ENV{HOME}/data/isar/cache/sstate"
   
-
 containers:
   - ubuntu-20.04:
       file: Dockerfile.ubuntu
@@ -152,11 +142,11 @@ registry:
       vendor: "Ilbers GmbH"
       includes:
         - isar/isar.yaml
+        - isar/common.yaml
 
   # =====================================
   # Distributions
   # =====================================
-
   distro:
     
     - slug: poky
@@ -254,6 +244,7 @@ registry:
       description: "QEMU ARM64 (emulated)"
       vendor: qemu
       soc_vendor: arm
+      architecture: aarch64
       includes:
         - vendors/qemu/machine/qemuarm64.yaml
 
@@ -261,6 +252,7 @@ registry:
       description: "QEMU ARM (32-bit, emulated)"
       vendor: qemu
       soc_vendor: arm
+      architecture: arm
       includes:
         - vendors/qemu/machine/qemuarm.yaml
 
@@ -268,6 +260,7 @@ registry:
       description: "QEMU x86 (emulated)"
       vendor: qemu
       soc_vendor: intel
+      architecture: x86
       includes:
         - vendors/qemu/machine/qemux86.yaml
   
@@ -275,6 +268,7 @@ registry:
       description: "QEMU x86-64 (emulated)"
       vendor: qemu
       soc_vendor: intel
+      architecture: amd64
       includes:
         - vendors/qemu/machine/qemux86-64.yaml
 
@@ -282,6 +276,7 @@ registry:
       description: "QEMU x86-64 (emulated)"
       vendor: qemu
       soc_vendor: intel
+      architecture: amd64
       includes:
         - vendors/qemu/machine/qemuamd64.yaml
 
@@ -291,6 +286,7 @@ registry:
       description: "Advantech ROM-2620 (i.MX8)"
       vendor: advantech-europe
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech-europe/nxp/machine/imx8/rom2620-ed91.yml
 
@@ -298,6 +294,7 @@ registry:
       description: "Advantech ROM-2820 (i.MX9)"
       vendor: advantech-europe
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech-europe/nxp/machine/imx9/rom2820-ed93.yml
 
@@ -305,6 +302,7 @@ registry:
       description: "Advantech AOM-5521 (i.MX95)"
       vendor: advantech-europe
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech-europe/nxp/machine/imx9/aom5521-db2510.yml
 
@@ -312,6 +310,7 @@ registry:
       description: "Advantech ROM-5720 (i.MX8, 1GB)"
       vendor: advantech-europe
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech-europe/nxp/machine/imx8/rom5720-db5901.yml
 
@@ -319,6 +318,7 @@ registry:
       description: "Advantech ROM-5722 (i.MX8)"
       vendor: advantech-europe
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech-europe/nxp/machine/imx8/rom5722-db2510.yml
 
@@ -326,6 +326,7 @@ registry:
       description: "Advantech ROM-5721 (i.MX8)"
       vendor: advantech-europe
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech-europe/nxp/machine/imx8/rom5721-db5901.yml
 
@@ -333,6 +334,7 @@ registry:
       description: "Advantech ROM-5721 (i.MX8, 1GB)"
       vendor: advantech-europe
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech-europe/nxp/machine/imx8/rom5721-1g-db5901.yml
 
@@ -340,6 +342,7 @@ registry:
       description: "Advantech ROM-5721 (i.MX8, 2GB)"
       vendor: advantech-europe
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech-europe/nxp/machine/imx8/rom5721-2g-db5901.yml
 
@@ -347,6 +350,7 @@ registry:
       description: "Advantech ROM-5722 (i.MX8)"
       vendor: advantech-europe
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech-europe/nxp/machine/imx8/rom5722-db2510.yml
 
@@ -354,6 +358,7 @@ registry:
       description: "Advantech RSB-3720 (i.MX8, 6GB)"
       vendor: advantech-europe
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech-europe/nxp/machine/imx8/rsb3720.yml
 
@@ -361,6 +366,7 @@ registry:
       description: "Advantech RSB-3720 (i.MX8, 4GB)"
       vendor: advantech-europe
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech-europe/nxp/machine/imx8/rsb3720-4g.yml
 
@@ -368,6 +374,7 @@ registry:
       description: "Advantech RSB-3720 (i.MX8, 6GB)"
       vendor: advantech-europe
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech-europe/nxp/machine/imx8/rsb3720-6g.yml
 
@@ -379,6 +386,7 @@ registry:
       description: "Advantech ROM5721 (i.MX8)"
       vendor: advantech
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech/nxp/machine/imx8/imx8mmrom5721a1-1g.yml
 
@@ -386,6 +394,7 @@ registry:
       description: "Advantech ROM5721 (i.MX8)"
       vendor: advantech
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech/nxp/machine/imx8/imx8mmrom5721a1-2g.yml
 
@@ -395,6 +404,7 @@ registry:
       description: "Advantech RSB-3720 A1 (i.MX8)"
       vendor: advantech
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech/nxp/machine/imx8/imx8mprsb3720a1.yml
 
@@ -402,6 +412,7 @@ registry:
       description: "Advantech RSB-3720 A2 (i.MX8)"
       vendor: advantech
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech/nxp/machine/imx8/imx8mprsb3720a2.yml
 
@@ -411,6 +422,7 @@ registry:
       description: "Advantech RSB-3730 (i.MX8)"
       vendor: advantech
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech/nxp/machine/imx8/imx8mprsb3730a2.yml
 
@@ -418,6 +430,7 @@ registry:
       description: "Advantech RSB-3730 2GB (i.MX8)"
       vendor: advantech
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech/nxp/machine/imx8/imx8mprsb3730a2-2g.yml
 
@@ -425,6 +438,7 @@ registry:
       description: "Advantech RSB-3730 4GB (i.MX8)"
       vendor: advantech
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech/nxp/machine/imx8/imx8mprsb3730a2-4g.yml
 
@@ -434,6 +448,7 @@ registry:
       description: "i.MX93 ROM-2820 A1 (i.MX9)"
       vendor: advantech
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech/nxp/machine/imx9/imx93rom2820a1.yml
 
@@ -443,6 +458,7 @@ registry:
       description: "Advantech AOM-5521 A1 (i.MX95)"
       vendor: advantech
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech/nxp/machine/imx9/imx95aom5521a1.yml
 
@@ -450,6 +466,7 @@ registry:
       description: "Advantech AOM-5521 A2 (i.MX95)"
       vendor: advantech
       soc_vendor: nxp
+      architecture: arm64
       includes:
         - vendors/advantech/nxp/machine/imx9/imx95aom5521a2.yml
 
@@ -460,6 +477,7 @@ registry:
       description: "Advantech RSB-3810 (Mediatek)"
       vendor: advantech-europe
       soc_vendor: mediatek
+      architecture: arm64
       includes:
         - vendors/advantech-europe/mediatek/machine/rsb3810.yaml
 
@@ -469,6 +487,7 @@ registry:
       description: "Mediatek genio-1200-evk"
       vendor: mediatek
       soc_vendor: mediatek
+      architecture: arm64
       includes:
         - vendors/mediatek/machine/genio-1200-evk.yml
 
@@ -479,6 +498,7 @@ registry:
       description: "Advantech AOM-2721 (Qualcomm)"
       vendor: advantech-europe
       soc_vendor: qualcomm
+      architecture: arm64
       includes:
         - vendors/advantech-europe/qualcomm/machine/aom2721.yaml
 
@@ -488,6 +508,7 @@ registry:
       description: "Qualcomm QCS6490 RB3 Gen2 Vision Kit"
       vendor: qualcomm
       soc_vendor: qualcomm
+      architecture: arm64
       includes:
         - vendors/qualcomm/machine/qcs6490-rb3gen2-vision-kit.yml
 
@@ -868,14 +889,19 @@ registry:
       device: qemuarm64
       releases: [kirkstone, nanbield, mickledore, scarthgap,styhead, walnascar, whinlatter]
       features: [systemd, usrmerge, yocto-ssh]
+      includes:
+        - vendors/qemu/common.yaml
       build:
         path: build/poky-qemuarm64
 
+    # --- QEMU x86-64 ---
     - name: poky-harden-qemux86-64-scarthgap
       description: "Poky Hardened QEMU x86-64 Scarthgap (Yocto 5.0 LTS)"
       device: qemux86-64
       release: scarthgap
       features: [systemd, yocto-ssh, security, usrmerge]
+      includes:
+        - vendors/qemu/common.yaml
       build:
         container: "debian-12"
         path: build/poky-harden-qemux86-64-scarthgap
@@ -885,6 +911,14 @@ registry:
       device: qemux86-64
       releases: [kirkstone, nanbield, mickledore, scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, usrmerge, yocto-ssh]
+      includes:
+        - vendors/qemu/common.yaml
+      testing:
+        lava:
+          device_type: "qemu"                                       # LAVA device type label
+          artifact_name: "core-image-minimal-qemux86-64.rootfs.wic" # where the image is served
+          tags: ["hil", "qemu"]                                     # optional LAVA scheduler tags
+          job_template: "vendors/qemu/lava/qemu.yaml.j2"            # optional; builtin used if omitted
 
     - name: poky-qemux86-64-ros2
       description: "Poky QEMU x86-64"
@@ -892,21 +926,14 @@ registry:
       releases: [ros2-humble-scarthgap]
       features: [systemd, usrmerge, yocto-ssh]
 
-    - name: poky-qemux86-64-styhead
-      description: "Poky QEMU x86-64 Styhead (Yocto 5.1)"
-      device: qemux86-64
-      release: styhead
-      features: [systemd]
-      build:
-        container: "debian-12"
-        path: build/poky-qemux86-64-styhead
-
     # --- QEMU ARM (32-bit) ---
     - name: poky-qemuarm-scarthgap
       description: "Poky QEMU ARM (32-bit) Scarthgap (Yocto 5.0 LTS)"
       device: qemuarm
       release: scarthgap
       features: [systemd]
+      includes:
+        - vendors/qemu/common.yaml
       build:
         container: "debian-12"
         path: build/poky-qemuarm-scarthgap
@@ -919,8 +946,13 @@ registry:
       releases: [ubuntu-noble, ubuntu-jammy, debian-trixie]
       features: []
       build:
-        container: "isar-debian-13"
         path: build/isar-qemuamd64
+      # testing:
+      #   lava:
+      #     device_type: "qemu"                               # LAVA device type label
+      #     artifact_name: "qemuamd64.wic"                    # where the image is served
+      #     tags: ["hil", "qemu"]                             # optional LAVA scheduler tags
+      #     job_template: "vendors/qemu/lava/qemu.yaml.j2"    # optional; builtin used if omitted
 
     - name: isar-qemuarm64
       description: "Poky QEMU ARM64 (64-bit)"

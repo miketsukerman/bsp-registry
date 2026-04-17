@@ -166,7 +166,7 @@ The following ASCII diagrams illustrate the Isar image generation workflow:
 ┌─────────────────────────────────────────────────────────────────────┐
 │                     Repository Checkout                             │
 │  • Clones Isar framework (github.com/ilbers/isar)                   │
-│  • Checks out specified version (v0.11)                             │
+│  • Checks out specified version (v1.0)                              │
 │  • Sets up meta-layers (meta, meta-isar, meta-test)                 │
 └────────────────────────────────┬────────────────────────────────────┘
                                  │
@@ -448,8 +448,8 @@ build_system: isar
 repos:
   isar:
     url: "https://github.com/ilbers/isar.git"
-    tag: "v0.11"
-    commit: "f8558fcf3ecf98e58853b82d89645bcedb24b853"
+    tag: "v1.0"
+    commit: "6504321e85b5fdc3bb5a83f042b77cb39cd11a6f"
     path: "layers/isar"
     layers:
       meta:
@@ -465,7 +465,7 @@ bblayers_conf_header:
 **Key Components:**
 - **build_system**: Specifies Isar instead of Yocto
 - **repos**: Defines the Isar framework repository
-  - Uses stable version v0.11
+  - Uses stable version v1.0
   - Pinned to specific commit for reproducibility
 - **layers**: Enables meta, meta-isar, and meta-test layers
 - **bblayers_conf_header**: BitBake layer configuration template

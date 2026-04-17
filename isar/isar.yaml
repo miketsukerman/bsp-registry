@@ -1,13 +1,13 @@
 header:
   version: 14
+  includes:
+    - isar/common.yaml
 
 build_system: isar
 
 repos:
   isar:
     url: "https://github.com/ilbers/isar.git"
-    tag: "v0.11"
-    commit: "f8558fcf3ecf98e58853b82d89645bcedb24b853"
     path: "layers/isar"
     layers:
       meta:

@@ -104,6 +104,29 @@ containers:
         - name: "DISTRO" 
           value: "debian-trixie"
 
+# Named environments: each entry bundles a container reference + variables.
+# The special name "default" is used for any release that does not specify an environment.
+# A release can override by setting its "environment:" field to a different name.
+environments:
+  default:
+    container: ubuntu-22.04
+  ubuntu-24.04:
+    container: ubuntu-24.04
+  ubuntu-20.04:
+    container: ubuntu-20.04
+  debian-13:
+    container: debian-13
+  isar-build-environment:
+    container: isar-debian-13
+    # Copy the QEMU run script into every Isar build directory
+    copy:
+      - isar/scripts/isar-runqemu.sh: build/
+    variables:
+      - name: "DL_DIR"
+        value: "$ENV{HOME}/data/cache/isar/downloads"
+      - name: "SSTATE_DIR"
+        value: "$ENV{HOME}/data/cache/isar/sstate"
+
 registry:
 
   # =====================================
@@ -164,28 +187,28 @@ registry:
       includes:
         - vendors/nxp/distro/fsl-imx-xwayland.yaml
 
-    - slug: ubuntu-noble
-      description: "Isar Ubuntu Noble"
+    - slug: isar-v0.11
+      description: "Isar v0.11 (Siemens build system)"
       framework: isar
       includes:
-        - isar/common.yaml
-        - isar/distro/ubuntu-noble.yaml
+        - isar/isar-v0.11.yaml
 
-    - slug: ubuntu-jammy
-      description: "Isar Ubuntu Jammy"
+    - slug: isar-v1.0
+      description: "Isar v1.0 (Siemens build system)"
       framework: isar
       includes:
-        - isar/common.yaml
-        - isar/distro/ubuntu-jammy.yaml
-
-    - slug: debian-trixie
-      description: "Isar Debian Trixie"
-      framework: isar
-      includes:
-        - isar/common.yaml
-        - isar/distro/debian-trixie.yaml
+        - isar/isar-v1.0.yaml
 
   vendors:
+    - slug: qemu
+      name: "QEMU"
+      description: "QEMU, a generic and open source machine emulator and virtualizer."
+      website: "https://www.qemu.org/"
+      frameworks_overrides:
+        yocto:
+          includes:
+            - vendors/qemu/common.yaml
+
     - slug: advantech
       name: "Advantech"
       description: "Advantech Corporation, a global leader in industrial computing and IoT solutions."
@@ -496,15 +519,24 @@ registry:
 
     - slug: ubuntu-noble
       description: "Isar Ubuntu Noble"
-      distro: ubuntu-noble
+      distro: isar-v1.0
+      environment: isar-build-environment
+      includes:
+        - isar/distro/ubuntu-noble.yaml
 
     - slug: ubuntu-jammy
       description: "Isar Ubuntu Jammy"
-      distro: ubuntu-jammy
+      distro: isar-v1.0
+      environment: isar-build-environment
+      includes:
+        - isar/distro/ubuntu-jammy.yaml
 
     - slug: debian-trixie
       description: "Isar Debian Trixie "
-      distro: debian-trixie
+      distro: isar-v1.0
+      environment: isar-build-environment
+      includes:
+        - isar/distro/debian-trixie.yaml
 
     - slug: kirkstone
       distro: poky
@@ -896,7 +928,6 @@ registry:
       releases: [debian-trixie]
       features: []
       build:
-        container: "isar-debian-13"
         path: build/isar-qemuarm64
 
     # --- Qualcomm QCS6490 RB3 Gen2 Vision Kit ---    

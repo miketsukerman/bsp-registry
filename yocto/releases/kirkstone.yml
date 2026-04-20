@@ -7,8 +7,12 @@ defaults:
 
 # https://downloads.yoctoproject.org/releases/yocto/yocto-4.0.28/RELEASENOTES
 repos:
+  this:
+    layers:
+      .: "disabled"
+
   poky:
-    commit: "24a3f7b3648185e33133f5d96b184a6cb6524f3d"
+    commit: "93431249a6260da7bd29ee3ca32145d89e5b8259"
 
   bitbake:
     branch: "2.0"

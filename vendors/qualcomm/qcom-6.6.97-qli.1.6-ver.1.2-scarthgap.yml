@@ -1,9 +1,8 @@
 header:
   version: 14
   includes:
-    - compilers/clang/scarthgap.yml
+    - compilers/clang/clang.yml
     - features/deep-learning/tensorflow.yml
-    - features/ota/ostree/scarthgap.yml
     - vendors/qualcomm/qualcomm-common.yml
 
 repos:

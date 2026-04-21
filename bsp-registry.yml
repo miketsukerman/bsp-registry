@@ -232,7 +232,7 @@ registry:
       description: "Qualcomm, wireless technology and semiconductor solutions."
       website: "https://www.qualcomm.com/"
       includes:
-        - vendors/qualcomm/qualcomm.yml
+        - vendors/qualcomm/qualcomm-common.yml
 
   # =====================================
   # Devices
@@ -968,7 +968,7 @@ registry:
       description: "Qualcomm QCS6490 RB3 Gen2 Vision Kit"
       device: qcs6490-rb3gen2-vision-kit
       releases: [scarthgap]
-      features: [systemd, security, virtualization, ipv6]
+      features: [systemd, security, virtualization, ipv6, ostree]
       build:
         path: build/qcs6490-rb3gen2-vision-kit
 

@@ -13,7 +13,7 @@ cache variables, and the build directory layout.
   - Pulls MediaTek Rity layers from GitLab and pins them to `refs/tags/rity-scarthgap-v25.0`.
   - Enables extra build features used by this registry:
     - `yocto/scarthgap.yml` (base Yocto Scarthgap repos)
-    - `compilers/clang/scarthgap.yml`
+    - `compilers/clang/clang.yml`
     - `features/deep-learning/tensorflow.yml`
   - Applies local patches from this repository:
     - `patches/mediatek/scarthgap/0001-Fix-recipe-dtbo-name.patch`

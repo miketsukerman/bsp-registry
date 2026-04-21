@@ -16,7 +16,7 @@ selection, cache variables, and the build directory layout.
     - `meta-qcom-hwe` (Qualcomm hardware enablement)
     - `meta-qcom-distro` (Qualcomm distribution layer)
   - Enables extra build features used by this registry:
-    - `compilers/clang/scarthgap.yml`
+    - `compilers/clang/clang.yml`
     - `features/deep-learning/tensorflow.yml`
     - `features/ota/ostree/scarthgap.yml`
     - `vendors/qualcomm/qualcomm-common.yml`

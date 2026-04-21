@@ -931,7 +931,7 @@ registry:
       description: "Poky QEMU ARM (32-bit) Scarthgap (Yocto 5.0 LTS)"
       device: qemuarm
       release: scarthgap
-      features: [systemd]
+      features: [systemd, usrmerge, yocto-ssh]
       includes:
         - vendors/qemu/common.yaml
       build:

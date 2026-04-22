@@ -9,7 +9,7 @@ The registry supports two build systems:
 * **Yocto Project**: For building custom embedded Linux distributions with full control over the software stack
 * **Isar**: For building Debian-based embedded systems using native Debian packaging tools
 
-## Quick Start
+# Quick Start
 
 **Prerequisites:** Python 3, Docker, Git. See [Section 4.1](#41-host-system-dependencies) for full setup.
 

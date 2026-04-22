@@ -60,8 +60,8 @@ grep '^\s*- name:' bsp-registry.yml | awk '{print $3}'
 A quick way to check relative Markdown links from the repository root:
 
 ```bash
-grep -rh '\](vendors/[^)]*\|patches/[^)]*\|isar/[^)]*\|BUILDING[^)]*)' --include='*.md' \
-  | grep -oP '\]\(\K[^)]+' \
+grep -roh '\]([^)]*\.md)' --include='*.md' \
+  | sed 's/.*](\(.*\))/\1/' \
   | sort -u \
   | while read f; do [ -e "$f" ] || echo "MISSING: $f"; done
 ```

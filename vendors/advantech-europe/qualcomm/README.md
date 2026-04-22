@@ -21,7 +21,7 @@ If you are looking for the **upstream Qualcomm QLI** layer definitions and EVK c
 
 ## Where it is used
 
-Machine config `vendors/advantech/qualcomm/machine/aom2721.yml` selects the Advantech AOM-2721
+Machine config `vendors/advantech-europe/qualcomm/machine/aom2721.yml` selects the Advantech AOM-2721
 board when composing a full BSP alongside `vendors/qualcomm/qcom-6.6.97-qli.1.6-ver.1.2-scarthgap.yml`.
 
 ## Build
@@ -30,16 +30,16 @@ From the repository root:
 
 ```bash
 # List available Qualcomm BSPs
-python bsp.py list | grep -i qcom
+bsp list | grep -i qualcomm
 
 # Fast config checkout/validation (no build)
-python bsp.py build bsp-oeqcom-scarthgap-qcs6490-evk --checkout
+bsp build qcs6490-rb3gen2-vision-kit --checkout
 
 # Full build
-python bsp.py build bsp-oeqcom-scarthgap-qcs6490-evk
+bsp build qcs6490-rb3gen2-vision-kit
 
 # Enter an interactive build shell
-python bsp.py shell bsp-oeqcom-scarthgap-qcs6490-evk
+bsp shell qcs6490-rb3gen2-vision-kit
 ```
 
 ## References

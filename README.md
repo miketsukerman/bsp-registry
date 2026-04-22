@@ -9,9 +9,40 @@ The registry supports two build systems:
 * **Yocto Project**: For building custom embedded Linux distributions with full control over the software stack
 * **Isar**: For building Debian-based embedded systems using native Debian packaging tools
 
+## Quick Start
+
+**Prerequisites:** Python 3, Docker, Git. See [Section 4.1](#41-host-system-dependencies) for full setup.
+
+```bash
+# 1. Install the BSP Registry Manager
+pip3 install bsp-registry-tools
+
+# 2. List all available BSPs
+bsp list
+
+# 3. Build a BSP (examples)
+bsp build modular-bsp-rsb3720        # Advantech RSB-3720 (NXP i.MX8M Plus)
+bsp build modular-bsp-rom2820-ed93   # Advantech ROM-2820 (NXP i.MX93)
+bsp build modular-bsp-rom2620-ed91   # Advantech ROM-2620 (NXP i.MX8ULP)
+bsp build mediatek-genio-1200-evk    # MediaTek Genio 1200 EVK
+bsp build qcs6490-rb3gen2-vision-kit # Qualcomm QCS6490 RB3gen2
+bsp build isar-qemuarm64-debian-trixie  # QEMU ARM64 with Debian (Isar)
+
+# 4. Validate configuration without a full build
+bsp build <bsp_name> --checkout
+
+# 5. Enter an interactive build shell
+bsp shell <bsp_name>
+```
+
+For the alternative Repo-tool based workflow (NXP i.MX boards only) see [BUILDING_WITH_REPO.md](BUILDING_WITH_REPO.md).
+
+---
+
 # Table of Contents
 
 - [Advantech BSP configurations registry](#advantech-bsp-configurations-registry)
+- [Quick Start](#quick-start)
 - [Table of Contents](#table-of-contents)
 - [1. Build System Architecture](#1-build-system-architecture)
   - [1.1. Component Overview](#11-component-overview)
@@ -269,13 +300,16 @@ To build a BSP image with OTA support, use the `bsp` command:
 
 ```bash
 # List all available OTA configurations
-bsp list | grep rauc
+bsp list | grep -E "rauc|swupdate|ostree"
 
-# Build RSB3720 6G variant with RAUC support
-bsp build modular-bsp-rauc-rsb3720-6g-walnascar
+# Build RSB3720 with RAUC support
+bsp build modular-bsp-rauc-rsb3720
 
-# Build RSB3720 6G variant with SWUpdate support
-bsp build modular-bsp-swupdate-rsb3720-styhead
+# Build RSB3720 with SWUpdate support
+bsp build modular-bsp-swupdate-rsb3720
+
+# Build RSB3720 with OSTree support
+bsp build modular-bsp-ostree-rsb3720
 ```
 
 ## 2.3. MediaTek Boards Compatibility Matrix
@@ -283,7 +317,7 @@ bsp build modular-bsp-swupdate-rsb3720-styhead
 The BSP registry supports MediaTek-based boards through the **MediaTek AIoT Rity** BSP stack. The
 current integration targets the Yocto **Scarthgap** release and uses the upstream Rity v25.0 layer
 set. For detailed configuration, see the [MediaTek vendor README](vendors/mediatek/README.md) and the
-[Advantech MediaTek overlay README](vendors/advantech/mediatek/README.md).
+[Advantech MediaTek overlay README](vendors/advantech-europe/mediatek/README.md).
 
 | Board \ Yocto  | scarthgap | Status        |
 | -------------- | :-------: | ------------- |
@@ -307,10 +341,10 @@ set. For detailed configuration, see the [MediaTek vendor README](vendors/mediat
 bsp list | grep -i mediatek
 
 # Build MediaTek Genio 1200 EVK (scarthgap)
-bsp build mediatek-genio-1200-evk-scarthgap
+bsp build mediatek-genio-1200-evk
 
 # Build Advantech RSB-3810 (scarthgap)
-bsp build modular-bsp-rsb3810-scarthgap:
+bsp build modular-bsp-rsb3810
 ```
 
 ---
@@ -318,9 +352,9 @@ bsp build modular-bsp-rsb3810-scarthgap:
 ## 2.4. Qualcomm Boards Compatibility Matrix
 
 The BSP registry supports Qualcomm-based boards through the **Qualcomm Linux (QLI)** BSP stack.
-The current integration targets the Yocto **Scarthgap** release and uses the QLI v1.5 Ver.1.1 layer
+The current integration targets the Yocto **Scarthgap** release and uses the QLI v1.6 Ver.1.2 layer
 set. For detailed configuration, see the [Qualcomm vendor README](vendors/qualcomm/README.md) and
-the [Advantech Qualcomm overlay README](vendors/advantech/qualcomm/README.md).
+the [Advantech Qualcomm overlay README](vendors/advantech-europe/qualcomm/README.md).
 
 | Board \ Yocto         | scarthgap | Status        |
 | --------------------- | :-------: | ------------- |
@@ -341,10 +375,10 @@ the [Advantech Qualcomm overlay README](vendors/advantech/qualcomm/README.md).
 
 ```bash
 # List available Qualcomm BSPs
-bsp list | grep -i qcs
+bsp list | grep -i qualcomm
 
 # Build Qualcomm QCS6490 RB3gen2 EVK (scarthgap)
-bsp build qcs6490-rb3gen2-vision-kit-scarthgap
+bsp build qcs6490-rb3gen2-vision-kit
 ```
 ---
 
@@ -507,13 +541,13 @@ The `--checkout` flag provides a fast way to checkout and validate BSP configura
 
 ```bash
 # Checkout and validate configuration for RSB3720 6G board
-bsp build adv-mbsp-oenxp-walnascar-rsb3720-6g --checkout
+bsp build modular-bsp-rsb3720-6g --checkout
 
 # Checkout and validate configuration for RSB3720 4G board
-bsp build adv-mbsp-oenxp-walnascar-rsb3720-4g --checkout
+bsp build modular-bsp-rsb3720-4g --checkout
 
 # If validation passes, proceed with full build
-bsp build adv-mbsp-oenxp-walnascar-rsb3720-6g
+bsp build modular-bsp-rsb3720-6g
 ```
 
 ---

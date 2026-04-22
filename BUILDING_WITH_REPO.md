@@ -428,7 +428,7 @@ This repository supports two build workflows:
 
 ### 9.1 Common Issues
 
-**2. BitBake cannot find Advantech machines:**
+**1. BitBake cannot find Advantech machines:**
 ```bash
 # Verify meta-modular-bsp-nxp is in bblayers.conf
 grep meta-modular-bsp-nxp conf/bblayers.conf
@@ -436,3 +436,20 @@ grep meta-modular-bsp-nxp conf/bblayers.conf
 # Add if missing
 echo 'BBLAYERS += "${BSPDIR}/sources/meta-modular-bsp-nxp"' >> conf/bblayers.conf
 ```
+
+### 9.2 Getting Help
+
+If you encounter issues not covered above:
+
+- Open an issue in the [bsp-registry GitHub repository](https://github.com/Advantech-EECC/bsp-registry)
+- Consult the [Yocto Project documentation](https://docs.yoctoproject.org/)
+- Visit the [NXP Community forum](https://community.nxp.com/) for hardware-specific questions
+
+## 10. Contributing
+
+Contributions to the BSP registry are welcome. When updating documentation:
+
+- Validate all BSP names against `bsp-registry.yml` before updating command examples
+- Use `bsp` (not `python bsp.py`) for all CLI command examples
+- Test build commands with `bsp build <name> --checkout` before documenting them
+- Keep vendor-specific documentation in the respective `vendors/` subdirectory READMEs

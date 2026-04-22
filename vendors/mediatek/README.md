@@ -32,10 +32,9 @@ cache variables, and the build directory layout.
 
 The top-level registry file `bsp-registry.yml` currently exposes the following MediaTek BSP build targets:
 
-- `oemtk-scarthgap-genio-1200-evk`
-  - Config: `vendors/mediatek/evk/genio-1200-evk.yml`
-  - Build dir: `build/oemtk-scarthgap-genio-1200-evk`
-  - Container: `ubuntu-22.04`
+- `mediatek-genio-1200-evk`
+  - Device: `genio-1200-evk`
+  - Build dir: `build/mediatek-genio-1200-evk`
 
 ## Build instructions (recommended)
 
@@ -43,16 +42,16 @@ From the repository root:
 
 ```bash
 # List available BSPs
-bsp list | grep -i mtk
+bsp list | grep -i mediatek
 
 # Fast config checkout/validation (no build)
-bsp build oemtk-scarthgap-genio-1200-evk --checkout
+bsp build mediatek-genio-1200-evk --checkout
 
 # Full build
-bsp build oemtk-scarthgap-genio-1200-evk
+bsp build mediatek-genio-1200-evk
 
 # Enter an interactive build shell
-bsp shell oemtk-scarthgap-genio-1200-evk
+bsp shell mediatek-genio-1200-evk
 ```
 
 Build artifacts follow the standard Yocto layout under the registry build directory, e.g.:

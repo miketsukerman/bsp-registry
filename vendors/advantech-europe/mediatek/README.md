@@ -30,8 +30,8 @@ This fragment is intentionally small and is meant to be composed with the upstre
 
 ## Where it is used
 
-The registry BSP `adv-mbsp-oemtk-scarthgap-rsb3810` (configured by `adv-mbsp-oemtk-scarthgap-rsb3810.yaml`)
-includes `vendors/advantech/mediatek/machine/rsb3810.yaml` to select the machine.
+The registry BSP `modular-bsp-rsb3810` (device slug `rsb3810`)
+includes `vendors/advantech-europe/mediatek/machine/rsb3810.yaml` to select the machine.
 
 ## Build
 
@@ -39,13 +39,13 @@ From the repository root:
 
 ```bash
 # Fast config checkout/validation (no build)
-bsp build adv-mbsp-oemtk-scarthgap-rsb3810 --checkout
+bsp build modular-bsp-rsb3810 --checkout
 
 # Full build
-bsp build adv-mbsp-oemtk-scarthgap-rsb3810
+bsp build modular-bsp-rsb3810
 
 # Enter an interactive build shell
-bsp shell adv-mbsp-oemtk-scarthgap-rsb3810
+bsp shell modular-bsp-rsb3810
 ```
 
 ## References

@@ -1186,7 +1186,7 @@ registry:
     - name: modular-bsp-rom5721-db5901
       description: "Advantech ROM-5721 DB5901 (i.MX8)"
       device: rom5721-db5901
-      releases: [scarthgap, styhead, walnascar, whinlatter]
+      releases: [scarthgap, styhead, walnascar]
       features: [systemd, security, virtualization, ipv6]
       build:
         container: "ubuntu-22.04"
@@ -1195,8 +1195,8 @@ registry:
     - name: modular-bsp-rom5721-1g-db5901
       description: "Advantech ROM-5721 DB5901 (i.MX8)"
       device: rom5721-1g-db5901
-      releases: [walnascar]
-      features: [systemd, security, virtualization, ipv6]
+      releases: [walnascar, whinlatter]
+      features: [systemd, security, virtualization, ipv6, root-login]
       build:
         container: "ubuntu-22.04"
         path: build/modular-bsp-rom5721-1g-db5901
@@ -1204,8 +1204,8 @@ registry:
     - name: modular-bsp-rom5721-2g-db5901
       description: "Advantech ROM-5721 DB5901 (i.MX8)"
       device: rom5721-2g-db5901
-      releases: [walnascar]
-      features: [systemd, security, virtualization, ipv6]
+      releases: [walnascar, whinlatter]
+      features: [systemd, security, virtualization, ipv6, root-login]
       build:
         container: "ubuntu-22.04"
         path: build/modular-bsp-rom5721-2g-db5901
@@ -1226,8 +1226,8 @@ registry:
     - name: modular-bsp-aom5521-db2510
       description: "Advantech AOM-5521 DB2510 (i.MX95)"
       device: aom5521-db2510
-      releases: [walnascar]
-      features: [systemd, security, virtualization, ipv6]
+      releases: [walnascar, whinlatter]
+      features: [systemd, security, virtualization, ipv6, root-login]
       build:
         container: "ubuntu-22.04"
         path: build/modular-bsp-aom5521-db2510
@@ -1236,7 +1236,7 @@ registry:
       description: "Advantech AOM-5521 A1 DB2510 (i.MX95)"
       device: imx95aom5521a1
       releases: [scarthgap, walnascar]
-      features: [systemd, security, virtualization, ipv6]
+      features: [systemd, security, virtualization, ipv6, root-login]
       build:
         container: "ubuntu-22.04"
         path: build/advantech-imx95aom5521a1

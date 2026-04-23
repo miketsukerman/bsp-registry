@@ -85,8 +85,8 @@ repos:
     url: "https://github.com/nxp-imx/meta-nxp-connectivity.git"
     # tag: "refs/tags/rel_imx_6.18.2_1.0.0"
     branch: "imx_matter_2025_q4-post"
-    commit: "4439026fea59f5f8d530fd9a4dac14504bb613e5"
-    path: "layers/meta-connectivity"
+    commit: "80e4f62242f9606af95851e0741fa7ccc7e55b01"
+    path: "layers/meta-nxp-connectivity"
     layers:
       meta-nxp-matter-baseline:
       meta-nxp-openthread:
@@ -117,7 +117,10 @@ repos:
         path: patches/nxp/whinlatter/0001-fix-device-name-for-imx95-evk.patch
       alsa-tools-imx9:
         repo: this
-        path: patches/nxp/walnascar/0010-Add-alsa-tools-to-dependencies-for-imx9.patch
+        path: patches/nxp/whinlatter/0002-Add-alsa-tools-to-dependencies-for-imx9.patch
+      gst-plugins-bad-fix-dependencies:
+        repo: this
+        path: patches/nxp/whinlatter/0003-gst-plugins-bad-add-alsa-tools-to-dependencies.patch
 
 local_conf_header:
   fsl-imx: | 

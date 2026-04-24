@@ -30,6 +30,9 @@ The registry supports two build systems:
       - [2.1.2.1. Supported OTA Technologies](#2121-supported-ota-technologies)
       - [2.1.2.2. OTA Support Matrix](#2122-ota-support-matrix)
       - [2.1.2.3. Building Images with OTA Support](#2123-building-images-with-ota-support)
+    - [2.1.3. Secure Boot Support](#213-secure-boot-support)
+      - [2.1.3.1. Secure Boot Support Matrix](#2131-secure-boot-support-matrix)
+      - [2.1.3.2. Building Images with Secure Boot](#2132-building-images-with-secure-boot)
   - [2.3. MediaTek Boards Compatibility Matrix](#23-mediatek-boards-compatibility-matrix)
     - [2.3.1. Building MediaTek BSPs](#231-building-mediatek-bsps)
   - [2.4. Qualcomm Boards Compatibility Matrix](#24-qualcomm-boards-compatibility-matrix)
@@ -276,6 +279,48 @@ bsp build modular-bsp-rauc-rsb3720-6g-walnascar
 
 # Build RSB3720 6G variant with SWUpdate support
 bsp build modular-bsp-swupdate-rsb3720-styhead
+```
+
+### 2.1.3. Secure Boot Support
+
+NXP-based Advantech Europe boards support cryptographic boot-image signing via
+**HAB** (High Assurance Boot, i.MX8 family) and **AHAB** (Advanced High Assurance Boot,
+i.MX9 / i.MX95 family).
+
+📖 **See [docs/secure-boot.md](docs/secure-boot.md)** for full instructions including:
+- Obtaining and configuring the NXP Code Signing Tool (CST)
+- Generating SRK keys and certificates
+- Required environment variables
+- Board fusing / provisioning procedures
+- CI / Azure Pipelines integration
+
+#### 2.1.3.1. Secure Boot Support Matrix
+
+| Board              | SoC Family | Secure Boot | Yocto Releases                        |
+|--------------------|-----------|-------------|---------------------------------------|
+| ROM-2620 (ed91)    | i.MX8     | HAB         | kirkstone, scarthgap, styhead, walnascar, whinlatter |
+| ROM-5720 (db5901)  | i.MX8     | HAB         | scarthgap, styhead, walnascar, whinlatter |
+| ROM-5721 (db5901)  | i.MX8     | HAB         | scarthgap, styhead, walnascar, whinlatter |
+| ROM-5721 1G        | i.MX8     | HAB         | scarthgap, walnascar, whinlatter      |
+| ROM-5721 2G        | i.MX8     | HAB         | scarthgap, walnascar, whinlatter      |
+| ROM-5722 (db2510)  | i.MX8     | HAB         | scarthgap, styhead, walnascar, whinlatter |
+| RSB-3720           | i.MX8     | HAB         | scarthgap, styhead, walnascar, whinlatter |
+| RSB-3720 4G        | i.MX8     | HAB         | walnascar, whinlatter                 |
+| RSB-3720 6G        | i.MX8     | HAB         | walnascar, whinlatter                 |
+| ROM-2820 (ed93)    | i.MX9     | AHAB        | scarthgap, styhead, walnascar, whinlatter |
+| AOM-5521 (db2510)  | i.MX95    | AHAB        | scarthgap, walnascar                  |
+
+#### 2.1.3.2. Building Images with Secure Boot
+
+```bash
+# Export signing environment variables before building
+export IMX_CST_BIN=/opt/nxp/cst/linux64/bin/cst
+export IMX_HAB_SRK_TABLE=/path/to/keys/SRK_1_2_3_4_table.bin
+export IMX_HAB_CSF_KEY=/path/to/keys/CSF1_1_sha256_4096_65537_v3_usr_key.pem
+export IMX_HAB_IMG_KEY=/path/to/keys/IMG1_1_sha256_4096_65537_v3_usr_key.pem
+
+# Build a signed image (example: ROM-5720, Walnascar release)
+bsp build <bsp-name> --feature secure-boot
 ```
 
 ## 2.3. MediaTek Boards Compatibility Matrix

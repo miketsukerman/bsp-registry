@@ -1,0 +1,7 @@
+header:
+  version: 14
+
+local_conf_header:
+  nxp-secure-boot-tools: |
+    # Path to the NXP Code Signing Tool inside the build container (must match the volume mount in bsp-registry.yml)
+    SIG_TOOL_PATH = "/opt/cst/"

@@ -9,3 +9,6 @@ repos:
 
   meta-nxp-security-reference-design:
     branch: "walnascar-6.12.49-2.2.0-adv"
+    # TODO: pin to an exact commit once a dedicated whinlatter branch is available.
+    # The branch above is a temporary placeholder; the layer maintainer should create
+    # a whinlatter-6.18.2-1.0.0-adv branch and update this entry accordingly.

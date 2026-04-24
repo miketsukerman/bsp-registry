@@ -1,0 +1,14 @@
+header:
+  version: 14
+
+# Enable the meta-secure-boot sublayer from meta-nxp-security-reference-design.
+# The layer is disabled by default in vendors/advantech-europe/nxp/modular-bsp-nxp.yml;
+# this feature overrides that entry to activate it.
+repos:
+  meta-nxp-security-reference-design:
+    layers:
+      meta-secure-boot:
+
+local_conf_header:
+  secure-boot: |
+    DISTRO_FEATURES:append = " secure-boot"

@@ -8,7 +8,6 @@ repos:
     commit: "9ef7bf04c7373d0edd3a2cc33169cb0804be841e"
 
   meta-nxp-security-reference-design:
-    branch: "walnascar-6.12.49-2.2.0-adv"
-    # TODO: pin to an exact commit once a dedicated whinlatter branch is available.
-    # The branch above is a temporary placeholder; the layer maintainer should create
-    # a whinlatter-6.18.2-1.0.0-adv branch and update this entry accordingly.
+    url: "https://github.com/Advantech-EECC/meta-nxp-security-reference-design.git"
+    branch: "whinlatter-6.18.2-1.0.0-adv"
+    commit: "8884749909a105b24eb1ee6e66e2ad2ac0823733"

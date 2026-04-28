@@ -1,0 +1,24 @@
+From 6074de07cea1603f2645054f3835f6926c947591 Mon Sep 17 00:00:00 2001
+From: Mikhail Tsukerman <miketsukerman@gmail.com>
+Date: Tue, 28 Apr 2026 17:00:27 +0200
+Subject: [PATCH] tensorflow-lite: fix build
+
+---
+ .../tensorflow-lite/tensorflow-lite-2.18.0.inc                | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/meta-imx-ml/recipes-libraries/tensorflow-lite/tensorflow-lite-2.18.0.inc b/meta-imx-ml/recipes-libraries/tensorflow-lite/tensorflow-lite-2.18.0.inc
+index c108d87e01..0906ac3681 100644
+--- a/meta-imx-ml/recipes-libraries/tensorflow-lite/tensorflow-lite-2.18.0.inc
++++ b/meta-imx-ml/recipes-libraries/tensorflow-lite/tensorflow-lite-2.18.0.inc
+@@ -1,5 +1,5 @@
+ # Copyright 2020-2024 NXP
+ 
+ TENSORFLOW_LITE_SRC ?= "git://github.com/nxp-imx/tensorflow-imx.git;protocol=https"
+-SRCBRANCH_tf = "lf-6.12.3_1.0.0"
+-SRCREV_tf = "5a62e8ed0e476cba331e10709ebc5af6b81715e8"
++SRCBRANCH_tf = "lf-6.12.34_2.1.0"
++SRCREV_tf = "3f66711bcfd7a4272119afc1ae2a51698fd3a6b4"
+-- 
+2.43.0
+

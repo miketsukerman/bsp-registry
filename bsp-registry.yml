@@ -78,8 +78,6 @@ containers:
       volumes:
         - host: $ENV{CST_TOOL_PATH}
           container: "/opt/cst/"
-        - host: $ENV{KEYS_PATH}
-          container: "/opt/keys/"
   - debian-12:
       file: Dockerfile.debian
       image: "advantech/bsp-registry/debian-12/kas:5.2"

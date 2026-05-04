@@ -33,7 +33,7 @@ The registry supports two build systems:
     - [2.1.3. Secure Boot Support](#213-secure-boot-support)
       - [2.1.3.1. Secure Boot Support Matrix](#2131-secure-boot-support-matrix)
       - [2.1.3.2. Building Images with Secure Boot](#2132-building-images-with-secure-boot)
-  - [2.3. MediaTek Boards Compatibility Matrix](#23-mediatek-boards-compatibility-matrix)
+  - [2.3. MediaTek Boards Compatibility Matrix \[preview\]](#23-mediatek-boards-compatibility-matrix-preview)
     - [2.3.1. Building MediaTek BSPs](#231-building-mediatek-bsps)
   - [2.4. Qualcomm Boards Compatibility Matrix](#24-qualcomm-boards-compatibility-matrix)
     - [2.4.1. Building Qualcomm BSPs](#241-building-qualcomm-bsps)
@@ -41,8 +41,6 @@ The registry supports two build systems:
   - [3.1. Overview](#31-overview)
   - [3.2. Installation](#32-installation)
   - [3.3. Basic Usage](#33-basic-usage)
-  - [3.4. Container Management](#34-container-management)
-  - [3.5. Configuration File Structure](#35-configuration-file-structure)
   - [3.6. Command Reference](#36-command-reference)
     - [3.6.1. Checkout and Validation](#361-checkout-and-validation)
   - [4. HowTo Assemble BSPs](#4-howto-assemble-bsps)
@@ -112,17 +110,17 @@ Table describes in which combinations yocto releases could be used together with
 
 | Board \ Yocto  | whinlatter | walnascar | styhead | scarthgap | mickledore | langdale | kirkstone | Status        |
 | -------------- | :--------: | :-------: | :-----: | :-------: | :--------: | :------: | :-------: | ------------- |
-| **RSB3720**    |     ✅      |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     🟡     | 🟢 Stable      |
-| **RSB3720 4G** |     ✅      |     ✅     |    ❌    |     ❌     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
-| **RSB3720 6G** |     ✅      |     ✅     |    ❌    |     ❌     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
+| **RSB3720**    |     🟡      |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     🟡     | 🟢 Stable      |
+| **RSB3720 4G** |     🟡      |     ✅     |    ❌    |     ❌     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
+| **RSB3720 6G** |     🟡      |     ✅     |    ❌    |     ❌     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
 | **RSB3730**    |     ❌      |     ❌     |    ❌    |     ❌     |     ✅      |    ❌     |     ❌     | 🟡 Development |
-| **ROM2620**    |     ✅      |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
-| **ROM5720**    |     ✅      |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
-| **ROM5721**    |     ✅      |     ✅     |    ✅    |     ✅     |     ✅      |    ❌     |     ❌     | 🟢 Stable      |
-| **ROM5721 1G** |     ✅      |     ✅     |    ❌    |     ✅     |     ✅      |    ❌     |     ❌     | 🟢 Stable      |
-| **ROM5721 2G** |     ✅      |     ✅     |    ❌    |     ✅     |     ✅      |    ❌     |     ❌     | 🟢 Stable      |
-| **ROM5722**    |     ✅      |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
-| **ROM2820**    |     ✅      |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
+| **ROM2620**    |     🟡      |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
+| **ROM5720**    |     🟡      |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
+| **ROM5721**    |     🟡      |     ✅     |    ✅    |     ✅     |     ✅      |    ❌     |     ❌     | 🟢 Stable      |
+| **ROM5721 1G** |     🟡      |     ✅     |    ❌    |     ✅     |     ✅      |    ❌     |     ❌     | 🟢 Stable      |
+| **ROM5721 2G** |     🟡      |     ✅     |    ❌    |     ✅     |     ✅      |    ❌     |     ❌     | 🟢 Stable      |
+| **ROM5722**    |     🟡      |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
+| **ROM2820**    |     🟡      |     ✅     |    ✅    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
 | **AOM5521 A1** |     ❌      |     🟡     |    ❌    |     ✅     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
 | **AOM5521 A2** |     ❌      |     ✅     |    ❌    |     ❌     |     ❌      |    ❌     |     ❌     | 🟢 Stable      |
 
@@ -275,7 +273,7 @@ To build a BSP image with OTA support, use the `bsp` command:
 bsp list | grep rauc
 
 # Build RSB3720 6G variant with RAUC support
-bsp build modular-bsp-rauc-rsb3720-6g-walnascar
+bsp build modular-bsp-rauc-rsb3720-walnascar
 
 # Build RSB3720 6G variant with SWUpdate support
 bsp build modular-bsp-swupdate-rsb3720-styhead
@@ -314,16 +312,13 @@ i.MX9 / i.MX95 family).
 
 ```bash
 # Export signing environment variables before building
-export IMX_CST_BIN=/opt/nxp/cst/linux64/bin/cst
-export IMX_HAB_SRK_TABLE=/path/to/keys/SRK_1_2_3_4_table.bin
-export IMX_HAB_CSF_KEY=/path/to/keys/CSF1_1_sha256_4096_65537_v3_usr_key.pem
-export IMX_HAB_IMG_KEY=/path/to/keys/IMG1_1_sha256_4096_65537_v3_usr_key.pem
+export CST_TOOL_PATH=/opt/cst
 
-# Build a signed image (example: ROM-5720, Walnascar release)
-bsp build <bsp-name> --feature secure-boot
+# Build a signed image (example: ROM-5721, Walnascar release)
+bsp build  modular-bsp-rom5721-2g-db5901-secureboot-walnascar
 ```
 
-## 2.3. MediaTek Boards Compatibility Matrix
+## 2.3. MediaTek Boards Compatibility Matrix [preview]
 
 The BSP registry supports MediaTek-based boards through the **MediaTek AIoT Rity** BSP stack. The
 current integration targets the Yocto **Scarthgap** release and uses the upstream Rity v25.0 layer
@@ -332,8 +327,8 @@ set. For detailed configuration, see the [MediaTek vendor README](vendors/mediat
 
 | Board \ Yocto  | scarthgap | Status        |
 | -------------- | :-------: | ------------- |
-| **Genio 1200 EVK** | ✅    | 🟡 Development |
-| **RSB-3810**   |     ✅     | 🟡 Development |
+| **Genio 1200 EVK** | 🟡    | 🟡 Development |
+| **RSB-3810**   |     🟡     | 🟡 Development |
 
 **Status Legend:**
 
@@ -355,7 +350,7 @@ bsp list | grep -i mediatek
 bsp build mediatek-genio-1200-evk-scarthgap
 
 # Build Advantech RSB-3810 (scarthgap)
-bsp build modular-bsp-rsb3810-scarthgap:
+bsp build modular-bsp-rsb3810-scarthgap
 ```
 
 ---
@@ -369,8 +364,8 @@ the [Advantech Qualcomm overlay README](vendors/advantech/qualcomm/README.md).
 
 | Board \ Yocto         | scarthgap | Status        |
 | --------------------- | :-------: | ------------- |
-| **QCS6490 RB3gen2**   |     ✅     | 🟡 Development |
-| **AOM-2721**          |     ✅     | 🟡 Development |
+| **QCS6490 RB3gen2**   |     🟡     | 🟡 Development |
+| **AOM-2721**          |     🟡     | 🟡 Development |
 
 **Status Legend:**
 
@@ -440,85 +435,6 @@ bsp shell <bsp_name>
 
 # Export BSP configuration
 bsp export <bsp_name>
-
-# List available container definitions
-bsp containers
-```
-
-## 3.4. Container Management
-
-The BSP Registry Manager supports container definitions that can be shared across multiple BSPs:
-
-```bash
-# List all available containers
-bsp containers
-
-# Example output:
-# Available Containers:
-# - ubuntu-20.04:
-#     Image: advantech/bsp-registry/ubuntu-20.04/kas:4.7
-#     File: Dockerfile.ubuntu
-#     Args: DISTRO=ubuntu:20.04, KAS_VERSION=4.7
-# - ubuntu-22.04:
-#     Image: advantech/bsp-registry/ubuntu-22.04/kas:5.2
-#     File: Dockerfile.ubuntu
-#     Args: DISTRO=ubuntu:22.04, KAS_VERSION=5.0
-```
-
-## 3.5. Configuration File Structure
-
-The BSP registry uses a YAML configuration file (default: `bsp-registry.yml`) with the following structure:
-
-```yaml
-specification:
-  version: '1.0'
-
-# Global environment variables (supports $ENV{VAR} expansion)
-environment:
-  - name: "DL_DIR"
-    value: "$ENV{HOME}/yocto-cache/downloads"
-  - name: "SSTATE_DIR"
-    value: "$ENV{HOME}/yocto-cache/sstate-cache"
-
-# Container definitions (reusable across BSPs)
-containers:
-  - ubuntu-20.04:
-      file: Dockerfile.ubuntu
-      image: "advantech/bsp-registry/ubuntu-20.04/kas:4.7"
-      args:
-        - name: "DISTRO"
-          value: "ubuntu:20.04"
-        - name: "KAS_VERSION"
-          value: "4.7"
-  - ubuntu-22.04:
-      file: Dockerfile.ubuntu
-      image: "advantech/bsp-registry/ubuntu-22.04/kas:5.2"
-      args:
-        - name: "DISTRO"
-          value: "ubuntu:22.04"
-        - name: "KAS_VERSION"
-          value: "5.2"
-
-# BSP definitions
-registry:
-  bsp:
-    - name: "imx8mpevk"
-      description: "i.MX8MP EVK Board"
-      os:
-        name: "linux"
-        build_system: "yocto"
-        version: "scarthgap"
-      build:
-        path: "build/imx8mpevk"
-        copy:
-          - scripts/helper.sh: build/  # Copies into <build path>/build/
-        environment:
-          container: "ubuntu-22.04"  # Reference to container definition
-          runtime_args: "--device=/dev/net/tun --cap-add=NET_ADMIN"  # Optional kas-container args (e.g. for QEMU networking)
-        docker: "docker"
-        configuration:
-          - "conf/imx8mpevk.yml"
-          - "conf/scarthgap.yml"
 ```
 
 ## 3.6. Command Reference
@@ -526,6 +442,7 @@ registry:
 | Command | Description | Example |
 |---------|-------------|---------|
 | `list` | List all available BSPs | `bsp list` |
+| `tree` | Show all available BSPs as a tree | `bsp tree` |
 | `build <bsp_name>` | Build a specific BSP | `bsp build imx8mpevk` |
 | `build <bsp_name> --checkout` | Checkout and validate BSP configuration without building (fast) | `bsp build imx8mpevk --checkout` |
 | `shell <bsp_name>` | Enter interactive shell | `bsp shell imx8mpevk` |
@@ -552,13 +469,7 @@ The `--checkout` flag provides a fast way to checkout and validate BSP configura
 
 ```bash
 # Checkout and validate configuration for RSB3720 6G board
-bsp build adv-mbsp-oenxp-walnascar-rsb3720-6g --checkout
-
-# Checkout and validate configuration for RSB3720 4G board
-bsp build adv-mbsp-oenxp-walnascar-rsb3720-4g --checkout
-
-# If validation passes, proceed with full build
-bsp build adv-mbsp-oenxp-walnascar-rsb3720-6g
+bsp build modular-bsp-rsb3720-6g-walnascar --checkout
 ```
 
 ---

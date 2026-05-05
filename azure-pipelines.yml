@@ -25,7 +25,7 @@ jobs:
 
       - script: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install --user bsp-registry-tools
+          python3 -m pip install --user --upgrade bsp-registry-tools
           echo "##vso[task.prependpath]$HOME/.local/bin"
           which bsp || true
           bsp --help || true
@@ -115,7 +115,7 @@ jobs:
 
       - script: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install --user bsp-registry-tools
+          python3 -m pip install --user --upgrade bsp-registry-tools
           echo "##vso[task.prependpath]$HOME/.local/bin"
           which bsp || true
           bsp --help || true

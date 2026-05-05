@@ -124,6 +124,8 @@ environments:
     container: ubuntu-20.04
   debian-13:
     container: debian-13
+  debian-12:
+    container: debian-12
   isar-build-environment:
     container: isar-debian-13
     # Copy the QEMU run script into every Isar build directory
@@ -934,6 +936,7 @@ registry:
       includes:
         - vendors/qemu/common.yaml
       build:
+        environment: default
         path: build/poky-qemuarm64
 
     # --- QEMU x86-64 ---
@@ -945,7 +948,7 @@ registry:
       includes:
         - vendors/qemu/common.yaml
       build:
-        container: "debian-12"
+        environment: debian-12
         path: build/poky-harden-qemux86-64-scarthgap
 
     - name: poky-qemux86-64
@@ -977,7 +980,7 @@ registry:
       includes:
         - vendors/qemu/common.yaml
       build:
-        container: "debian-12"
+        environment: debian-12
         path: build/poky-qemuarm-scarthgap
 
     # --- QEMU Debian / Ubuntu
@@ -988,6 +991,7 @@ registry:
       releases: [ubuntu-noble, ubuntu-jammy, debian-trixie]
       features: []
       build:
+        environment: isar-build-environment
         path: build/isar-qemuamd64
       # testing:
       #   lava:
@@ -1002,6 +1006,7 @@ registry:
       releases: [debian-trixie]
       features: []
       build:
+        environment: isar-build-environment
         path: build/isar-qemuarm64
 
     # --- Qualcomm QCS6490 RB3 Gen2 Vision Kit ---    
@@ -1012,6 +1017,7 @@ registry:
       releases: [scarthgap]
       features: [systemd, security, virtualization, ipv6, ostree]
       build:
+        environment: default
         path: build/qcs6490-rb3gen2-vision-kit
 
     # --- Mediatek Genio 1200 EVK ---    
@@ -1022,6 +1028,7 @@ registry:
       releases: [scarthgap]
       features: [systemd, security, virtualization, ipv6]
       build:
+        environment: default
         path: build/mediatek-genio-1200-evk
 
     # --- Advantech RSB-3810 (Mediatek) ---    
@@ -1033,6 +1040,7 @@ registry:
       vendor_release: mtk-rity-v25.0
       features: [systemd, security, virtualization, ipv6]
       build:
+        environment: default
         path: build/modular-bsp-rsb3810
 
     # --- Advantech ROM-2620 (i.MX8) ---    
@@ -1043,6 +1051,7 @@ registry:
       releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6]
       build:
+        environment: default
         path: build/modular-bsp-rom2620-ed91
 
     # --- Advantech ROM-2820 (i.MX93) ---    
@@ -1053,7 +1062,7 @@ registry:
       releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6]
       build:
-        container: "ubuntu-22.04"
+        environment: ubuntu-22.04
         path: build/modular-bsp-rom2820-ed93
 
     # --- Advantech ROM-5721 DB5901 ---
@@ -1064,7 +1073,7 @@ registry:
       release: mickledore
       features: [systemd, debug-tweaks, virtualization, ipv6, security]
       build:
-        container: "ubuntu-20.04"
+        environment: ubuntu-20.04
         path: build/advantech-rom5721-db5901-1g-mickledore
 
     - name: advantech-rom5721-db5901-2g-mickledore
@@ -1073,7 +1082,7 @@ registry:
       release: mickledore
       features: [systemd, debug-tweaks, virtualization, ipv6, security]
       build:
-        container: "ubuntu-20.04"
+        environment: ubuntu-20.04
         path: build/advantech-rom5721-db5901-2g-mickledore
 
     # --- Advantech ROM-2820 A1 ---
@@ -1085,8 +1094,8 @@ registry:
       vendor_release: imx-6.1.22-2.0.0
       features: [systemd, security, debug-tweaks, virtualization, ipv6]
       build:
-        container: "ubuntu-20.04"
-        build: build/advantech-rom2820-a1-mickledore
+        environment: ubuntu-20.04
+        path: build/advantech-rom2820-a1-mickledore
 
     # --- Advantech RSB-3730 ---
 
@@ -1097,8 +1106,8 @@ registry:
       vendor_release: imx-6.1.22-2.0.0
       features: [systemd, security, debug-tweaks, virtualization, ipv6]
       build:
-        container: "ubuntu-20.04"
-        build: build/advantech-rsb3730-mickledore
+        environment: ubuntu-20.04
+        path: build/advantech-rsb3730-mickledore
 
     - name: advantech-rsb3730-2g-mickledore
       description: "Advantech RSB-3730 2GB (i.MX8) Mickledore (Yocto 4.2)"
@@ -1107,8 +1116,8 @@ registry:
       vendor_release: imx-6.1.22-2.0.0
       features: [systemd, debug-tweaks, security, virtualization, ipv6]
       build:
-        container: "ubuntu-20.04"
-        build: build/advantech-rsb3730-2g-mickledore
+        environment: ubuntu-20.04
+        path: build/advantech-rsb3730-2g-mickledore
 
     - name: advantech-rsb3730-4g-mickledore
       description: "Advantech RSB-3730 4GB (i.MX8) Mickledore (Yocto 4.2)"
@@ -1117,8 +1126,8 @@ registry:
       vendor_release: imx-6.1.22-2.0.0
       features: [systemd, debug-tweaks, security, virtualization, ipv6]
       build:
-        container: "ubuntu-20.04"
-        build: build/advantech-rsb3730-4g-mickledore
+        environment: ubuntu-20.04
+        path: build/advantech-rsb3730-4g-mickledore
 
     # --- Advantech RSB-3720 ---
 
@@ -1129,8 +1138,8 @@ registry:
       vendor_release: imx-5.15.52-2.1.0
       features: [systemd, virtualization, ipv6]
       build:
-        container: "ubuntu-20.04"
-        build: build/advantech-imx8mprsb3720a1-kirkstone
+        environment: ubuntu-20.04
+        path: build/advantech-imx8mprsb3720a1-kirkstone
 
     - name: advantech-imx8mprsb3720a2-scarthgap
       description: "Advantech RSB-3720 A2 (i.MX8) Scarthgap (Yocto 5.0 LTS)"
@@ -1139,8 +1148,8 @@ registry:
       vendor_release: imx-6.6.23-2.0.0
       features: [systemd, security, virtualization, ipv6]
       build:
-        container: ubuntu-22.04
-        build: build/advantech-imx8mprsb3720a2-scarthgap
+        environment: ubuntu-22.04
+        path: build/advantech-imx8mprsb3720a2-scarthgap
 
     # --- Advantech Europe RSB-3720 ---
 
@@ -1151,6 +1160,7 @@ registry:
       features: [systemd, security, virtualization, ipv6, usrmerge, x11, wayland]
       targets: [ros-image-core]
       build:
+        environment: default
         path: build/modular-ros-bsp-rsb3720
 
     - name: modular-bsp-rsb3720
@@ -1159,6 +1169,7 @@ registry:
       releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6, usrmerge]
       build:
+        environment: default
         path: build/modular-bsp-rsb3720
 
     - name: modular-bsp-rsb3720-4g
@@ -1167,6 +1178,7 @@ registry:
       releases: [walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6, usrmerge, root-login]
       build:
+        environment: default
         path: build/modular-bsp-rsb3720-4g
 
     - name: modular-bsp-rsb3720-6g
@@ -1175,6 +1187,7 @@ registry:
       releases: [walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6, usrmerge, root-login]
       build:
+        environment: default
         path: build/modular-bsp-rsb3720-6g
 
     - name: modular-bsp-rauc-rsb3720
@@ -1183,6 +1196,7 @@ registry:
       releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6, usrmerge, rauc]
       build:
+        environment: default
         path: build/modular-bsp-rauc-rsb3720
 
     - name: modular-bsp-swupdate-rsb3720
@@ -1191,6 +1205,7 @@ registry:
       releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6, swupdate]
       build:
+        environment: default
         path: build/modular-bsp-swupdate-rsb3720
 
     - name: modular-bsp-ostree-rsb3720
@@ -1199,6 +1214,7 @@ registry:
       releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6, ostree]
       build:
+        environment: default
         path: build/modular-bsp-ostree-rsb3720
 
     # --- Advantech Europe Modular BSP ROM-5720 DB5901 ---
@@ -1209,7 +1225,7 @@ registry:
       releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6]
       build:
-        container: "ubuntu-22.04"
+        environment: ubuntu-22.04
         path: build/modular-bsp-rom5720-db5901
 
     # --- Advantech Europe Modular BSP ROM-5721 DB5901 ---
@@ -1220,7 +1236,7 @@ registry:
       releases: [scarthgap, styhead, walnascar]
       features: [systemd, security, virtualization, ipv6]
       build:
-        container: "ubuntu-22.04"
+        environment: ubuntu-22.04
         path: build/modular-bsp-rom5721-db5901
 
     - name: modular-bsp-rom5721-1g-db5901
@@ -1229,7 +1245,7 @@ registry:
       releases: [walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6, root-login]
       build:
-        container: "ubuntu-22.04"
+        environment: ubuntu-22.04
         path: build/modular-bsp-rom5721-1g-db5901
 
     - name: modular-bsp-rom5721-2g-db5901
@@ -1238,7 +1254,7 @@ registry:
       releases: [walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6, root-login]
       build:
-        container: "ubuntu-22.04"
+        environment: ubuntu-22.04
         path: build/modular-bsp-rom5721-2g-db5901
 
     - name: modular-bsp-rom5721-2g-db5901-secureboot
@@ -1262,7 +1278,7 @@ registry:
       releases: [scarthgap, styhead, walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6]
       build:
-        container: "ubuntu-22.04"
+        environment: ubuntu-22.04
         path: build/modular-bsp-rom5722-db2510
 
     # --- Advantech Europe Modular BSP AOM-5521 DB2510 ---
@@ -1273,7 +1289,7 @@ registry:
       releases: [walnascar, whinlatter]
       features: [systemd, security, virtualization, ipv6, root-login]
       build:
-        container: "ubuntu-22.04"
+        environment: ubuntu-22.04
         path: build/modular-bsp-aom5521-db2510
 
     - name: advantech-imx95aom5521a1
@@ -1282,7 +1298,7 @@ registry:
       releases: [scarthgap, walnascar]
       features: [systemd, security, virtualization, ipv6, root-login]
       build:
-        container: "ubuntu-22.04"
+        environment: ubuntu-22.04
         path: build/advantech-imx95aom5521a1
 
     - name: advantech-imx95aom5521a2
@@ -1291,5 +1307,5 @@ registry:
       releases: [walnascar]
       features: [systemd, security, virtualization, ipv6]
       build:
-        container: "ubuntu-22.04"
+        environment: ubuntu-22.04
         path: build/advantech-imx95aom5521a2

@@ -1,0 +1,11 @@
+header:
+  version: 14
+  includes:
+    - vendors/nxp/imx-6.18.20-2.0.0-wrynose.yml
+
+repos:
+  meta-modular-bsp-nxp:
+    branch: "wrynose-6.18.20-2.0.0-adv"
+
+  meta-nxp-security-reference-design:
+    branch: "wrynose-6.18.20-2.0.0-adv"

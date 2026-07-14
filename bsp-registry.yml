@@ -362,6 +362,14 @@ registry:
       includes:
         - vendors/advantech-europe/nxp/machine/imx9/aom5521-db2510.yml
 
+    - slug: rom5620-db5901
+      description: "Advantech ROM-5620 (i.MX8)"
+      vendor: advantech-europe
+      soc_vendor: nxp
+      architecture: arm64
+      includes:
+        - vendors/advantech-europe/nxp/machine/imx8/rom5620-db5901.yml
+
     - slug: rom5720-db5901
       description: "Advantech ROM-5720 (i.MX8, 1GB)"
       vendor: advantech-europe
@@ -1390,6 +1398,17 @@ registry:
       features: [systemd, security, virtualization, ipv6, ostree]
       build:
         path: build/modular-bsp-ostree-rsb3720
+
+    # --- Advantech Europe Modular BSP ROM-5620 DB5901 ---
+
+    - name: modular-bsp-rom5620-db5901
+      description: "Advantech ROM-5620 DB5901 (i.MX8)"
+      device: rom5620-db5901
+      releases: [styhead, whinlatter, wrynose]
+      features: [systemd, security, virtualization, ipv6, root-login]
+      build:
+        container: "ubuntu-22.04"
+        path: build/modular-bsp-rom5620-db5901
 
     # --- Advantech Europe Modular BSP ROM-5720 DB5901 ---
 

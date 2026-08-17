@@ -1,0 +1,28 @@
+header:
+  version: 14
+
+defaults:
+  repos:
+    branch: "scarthgap"
+
+repos:
+  poky:
+    commit: "ac257900c33754957b2696529682029d997a8f28"
+
+  bitbake:
+    tag: "yocto-5.0.10"
+    branch: ""
+    commit: "696c2c1ef095f8b11c7d2eff36fae50f58c62e5e"
+
+  meta-openembedded:
+    commit: "491671faee11ea131feab5a3a451d1a01deb2ab1"
+
+  meta-arm:
+    commit: "8e0f8af90fefb03f08cd2228cde7a89902a6b37c"
+
+  meta-virtualization:
+    commit: "9e040ee8dd6025558ea60ac9db60c41bfeddf221"
+
+local_conf_header:
+  distro: |
+    WARN_QA:remove = "license-exists"

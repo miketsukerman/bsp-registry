@@ -1,0 +1,24 @@
+header:
+  version: 14
+
+defaults:
+  repos:
+    branch: "styhead"
+
+repos:
+  poky:
+    commit: "7e081bd98fdc5435e850d1df79a5e0f1e30293d0"
+
+  bitbake:
+    tag: "yocto-5.1.1"
+    branch: ""
+    commit: "9602a684568910fd333ffce907fa020ad3661c26"
+
+  meta-openembedded:
+    commit: "5d54a52fbeb69dba7b8ae11db98af4813951fa61"
+
+  meta-arm:
+    commit: "acafe7c89f04a88efd8d427ddd21e66eb4bb7f54"
+
+  meta-virtualization:
+    commit: "9e9f60e959f3710fb7a16b9829d950c3d94c0d4a"

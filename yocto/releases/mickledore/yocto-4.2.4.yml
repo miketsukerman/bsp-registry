@@ -1,0 +1,24 @@
+header:
+  version: 14
+
+defaults:
+  repos:
+    branch: "mickledore"
+
+repos:
+  poky:
+    commit: "7235399a86b134e57d5eb783d7f1f57ca0439ae5"
+
+  bitbake:
+    tag: "yocto-4.2.4"
+    branch: ""
+    commit: "c7e094ec3beccef0bbbf67c100147c449d9c6836"
+
+  meta-openembedded:
+    commit: "39968837196cb48209b71e8852dd04a2f8ccdca8"
+
+  meta-arm:
+    commit: "9bcc166bd5bb717aa86bb0464621a36abc51fa19"
+
+  meta-virtualization:
+    commit: "b8db7002764712f2902fe9dea098c171b1128076"

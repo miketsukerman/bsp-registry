@@ -1,0 +1,24 @@
+header:
+  version: 14
+
+defaults:
+  repos:
+    branch: "nanbield"
+
+repos:
+  poky:
+    commit: "f768ffb8916feb6542fcbe3e946cbf30e247b151"
+
+  bitbake:
+    tag: "yocto-4.3.2"
+    branch: ""
+    commit: "72bf75f0b2e7f36930185e18a1de8277ce7045d8"
+
+  meta-openembedded:
+    commit: "1750c66ae8e4268c472c0b2b94748a59d6ef866d"
+
+  meta-arm:
+    commit: "ae11c9d47374b7373dfead6b4217374484151f6f"
+
+  meta-virtualization:
+    commit: "9e92984ff47b3ca2106b1d27a93af061b28d1e8a"

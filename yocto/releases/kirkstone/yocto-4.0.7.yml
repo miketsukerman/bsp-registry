@@ -1,0 +1,24 @@
+header:
+  version: 14
+
+defaults:
+  repos:
+    branch: "kirkstone"
+
+repos:
+  poky:
+    commit: "65dafea22018052fe7b2e17e6e4d7eb754224d38"
+
+  bitbake:
+    tag: "yocto-4.0.7"
+    branch: ""
+    commit: "7e268c107bb0240d583d2c34e24a71e373382509"
+
+  meta-openembedded:
+    commit: "1f31570d0795da90083d1dbf28127c90908e30ee"
+
+  meta-arm:
+    commit: "ce41be0a7fe7c6f5fd2155866980388d3c83389f"
+
+  meta-virtualization:
+    commit: "9a94fa2ad76990b0eca40837a98aaf4cd83a7248"

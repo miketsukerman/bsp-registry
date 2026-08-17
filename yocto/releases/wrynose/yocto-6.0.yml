@@ -1,0 +1,39 @@
+header:
+  version: 14
+  includes:
+    - yocto/yocto-ext.yaml
+
+defaults:
+  repos:
+    branch: "wrynose"
+
+repos:
+  bitbake:
+    tag: "yocto-6.0"
+    branch: ""
+    commit: "33581c84f3a85008239acbd940501a35de48dc91"
+
+  meta-openembedded:
+    commit: "76700b6eaf327bb30e2c47b78713e2e409cfab7c"
+
+  meta-arm:
+    commit: "8eb10af8092dc3fff86891339fd024d8583f457f"
+
+  meta-virtualization:
+    commit: "2e0704ee9282e4e86c13180334cb7ce118e55dd9"
+
+  openembedded-core:
+    layers:
+      meta:
+
+  meta-yocto:
+    layers:
+      meta-poky:
+      meta-yocto-bsp:
+
+  poky:
+    branch: "master"
+    layers:
+      meta: "disabled"
+      meta-poky: "disabled"
+      meta-yocto-bsp: "disabled"

@@ -116,7 +116,7 @@ fragments, so they are enabled implicitly by choosing the corresponding `vendor_
 Anything in the tree can be used directly with KAS, even without a registry entry:
 
 ```bash
-kas build yocto/yocto.yaml:yocto/releases/scarthgap.yml:yocto/distro/poky.yaml:\
+kas build yocto/yocto.yaml:yocto/releases/scarthgap/yocto-5.0.yml:yocto/distro/poky.yaml:\
 vendors/qemu/machine/qemux86-64.yml:features/protocols/zenoh.yml
 ```
 

@@ -1,0 +1,23 @@
+header:
+  version: 14
+
+defaults:
+  repos:
+    branch: "kirkstone"
+
+repos:
+  poky:
+    commit: "74c92e38c701e268406bb656b45ccd68471c217e"
+
+  bitbake:
+    branch: "2.0"
+    commit: "f0f166aee766b4bb1f8cf8b35dfc7d406c75e6a4"
+
+  meta-openembedded:
+    commit: "c354f92778c1d4bcd3680af7e0fb0d1414de2344"
+
+  meta-arm:
+    commit: "898a4aa99bd7c7a30a0613c56bb3cc6607c5b020"
+
+  meta-virtualization:
+    commit: "8857b36ebfec3d548755755b009adc491ef320ab"

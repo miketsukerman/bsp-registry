@@ -66,7 +66,7 @@ A release carries the base KAS fragment for that Yocto/Isar branch plus per-vend
 ```yaml
 - slug: scarthgap
   includes:
-    - yocto/releases/scarthgap.yml
+    - yocto/releases/scarthgap/yocto-5.0.yml
   vendor_overrides:
     - vendor: nxp
       releases:
@@ -113,7 +113,7 @@ Run `bsp list` to see the expanded names; that is always authoritative.
 When resolving a preset the CLI concatenates KAS fragments in this order:
 
 1. **Framework** base (`yocto/yocto.yaml` or `isar/isar.yaml`)
-2. **Release** `includes` (e.g. `yocto/releases/scarthgap.yml`)
+2. **Release** `includes` (e.g. `yocto/releases/scarthgap/yocto-5.0.yml`)
 3. **Vendor overrides** for that release — applied **only** when the override's
    `releases[].slug` equals the preset's `vendor_release`
 4. **Distro** `includes`

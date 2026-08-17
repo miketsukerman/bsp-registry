@@ -1,0 +1,39 @@
+header:
+  version: 14
+  includes:
+    - yocto/yocto-ext.yaml
+
+defaults:
+  repos:
+    branch: "whinlatter"
+
+repos:
+  bitbake:
+    tag: "yocto-5.3.2"
+    branch: ""
+    commit: "7af7e04f3adc8ba144d9e2e6b37ed4ddb3b59df0"
+
+  meta-openembedded:
+    commit: "d28d0a23615f4d91d125fdcd247a71245087dab3"
+
+  meta-arm:
+    commit: "73460c53949658ab6c8b46269c3a69caccd3f745"
+
+  meta-virtualization:
+    commit: "8f03a0cc8950ef5d5e4f11d9ae494946d1991e45"
+
+  openembedded-core:
+    layers:
+      meta:
+
+  meta-yocto:
+    layers:
+      meta-poky:
+      meta-yocto-bsp:
+
+  poky:
+    branch: "master"
+    layers:
+      meta: "disabled"
+      meta-poky: "disabled"
+      meta-yocto-bsp: "disabled"

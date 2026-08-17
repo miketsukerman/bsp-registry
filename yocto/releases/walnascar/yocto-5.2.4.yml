@@ -1,0 +1,24 @@
+header:
+  version: 14
+
+defaults:
+  repos:
+    branch: "walnascar"
+
+repos:
+  poky:
+    commit: "d0b46a6624ec9c61c47270745dd0b2d5abbe6ac1"
+
+  bitbake:
+    tag: "yocto-5.2.4"
+    branch: ""
+    commit: "ac097300921590ed6a814f2c3fa08a59f4ded92d"
+
+  meta-openembedded:
+    commit: "80ab58cc404959ae2f0e8b2e68935b3bfd8e8cfe"
+
+  meta-arm:
+    commit: "21894cc2ea3197e6bfc1a56d889f757a09dc8b31"
+
+  meta-virtualization:
+    commit: "898239e810acbb7db93299f20deec8afe434f11b"

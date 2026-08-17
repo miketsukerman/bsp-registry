@@ -78,12 +78,13 @@ registry:
     - name: poky-qemuarm64
       description: "Poky QEMU ARM64 Scarthgap (Yocto 5.0 LTS)"
       device: qemuarm64
-      releases: [kirkstone, nanbield, mickledore, scarthgap,styhead, walnascar, whinlatter]
+      releases: [kirkstone, nanbield, mickledore, scarthgap,styhead, walnascar, whinlatter, wrynose, master]
       features: [systemd, usrmerge, yocto-ssh]
       includes:
         - vendors/qemu/common.yaml
       build:
         path: build/poky-qemuarm64
+
     # --- QEMU x86-64 ---
     - name: poky-harden-qemux86-64-scarthgap
       description: "Poky Hardened QEMU x86-64 Scarthgap (Yocto 5.0 LTS)"
@@ -95,6 +96,7 @@ registry:
       build:
         container: "debian-12"
         path: build/poky-harden-qemux86-64-scarthgap
+
     - name: poky-qemux86-64
       description: "Poky QEMU x86-64"
       device: qemux86-64
@@ -107,11 +109,13 @@ registry:
           device_type: "qemu"                                         # LAVA device type label
           artifact_name: "core-image-minimal-qemux86-64.rootfs.wic"   # where the image is served
           job_template: "vendors/qemu/lava/qemu.yaml.j2"              # optional; builtin used if omitted
+
     - name: poky-qemux86-64-ros2
       description: "Poky QEMU x86-64"
       device: qemux86-64
       releases: [ros2-humble-scarthgap]
       features: [systemd, usrmerge, yocto-ssh]
+
     # --- QEMU ARM (32-bit) ---
     - name: poky-qemuarm-scarthgap
       description: "Poky QEMU ARM (32-bit) Scarthgap (Yocto 5.0 LTS)"
@@ -123,8 +127,8 @@ registry:
       build:
         container: "debian-12"
         path: build/poky-qemuarm-scarthgap
+    
     # --- QEMU Debian / Ubuntu
-
     - name: isar-qemuamd64
       description: "Poky QEMU AMD64 (64-bit)"
       device: qemuamd64

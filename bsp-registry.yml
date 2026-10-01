@@ -12,6 +12,7 @@ include:
   - bsp-registry.nxp.yaml
   - bsp-registry.mediatek.yaml
   - bsp-registry.qualcomm.yaml
+  - bsp-registry.rockchip.yaml
   - bsp-registry.advantech.yaml
   - bsp-registry.advantech-aim-linux.yaml
   - bsp-registry.advantech-europe.yaml
@@ -380,6 +381,12 @@ registry:
               description: "Qualcomm QCS6490 RB3 Gen2 Vision Kit (Yocto 5.0 LTS Kernel 6.6.97)"
               includes:
                 - vendors/qualcomm/qcom-6.6.97-qli.1.6-ver.1.2-scarthgap.yml
+        - vendor: rockchip
+          releases:
+            - slug: rockchip
+              description: "Rockchip community BSP (mainline U-Boot + linux-yocto, Yocto 5.0 LTS)"
+              includes:
+                - vendors/rockchip/rockchip-scarthgap.yml
         - vendor: nvidia
           distro: 
           releases:
@@ -492,6 +499,12 @@ registry:
               description: "i.MX8/9 Release 2.2.0 Yocto 5.4 Kernel 6.12.49"
               includes:
                 - vendors/nxp/imx-6.12.49-2.2.0-walnascar.yml               
+        - vendor: rockchip
+          releases:
+            - slug: rockchip
+              description: "Rockchip community BSP (mainline U-Boot + linux-yocto, Yocto 5.4)"
+              includes:
+                - vendors/rockchip/rockchip-walnascar.yml
         - vendor: advantech
           soc_vendors:
             - vendor: nxp
@@ -596,6 +609,12 @@ registry:
       includes:
         - yocto/releases/wrynose.yml
       vendor_overrides:
+        - vendor: rockchip
+          releases:
+            - slug: rockchip
+              description: "Rockchip community BSP (mainline U-Boot + linux-yocto, Yocto 6.0)"
+              includes:
+                - vendors/rockchip/rockchip-wrynose.yml
         - vendor: advantech-europe
           soc_vendors:
             - vendor: nxp
@@ -607,6 +626,14 @@ registry:
                   description: "i.MX8 Release 2.0.0 Yocto 6.0 Kernel 6.18.20"
                   includes:
                     - vendors/advantech-europe/nxp/imx-6.18.20-2.0.0-wrynose.yml
+            - vendor: rockchip
+              includes:
+                - vendors/advantech-europe/rockchip/modular-bsp-rockchip.yml
+              releases:
+                - slug: rk3568-1.0.0
+                  description: "Advantech Rockchip RK3568 BSP 1.0.0 (Yocto 6.0 Wrynose)"
+                  includes:
+                    - vendors/advantech-europe/rockchip/rk3568-1.0.0-wrynose.yml
         - vendor: nvidia
           distro: 
           releases:

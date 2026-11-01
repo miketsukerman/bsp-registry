@@ -27,6 +27,7 @@ by the generic Yocto release fragments (`yocto/releases/<release>.yml`).
 |----------|--------------|---------------|
 | `ti-scarthgap.yml` | `scarthgap` | Yocto 5.0 LTS (Scarthgap) |
 | `ti-kirkstone.yml` | `kirkstone` | Yocto 4.0 LTS (Kirkstone) |
+| `ti-wrynose.yml`   | `wrynose`   | Yocto 6.0 (Wrynose) |
 
 ### Reference machine configs (`machine/`)
 
@@ -39,9 +40,9 @@ The top-level `bsp-registry.yml` exposes these TI presets:
 
 | Preset | Releases | SoC |
 |--------|----------|-----|
-| `am62xx-evm` | kirkstone, scarthgap | Sitara AM62x |
-| `am64xx-evm` | kirkstone, scarthgap | Sitara AM64x |
-| `j721e-evm`  | kirkstone, scarthgap | Jacinto J721e (TDA4VM) |
+| `am62xx-evm` | kirkstone, scarthgap, wrynose | Sitara AM62x |
+| `am64xx-evm` | kirkstone, scarthgap, wrynose | Sitara AM64x |
+| `j721e-evm`  | kirkstone, scarthgap, wrynose | Jacinto J721e (TDA4VM) |
 
 ## Build instructions
 

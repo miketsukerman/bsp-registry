@@ -64,7 +64,7 @@ registry:
     - name: am62xx-evm
       description: "TI Sitara AM62x EVM (Arago)"
       device: am62xx-evm
-      releases: [scarthgap, kirkstone]
+      releases: [scarthgap, kirkstone, wrynose]
       vendor_release: ti
       features: []
       build:
@@ -73,7 +73,7 @@ registry:
     - name: am64xx-evm
       description: "TI Sitara AM64x EVM (Arago)"
       device: am64xx-evm
-      releases: [scarthgap, kirkstone]
+      releases: [scarthgap, kirkstone, wrynose]
       vendor_release: ti
       features: []
       build:
@@ -82,7 +82,7 @@ registry:
     - name: j721e-evm
       description: "TI Jacinto J721e (TDA4VM) EVM (Arago)"
       device: j721e-evm
-      releases: [scarthgap, kirkstone]
+      releases: [scarthgap, kirkstone, wrynose]
       vendor_release: ti
       features: []
       build:

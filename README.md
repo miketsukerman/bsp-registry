@@ -594,14 +594,15 @@ The BSP registry supports **Texas Instruments** Sitara and Jacinto processors th
 `arago` reference distribution. For detailed configuration, see the
 [TI vendor README](vendors/ti/README.md).
 
-The TI Arago layers are maintained on the `kirkstone` (Yocto 4.0 LTS) and `scarthgap`
-(Yocto 5.0 LTS) branches, so the registry exposes the TI EVMs on those two releases.
+The TI Arago layers are maintained on the `kirkstone` (Yocto 4.0 LTS), `scarthgap`
+(Yocto 5.0 LTS) and `wrynose` (Yocto 6.0) branches, so the registry exposes the TI EVMs on
+those releases.
 
-| Board \ Yocto         | kirkstone | scarthgap | Status        |
-| --------------------- | :-------: | :-------: | ------------- |
-| **AM62x EVM**         |     🅿️     |     🅿️     | 🟡 Development |
-| **AM64x EVM**         |     🅿️     |     🅿️     | 🟡 Development |
-| **J721e (TDA4VM) EVM**|     🅿️     |     🅿️     | 🟡 Development |
+| Board \ Yocto         | kirkstone | scarthgap | wrynose | Status        |
+| --------------------- | :-------: | :-------: | :-----: | ------------- |
+| **AM62x EVM**         |     🅿️     |     🅿️     |    🅿️    | 🟡 Development |
+| **AM64x EVM**         |     🅿️     |     🅿️     |    🅿️    | 🟡 Development |
+| **J721e (TDA4VM) EVM**|     🅿️     |     🅿️     |    🅿️    | 🟡 Development |
 
 **Status Legend:**
 
@@ -612,9 +613,9 @@ The TI Arago layers are maintained on the `kirkstone` (Yocto 4.0 LTS) and `scart
 
 | **Hardware**           | **Preset**   | **Supported Releases** | **SoC**            | **Status**     | **Documentation** |
 |------------------------|--------------|------------------------|--------------------|----------------|-------------------|
-| **AM62x EVM**          | `am62xx-evm` | kirkstone, scarthgap   | Sitara AM62x       | 🟡 Development | [TI AM62x](https://www.ti.com/product/AM625) |
-| **AM64x EVM**          | `am64xx-evm` | kirkstone, scarthgap   | Sitara AM64x       | 🟡 Development | [TI AM64x](https://www.ti.com/product/AM6442) |
-| **J721e (TDA4VM) EVM** | `j721e-evm`  | kirkstone, scarthgap   | Jacinto J721e      | 🟡 Development | [TI TDA4VM](https://www.ti.com/product/TDA4VM) |
+| **AM62x EVM**          | `am62xx-evm` | kirkstone, scarthgap, wrynose | Sitara AM62x       | 🟡 Development | [TI AM62x](https://www.ti.com/product/AM625) |
+| **AM64x EVM**          | `am64xx-evm` | kirkstone, scarthgap, wrynose | Sitara AM64x       | 🟡 Development | [TI AM64x](https://www.ti.com/product/AM6442) |
+| **J721e (TDA4VM) EVM** | `j721e-evm`  | kirkstone, scarthgap, wrynose | Jacinto J721e      | 🟡 Development | [TI TDA4VM](https://www.ti.com/product/TDA4VM) |
 
 ### 2.6.1. Building Texas Instruments BSPs
 

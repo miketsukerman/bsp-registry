@@ -629,6 +629,13 @@ registry:
               description: "NVIDIA Jetson Orin JetPack 6 / L4T r36.x (Yocto 6.0 Wrynose)"
               includes:
                 - vendors/nvidia/tegra-wrynose.yml
+        - vendor: ti
+          distro:
+          releases:
+            - slug: ti
+              description: "TI Arago / meta-ti BSP (Yocto 6.0 Wrynose)"
+              includes:
+                - vendors/ti/ti-wrynose.yml
 
     - slug: master
       environment: ubuntu-24.04

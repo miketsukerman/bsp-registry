@@ -41,8 +41,10 @@ The registry supports two build systems:
     - [2.4.1. Building Qualcomm BSPs](#241-building-qualcomm-bsps)
   - [2.5. NVIDIA Jetson Boards Compatibility Matrix](#25-nvidia-jetson-boards-compatibility-matrix)
     - [2.5.1. Building NVIDIA Jetson BSPs](#251-building-nvidia-jetson-bsps)
-  - [2.6. QEMU and Reference BSPs](#26-qemu-and-reference-bsps)
-    - [2.6.1. Building QEMU BSPs](#261-building-qemu-bsps)
+  - [2.6. Texas Instruments Boards Compatibility Matrix](#26-texas-instruments-boards-compatibility-matrix)
+    - [2.6.1. Building Texas Instruments BSPs](#261-building-texas-instruments-bsps)
+  - [2.7. QEMU and Reference BSPs](#27-qemu-and-reference-bsps)
+    - [2.7.1. Building QEMU BSPs](#271-building-qemu-bsps)
 - [3. BSP Registry Manager](#3-bsp-registry-manager)
   - [3.1. Overview](#31-overview)
   - [3.2. Installation](#32-installation)
@@ -122,6 +124,7 @@ top-level `include:` directive of `bsp-registry.yml`:
 | `bsp-registry.advantech-aim-linux.yaml` | `advantech-aim-linux` vendor, the Advantech AIM Linux boards and their presets |
 | `bsp-registry.advantech-europe.yaml` | `advantech-europe` vendor, the Advantech Europe (modular BSP) boards and their presets |
 | `bsp-registry.nvidia.yaml` | `nvidia` vendor, the NVIDIA Jetson devkits and their presets |
+| `bsp-registry.ti.yaml` | `ti` vendor, the TI Sitara/Jacinto EVMs (Arago `meta-ti`/`meta-arago`) and their presets |
 
 Included files use the same schema as the root registry. Lists (`vendors`, `devices`, `bsp`, ...)
 from included files are concatenated with the ones defined in the root file, so an entry must be
@@ -584,7 +587,50 @@ bsp build jetson-orin-nano-devkit-wrynose
 ```
 ---
 
-## 2.6. QEMU and Reference BSPs
+## 2.6. Texas Instruments Boards Compatibility Matrix
+
+The BSP registry supports **Texas Instruments** Sitara and Jacinto processors through the
+**[Arago Project](https://www.arago-project.org/)** layers (`meta-ti`, `meta-arago`) and the
+`arago` reference distribution. For detailed configuration, see the
+[TI vendor README](vendors/ti/README.md).
+
+The TI Arago layers are maintained on the `kirkstone` (Yocto 4.0 LTS) and `scarthgap`
+(Yocto 5.0 LTS) branches, so the registry exposes the TI EVMs on those two releases.
+
+| Board \ Yocto         | kirkstone | scarthgap | Status        |
+| --------------------- | :-------: | :-------: | ------------- |
+| **AM62x EVM**         |     🅿️     |     🅿️     | 🟡 Development |
+| **AM64x EVM**         |     🅿️     |     🅿️     | 🟡 Development |
+| **J721e (TDA4VM) EVM**|     🅿️     |     🅿️     | 🟡 Development |
+
+**Status Legend:**
+
+* 🟢 **Stable**: Production-ready, fully tested and supported
+* 🟡 **Development**: Under active development, may have limitations
+* 🅿️ **Preset available**: a preset is shipped for this board and release
+* ❌ **Unsupported**: Not available for this Yocto release
+
+| **Hardware**           | **Preset**   | **Supported Releases** | **SoC**            | **Status**     | **Documentation** |
+|------------------------|--------------|------------------------|--------------------|----------------|-------------------|
+| **AM62x EVM**          | `am62xx-evm` | kirkstone, scarthgap   | Sitara AM62x       | 🟡 Development | [TI AM62x](https://www.ti.com/product/AM625) |
+| **AM64x EVM**          | `am64xx-evm` | kirkstone, scarthgap   | Sitara AM64x       | 🟡 Development | [TI AM64x](https://www.ti.com/product/AM6442) |
+| **J721e (TDA4VM) EVM** | `j721e-evm`  | kirkstone, scarthgap   | Jacinto J721e      | 🟡 Development | [TI TDA4VM](https://www.ti.com/product/TDA4VM) |
+
+### 2.6.1. Building Texas Instruments BSPs
+
+```bash
+# List available Texas Instruments BSPs
+bsp list | grep -Ei 'am62|am64|j721e'
+
+# Build the AM62x EVM on Scarthgap (Yocto 5.0 LTS)
+bsp build am62xx-evm-scarthgap
+
+# Build the J721e (TDA4VM) EVM on Kirkstone (Yocto 4.0 LTS)
+bsp build j721e-evm-kirkstone
+```
+---
+
+## 2.7. QEMU and Reference BSPs
 
 In addition to hardware BSPs, the registry ships emulated QEMU targets. They require no hardware
 and are the fastest way to validate the toolchain, a feature fragment, or a new Yocto release.
@@ -599,7 +645,7 @@ and are the fastest way to validate the toolchain, a feature fragment, or a new 
 | `isar-qemuamd64` | `qemuamd64` | Isar | ubuntu-noble, ubuntu-jammy, debian-trixie | Debian-based build, see [§2.2](#22-isar-build-system-support) |
 | `isar-qemuarm64` | `qemuarm64` | Isar | debian-trixie | Debian-based build, see [§2.2](#22-isar-build-system-support) |
 
-### 2.6.1. Building QEMU BSPs
+### 2.7.1. Building QEMU BSPs
 
 ```bash
 # List the emulated targets

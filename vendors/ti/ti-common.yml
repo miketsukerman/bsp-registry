@@ -1,0 +1,17 @@
+header:
+  version: 14
+
+# Texas Instruments Arago Project reference distribution provided by the
+# meta-arago-distro layer (conf/distro/arago.conf).
+distro: arago
+
+target:
+  - tisdk-base-image
+  - tisdk-default-image
+
+local_conf_header:
+  ti-license-flags: |
+    # The TI Arago BSP pulls in TI-licensed firmware and components (DSP/PRU
+    # firmware, graphics/codec binaries). Accept the TI end-user license so
+    # that the Arago images can be assembled.
+    LICENSE_FLAGS_ACCEPTED += "ti-eula-unrestricted-binaries"

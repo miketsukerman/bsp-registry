@@ -32,7 +32,7 @@ by the generic Yocto release fragments (`yocto/releases/<release>.yml`).
 ### Reference machine configs (`machine/`)
 
 - Sitara: `am62xx-evm`, `am64xx-evm`
-- Jacinto: `j721e-evm` (TDA4VM)
+- Jacinto: `j721e-evm` (TDA4VM), `j722s-evm` (AM67x / J722S, AM6734)
 
 ## BSPs in the registry
 
@@ -43,6 +43,7 @@ The top-level `bsp-registry.yml` exposes these TI presets:
 | `am62xx-evm` | kirkstone, scarthgap, wrynose | Sitara AM62x |
 | `am64xx-evm` | kirkstone, scarthgap, wrynose | Sitara AM64x |
 | `j721e-evm`  | kirkstone, scarthgap, wrynose | Jacinto J721e (TDA4VM) |
+| `j722s-evm`  | kirkstone, scarthgap, wrynose | AM67x / J722S (AM6734) |
 
 ## Build instructions
 

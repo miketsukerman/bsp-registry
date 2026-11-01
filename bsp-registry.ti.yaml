@@ -53,6 +53,14 @@ registry:
       includes:
         - vendors/ti/machine/j721e-evm.yml
 
+    - slug: j722s-evm
+      description: "TI AM67x / J722S (AM6734) Evaluation Module"
+      vendor: ti
+      soc_vendor: ti
+      architecture: arm64
+      includes:
+        - vendors/ti/machine/j722s-evm.yml
+
   # =====================================
   # Presets
   # =====================================
@@ -87,3 +95,12 @@ registry:
       features: []
       build:
         path: build/j721e-evm
+
+    - name: j722s-evm
+      description: "TI AM67x / J722S (AM6734) EVM (Arago)"
+      device: j722s-evm
+      releases: [scarthgap, kirkstone, wrynose]
+      vendor_release: ti
+      features: []
+      build:
+        path: build/j722s-evm

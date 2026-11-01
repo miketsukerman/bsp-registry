@@ -603,6 +603,7 @@ those releases.
 | **AM62x EVM**         |     🅿️     |     🅿️     |    🅿️    | 🟡 Development |
 | **AM64x EVM**         |     🅿️     |     🅿️     |    🅿️    | 🟡 Development |
 | **J721e (TDA4VM) EVM**|     🅿️     |     🅿️     |    🅿️    | 🟡 Development |
+| **J722S (AM67x) EVM** |     🅿️     |     🅿️     |    🅿️    | 🟡 Development |
 
 **Status Legend:**
 
@@ -616,6 +617,7 @@ those releases.
 | **AM62x EVM**          | `am62xx-evm` | kirkstone, scarthgap, wrynose | Sitara AM62x       | 🟡 Development | [TI AM62x](https://www.ti.com/product/AM625) |
 | **AM64x EVM**          | `am64xx-evm` | kirkstone, scarthgap, wrynose | Sitara AM64x       | 🟡 Development | [TI AM64x](https://www.ti.com/product/AM6442) |
 | **J721e (TDA4VM) EVM** | `j721e-evm`  | kirkstone, scarthgap, wrynose | Jacinto J721e      | 🟡 Development | [TI TDA4VM](https://www.ti.com/product/TDA4VM) |
+| **J722S (AM67x) EVM**  | `j722s-evm`  | kirkstone, scarthgap, wrynose | AM67x / J722S (AM6734) | 🟡 Development | [TI AM67A](https://www.ti.com/product/AM67A) |
 
 ### 2.6.1. Building Texas Instruments BSPs
 

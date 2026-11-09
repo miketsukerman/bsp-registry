@@ -1,0 +1,9 @@
+header:
+  version: 14
+  includes:
+    - vendors/rockchip/rockchip-common.yml
+
+repos:
+  meta-rockchip:
+    branch: "scarthgap"
+    commit: "9690180b7e9953361958c962b80d891eda8c1028"

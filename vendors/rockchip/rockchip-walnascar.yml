@@ -1,0 +1,9 @@
+header:
+  version: 14
+  includes:
+    - vendors/rockchip/rockchip-common.yml
+
+repos:
+  meta-rockchip:
+    branch: "walnascar"
+    commit: "d5b97e3d82a866272f7235b7c3904bc1b85eb4c0"

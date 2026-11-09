@@ -1,7 +1,7 @@
 # Qualcomm BSP (QLI)
 
 This directory contains the **Qualcomm vendor BSP integration** for the Advantech BSP Registry.
-The current integration is based on **Qualcomm Linux (QLI) v1.5** for **Yocto Scarthgap** and is
+The current integration is based on **Qualcomm Linux (QLI) v1.6** for **Yocto Scarthgap** and is
 intended to be built through the registry manager (the `bsp` CLI from the `bsp-registry-tools`
 package) which takes care of container selection, cache variables, and the build directory layout.
 
@@ -11,7 +11,7 @@ package) which takes care of container selection, cache variables, and the build
 
 - `qcom-6.6.97-qli.1.6-ver.1.2-scarthgap.yml`
   - Pulls Qualcomm layers from GitHub and pins them to specific commits matching the
-    [QLI 1.5 Ver.1.1 manifest](https://github.com/qualcomm-linux/qcom-manifest/blob/qcom-linux-scarthgap/qcom-6.6.97-QLI.1.6-Ver.1.2.xml):
+    [QLI 1.6 Ver.1.2 manifest](https://github.com/qualcomm-linux/qcom-manifest/blob/qcom-linux-scarthgap/qcom-6.6.97-QLI.1.6-Ver.1.2.xml):
     - `meta-qcom` (Linaro upstream)
     - `meta-qcom-hwe` (Qualcomm hardware enablement)
     - `meta-qcom-distro` (Qualcomm distribution layer)
@@ -49,7 +49,7 @@ One include per upstream `meta-qcom-hwe` machine, each simply selecting the corr
 
 ## BSPs in the registry
 
-The top-level registry file `bsp-registry.yml` exposes one preset per machine listed above, named
+The registry file `bsp-registry.qualcomm.yaml` exposes one preset per machine listed above, named
 after the machine, e.g. `qcs6490-rb3gen2-vision-kit`. A preset that declares `releases:` is
 addressed on the command line as `<preset>-<release>`, so the buildable names are suffixed with the
 release, e.g. `qcs6490-rb3gen2-vision-kit-scarthgap`. Run `bsp list | grep -i qualcomm` for the
@@ -94,5 +94,5 @@ Build artifacts follow the standard Yocto layout under the registry build direct
   - https://github.com/Linaro/meta-qcom
   - https://github.com/qualcomm-linux/meta-qcom-hwe
   - https://github.com/qualcomm-linux/meta-qcom-distro
-- QLI 1.5 Ver.1.1 manifest:
-  [https://github.com/qualcomm-linux/qcom-manifest/blob/qcom-linux-scarthgap/qcom-6.6.97-qli.1.6-ver.1.2.xml](https://github.com/qualcomm-linux/qcom-manifest/blob/qcom-linux-scarthgap/qcom-6.6.97-QLI.1.6-Ver.1.2.xml)
+- QLI 1.6 Ver.1.2 manifest:
+  [https://github.com/qualcomm-linux/qcom-manifest/blob/qcom-linux-scarthgap/qcom-6.6.97-QLI.1.6-Ver.1.2.xml](https://github.com/qualcomm-linux/qcom-manifest/blob/qcom-linux-scarthgap/qcom-6.6.97-QLI.1.6-Ver.1.2.xml)

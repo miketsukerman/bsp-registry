@@ -1,0 +1,27 @@
+header:
+  version: 14
+  includes:
+    - vendors/ti/ti-common.yml
+
+# Texas Instruments Arago BSP (meta-ti / meta-arago) pinned to the
+# "kirkstone" branch (Yocto 4.0 LTS). The base meta-arm / meta-arm-toolchain
+# layers required for TF-A and OP-TEE are provided by the generic kirkstone
+# release fragment (yocto/releases/kirkstone.yml) on the kirkstone branch.
+repos:
+  meta-ti:
+    url: "https://github.com/TexasInstruments/meta-ti.git"
+    branch: "kirkstone"
+    commit: "52018a8d730b2977d7163bf56c398905ef9115ac"
+    path: "layers/meta-ti"
+    layers:
+      meta-ti-bsp:
+      meta-ti-extras:
+
+  meta-arago:
+    url: "https://github.com/TexasInstruments/meta-arago.git"
+    branch: "kirkstone"
+    commit: "f8ad2232a4e52b50aecc6c847ee7cfa24fc84070"
+    path: "layers/meta-arago"
+    layers:
+      meta-arago-distro:
+      meta-arago-extras:

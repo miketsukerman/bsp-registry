@@ -1,0 +1,27 @@
+header:
+  version: 14
+  includes:
+    - vendors/ti/ti-common.yml
+
+# Texas Instruments Arago BSP (meta-ti / meta-arago) pinned to the
+# "wrynose" branch (Yocto 6.0). The base meta-arm / meta-arm-toolchain
+# layers required for TF-A and OP-TEE are provided by the generic wrynose
+# release fragment (yocto/releases/wrynose.yml).
+repos:
+  meta-ti:
+    url: "https://github.com/TexasInstruments/meta-ti.git"
+    branch: "wrynose"
+    commit: "066a7c440c0b241bca045133ec8cb5e506d49d98"
+    path: "layers/meta-ti"
+    layers:
+      meta-ti-bsp:
+      meta-ti-extras:
+
+  meta-arago:
+    url: "https://github.com/TexasInstruments/meta-arago.git"
+    branch: "wrynose"
+    commit: "daccd2a6943b3c785c606987292a0431d586f7b4"
+    path: "layers/meta-arago"
+    layers:
+      meta-arago-distro:
+      meta-arago-extras:

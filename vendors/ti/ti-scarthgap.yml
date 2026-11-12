@@ -1,0 +1,27 @@
+header:
+  version: 14
+  includes:
+    - vendors/ti/ti-common.yml
+
+# Texas Instruments Arago BSP (meta-ti / meta-arago) pinned to the
+# "scarthgap" branch (Yocto 5.0 LTS). The base meta-arm / meta-arm-toolchain
+# layers required for TF-A and OP-TEE are provided (and pinned) by the
+# generic scarthgap release fragment (yocto/releases/scarthgap.yml).
+repos:
+  meta-ti:
+    url: "https://github.com/TexasInstruments/meta-ti.git"
+    branch: "scarthgap"
+    commit: "760bcd6af8cb13cf9c56c460e4dd0fdba6ea5b79"
+    path: "layers/meta-ti"
+    layers:
+      meta-ti-bsp:
+      meta-ti-extras:
+
+  meta-arago:
+    url: "https://github.com/TexasInstruments/meta-arago.git"
+    branch: "scarthgap"
+    commit: "dd1b7f9b85c093931f3eed954d28eb6f52e271c1"
+    path: "layers/meta-arago"
+    layers:
+      meta-arago-distro:
+      meta-arago-extras:

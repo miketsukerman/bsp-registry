@@ -17,6 +17,7 @@ include:
   - bsp-registry.advantech-aim-linux.yaml
   - bsp-registry.advantech-europe.yaml
   - bsp-registry.nvidia.yaml
+  - bsp-registry.ti.yaml
 
 # Optional top-level flash settings for deploying images to devices.
 flash:
@@ -300,6 +301,13 @@ registry:
                   description: "i.MX8 Release 2.2.2 Yocto 4.0 LTS Kernel 5.15.71"
                   includes:
                     - vendors/advantech-europe/nxp/imx-5.15.71-2.2.2-kirkstone.yml
+        - vendor: ti
+          distro:
+          releases:
+            - slug: ti
+              description: "TI Arago / meta-ti BSP (Yocto 4.0 LTS Kirkstone)"
+              includes:
+                - vendors/ti/ti-kirkstone.yml
 
     - slug: mickledore
       distro: poky
@@ -399,6 +407,13 @@ registry:
               description: "NVIDIA Jetson Xavier + Orin JetPack 5 / L4T r35.x (Yocto 5.0 LTS)"
               includes:
                 - vendors/nvidia/tegra-jp5-scarthgap.yml
+        - vendor: ti
+          distro:
+          releases:
+            - slug: ti
+              description: "TI Arago / meta-ti BSP (Yocto 5.0 LTS Scarthgap)"
+              includes:
+                - vendors/ti/ti-scarthgap.yml
         - vendor: advantech
           soc_vendors:
             - vendor: nxp
@@ -642,6 +657,13 @@ registry:
               description: "NVIDIA Jetson Orin JetPack 6 / L4T r36.x (Yocto 6.0 Wrynose)"
               includes:
                 - vendors/nvidia/tegra-wrynose.yml
+        - vendor: ti
+          distro:
+          releases:
+            - slug: ti
+              description: "TI Arago / meta-ti BSP (Yocto 6.0 Wrynose)"
+              includes:
+                - vendors/ti/ti-wrynose.yml
 
     - slug: master
       environment: ubuntu-24.04

@@ -112,14 +112,6 @@ registry:
       includes:
         - vendors/advantech-europe/nxp/machine/imx8/rom5721-2g-db5901.yml
     
-    - slug: rom5722-db2510
-      description: "Advantech ROM-5722 (i.MX8)"
-      vendor: advantech-europe
-      soc_vendor: nxp
-      architecture: arm64
-      includes:
-        - vendors/advantech-europe/nxp/machine/imx8/rom5722-db2510.yml
-    
     - slug: rsb3720
       description: "Advantech RSB-3720 (i.MX8, 6GB)"
       vendor: advantech-europe
@@ -492,17 +484,35 @@ registry:
         container: "ubuntu-22.04"
         path: build/modular-bsp-aom5521a1-db2510
 
+    # One entry per release: each release needs its own `vendor_release`.
     - name: modular-bsp-aom5521a2-db2510
       description: "Advantech AOM-5521 A2 DB2510 (i.MX95)"
       device: aom5521a2-db2510
-      releases: [walnascar, wrynose]
+      releases: [walnascar]
+      vendor_release: imx-6.12.49-2.2.0
       features: [systemd, security, tpm, virtualization, docker, ipv6, root-login]
       testing:
         backend: direct-ssh
         direct:
           lava_job: vendors/advantech-europe/nxp/test/jobs/aom5521a2-db2510-modbsp.yaml
           # suites: [adv-context, adv-cpu, adv-ram, adv-thermal, adv-eth]   # optional subset
-          transport: { mode: ssh, user: root, strict_host_key_checking: false, known_hosts_file: /dev/null }        
+          transport: { mode: ssh, user: root, strict_host_key_checking: false, known_hosts_file: /dev/null }
+      build:
+        container: "ubuntu-22.04"
+        path: build/modular-bsp-aom5521a2-db2510
+
+    - name: modular-bsp-aom5521a2-db2510
+      description: "Advantech AOM-5521 A2 DB2510 (i.MX95)"
+      device: aom5521a2-db2510
+      releases: [wrynose]
+      vendor_release: imx-6.18.37-2.1.0
+      features: [systemd, security, tpm, virtualization, docker, ipv6, root-login]
+      testing:
+        backend: direct-ssh
+        direct:
+          lava_job: vendors/advantech-europe/nxp/test/jobs/aom5521a2-db2510-modbsp.yaml
+          # suites: [adv-context, adv-cpu, adv-ram, adv-thermal, adv-eth]   # optional subset
+          transport: { mode: ssh, user: root, strict_host_key_checking: false, known_hosts_file: /dev/null }
       build:
         container: "ubuntu-22.04"
         path: build/modular-bsp-aom5521a2-db2510

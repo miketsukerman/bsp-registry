@@ -36,6 +36,11 @@
 # repos: kas adds an unknown repo to the build. Deploy is skipped, so
 # artifacts from unreviewed revisions are never published.
 #
+# "Build target" overrides the BitBake target(s) the registry defines for the
+# selected presets ('bsp build <preset> --target <name>'), e.g. an image or a
+# single recipe such as linux-imx. Blank builds the registry targets. It only
+# affects the full build step, not "Check only".
+#
 # Every run ends with a "Run summary" job: a table of all selected presets
 # with result and duration on the run's Extensions tab. Logs of failed
 # presets are published as "failure-logs-<preset>-<attempt>" artifacts.
@@ -195,6 +200,10 @@ parameters:
     displayName: "Repo overrides: kas repo specs separated by spaces, e.g. meta-x@feature/y poky@commit:<sha> (blank = none; disables deploy)"
     type: string
     default: " "
+  - name: target
+    displayName: "Build target: BitBake image or recipe passed as 'bsp build --target' (blank = registry targets)"
+    type: string
+    default: " "
   - name: cacheRoot
     displayName: "Download/sstate cache directory on the agents (blank = registry default $HOME/data/cache)"
     type: string
@@ -211,6 +220,8 @@ variables:
   BSP_CACHE_ROOT: ${{ parameters.cacheRoot }}
   # Repo override specs added to the CI overlay by setup_overlay.py.
   REPO_OVERRIDES: ${{ parameters.repoOverrides }}
+  # BitBake target override for 'bsp build --target' (blank = registry targets).
+  BSP_TARGET: ${{ parameters.target }}
 
 jobs:
   # -----------------------------------------------------------------------------
@@ -316,9 +327,18 @@ jobs:
         retryCountOnTaskFailure: 2
 
       # Full build, not retried: a real failure would just burn hours again.
-      # Layers are already present from the step above.
+      # Layers are already present from the step above. BSP_TARGET (the
+      # "Build target" parameter) replaces the registry targets when set.
       - ${{ if eq(parameters.checkoutOnly, false) }}:
-        - script: bsp --local --overlay ci build "$(BSP_NAME)"
+        - script: |
+            set -e
+            TARGET="$(echo "$BSP_TARGET" | xargs)"
+            if [ -n "$TARGET" ]; then
+              echo "Building target: $TARGET"
+              bsp --local --overlay ci build "$(BSP_NAME)" --target "$TARGET"
+            else
+              bsp --local --overlay ci build "$(BSP_NAME)"
+            fi
           displayName: 'Run bsp build'
           condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
@@ -492,4 +512,5 @@ jobs:
         env:
           SYSTEM_ACCESSTOKEN: $(System.AccessToken)
           CHECK_ONLY: ${{ parameters.checkoutOnly }}
+          BSP_TARGET: ${{ parameters.target }}
           DEPLOY: ${{ and(eq(parameters.deploy, true), eq(replace(parameters.repoOverrides, ' ', ''), '')) }}

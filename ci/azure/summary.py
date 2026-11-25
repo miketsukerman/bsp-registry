@@ -57,10 +57,11 @@ def _rank(result):
     return ORDER.index(result) if result in ORDER else 0
 
 
-def render(matrix, records, check_only, deploy, pull_request, overrides=()):
+def render(matrix, records, check_only, deploy, pull_request, overrides=(), target=""):
     """Markdown summary for *matrix* ({key: {"BSP_NAME": ...}}) and timeline *records*.
 
-    *overrides* are the repo override specs the run was built with.
+    *overrides* are the repo override specs the run was built with; *target*
+    is the 'bsp build --target' override ("" = registry targets).
     """
     lines = ["# BSP build summary", ""]
     if not matrix:
@@ -96,6 +97,7 @@ def render(matrix, records, check_only, deploy, pull_request, overrides=()):
               f"**Deploy:** {'on' if deploy else 'off'}  ",
               *([f"**Repo overrides:** {', '.join(f'`{o}`' for o in overrides)}  "]
                 if overrides else []),
+              *([f"**Build target:** `{target}`  "] if target and not check_only else []),
               f"**Presets:** {totals}",
               ""]
 
@@ -135,7 +137,8 @@ def main():
             print(f"##vso[task.logissue type=warning]Could not read run timeline: {exc}")
 
     overrides = [o for o in re.split(r"[\s,]+", env.get("REPO_OVERRIDES") or "") if o]
-    text = render(matrix, records, check_only, deploy, pull_request, overrides)
+    target = (env.get("BSP_TARGET") or "").strip()
+    text = render(matrix, records, check_only, deploy, pull_request, overrides, target)
     out = os.path.join(env.get("AGENT_TEMPDIRECTORY", "."), "bsp-summary.md")
     with open(out, "w", encoding="utf-8") as f:
         f.write(text)

@@ -26,6 +26,7 @@ GROUPS = {
     "GROUP_QUALCOMM": r"^(qcm|qcs)[0-9]|^monaco-",
     "GROUP_ROCKCHIP": r"^rock-",
     "GROUP_NVIDIA": r"^jetson-",
+    "GROUP_TI": r"^(am62xx|am64xx|j721e|j722s)-",
 }
 
 # Release checkboxes (env var REL_<NAME>); "isar" covers debian-*/ubuntu-*.

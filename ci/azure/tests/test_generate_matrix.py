@@ -66,6 +66,16 @@ class SelectTest(unittest.TestCase):
         self.assertEqual(self.sel(GROUP_QUALCOMM="True"),
                          ["qcs6490-rb3gen2-core-kit-scarthgap", "monaco-monza-scarthgap"])
 
+    def test_ti_group(self):
+        presets = {
+            "am62xx-evm-scarthgap": "scarthgap",
+            "am64xx-evm-wrynose": "wrynose",
+            "j721e-evm-kirkstone": "kirkstone",
+            "j722s-evm-scarthgap": "scarthgap",
+        }
+        selected, _ = gm.select(presets, {"GROUP_TI": "True"})
+        self.assertEqual(selected, list(presets))
+
     def test_groups_and_regex_are_a_union(self):
         self.assertEqual(self.sel(GROUP_NVIDIA="True", PRESET_REGEX="^isar-"),
                          ["isar-qemuamd64-debian-trixie", "jetson-orin-nano-devkit-wrynose"])

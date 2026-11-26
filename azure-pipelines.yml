@@ -114,6 +114,10 @@ parameters:
     displayName: "NVIDIA Jetson (jetson-*)"
     type: boolean
     default: false
+  - name: groupTi
+    displayName: "Texas Instruments EVMs (am62xx, am64xx, j721e, j722s)"
+    type: boolean
+    default: false
   - name: presetRegex
     displayName: "Additional presets: regular expression (Python re.search, e.g. ^modular-bsp-rsb3720-.*-wrynose$)"
     type: string
@@ -251,6 +255,7 @@ jobs:
           GROUP_QUALCOMM: ${{ parameters.groupQualcomm }}
           GROUP_ROCKCHIP: ${{ parameters.groupRockchip }}
           GROUP_NVIDIA: ${{ parameters.groupNvidia }}
+          GROUP_TI: ${{ parameters.groupTi }}
           PRESET_REGEX: ${{ parameters.presetRegex }}
           REL_KIRKSTONE: ${{ parameters.relKirkstone }}
           REL_MICKLEDORE: ${{ parameters.relMickledore }}

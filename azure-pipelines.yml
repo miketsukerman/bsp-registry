@@ -36,9 +36,24 @@
 # repos: kas adds an unknown repo to the build. Deploy is skipped, so
 # artifacts from unreviewed revisions are never published.
 #
+# "Build target" overrides the BitBake target(s) the registry defines for the
+# selected presets ('bsp build <preset> --target <name>'), e.g. an image or a
+# single recipe such as linux-imx. Blank builds the registry targets. It only
+# affects the full build step, not "Check only".
+#
 # Every run ends with a "Run summary" job: a table of all selected presets
 # with result and duration on the run's Extensions tab. Logs of failed
 # presets are published as "failure-logs-<preset>-<attempt>" artifacts.
+#
+# Some presets use layers from private GitHub repositories (OTA features:
+# Advantech-EECC/meta-modular-bsp-ota; MediaTek and Rockchip modular BSPs).
+# To fetch them, set the secret pipeline variable GITHUB_FETCH_TOKEN (or
+# link a variable group / Azure Key Vault that defines it) to a read-only
+# token: a fine-grained personal access token, ideally of a service account,
+# with "Contents: read" on those repositories only. Each build job writes it
+# to a netrc in the job's temp directory (ci/azure/setup_github_netrc.py);
+# the token is never put into repository URLs. Without the variable, public
+# presets build as before and the private ones fail to fetch.
 #
 # Each build job starts with a pre-flight check (Docker, privileged
 # containers for Isar, free disk space) so a broken agent fails in seconds.
@@ -97,6 +112,10 @@ parameters:
     default: false
   - name: groupNvidia
     displayName: "NVIDIA Jetson (jetson-*)"
+    type: boolean
+    default: false
+  - name: groupTi
+    displayName: "Texas Instruments EVMs (am62xx, am64xx, j721e, j722s)"
     type: boolean
     default: false
   - name: presetRegex
@@ -185,6 +204,10 @@ parameters:
     displayName: "Repo overrides: kas repo specs separated by spaces, e.g. meta-x@feature/y poky@commit:<sha> (blank = none; disables deploy)"
     type: string
     default: " "
+  - name: target
+    displayName: "Build target: BitBake image or recipe passed as 'bsp build --target' (blank = registry targets)"
+    type: string
+    default: " "
   - name: cacheRoot
     displayName: "Download/sstate cache directory on the agents (blank = registry default $HOME/data/cache)"
     type: string
@@ -201,6 +224,8 @@ variables:
   BSP_CACHE_ROOT: ${{ parameters.cacheRoot }}
   # Repo override specs added to the CI overlay by setup_overlay.py.
   REPO_OVERRIDES: ${{ parameters.repoOverrides }}
+  # BitBake target override for 'bsp build --target' (blank = registry targets).
+  BSP_TARGET: ${{ parameters.target }}
 
 jobs:
   # -----------------------------------------------------------------------------
@@ -230,6 +255,7 @@ jobs:
           GROUP_QUALCOMM: ${{ parameters.groupQualcomm }}
           GROUP_ROCKCHIP: ${{ parameters.groupRockchip }}
           GROUP_NVIDIA: ${{ parameters.groupNvidia }}
+          GROUP_TI: ${{ parameters.groupTi }}
           PRESET_REGEX: ${{ parameters.presetRegex }}
           REL_KIRKSTONE: ${{ parameters.relKirkstone }}
           REL_MICKLEDORE: ${{ parameters.relMickledore }}
@@ -288,6 +314,15 @@ jobs:
 
       - template: ci/azure/templates/install-bsp-tools.yml
 
+      # Credentials for private GitHub layers (see the header): writes a
+      # netrc with the secret GITHUB_FETCH_TOKEN and exports NETRC_FILE,
+      # which kas-container hands to kas and BitBake. No-op when unset.
+      - script: python3 ci/azure/setup_github_netrc.py "$(Agent.TempDirectory)/github-netrc"
+        displayName: 'Set up GitHub credentials for private layers'
+        env:
+          # Secret variables are not exposed to scripts unless mapped.
+          GITHUB_FETCH_TOKEN: $(GITHUB_FETCH_TOKEN)
+
       # Fetch the layers and validate the configuration first, with retries:
       # git/network hiccups are cheap to repeat here, unlike a full build.
       # In check-only mode (checkbox, or any pull request build) this is the
@@ -297,9 +332,18 @@ jobs:
         retryCountOnTaskFailure: 2
 
       # Full build, not retried: a real failure would just burn hours again.
-      # Layers are already present from the step above.
+      # Layers are already present from the step above. BSP_TARGET (the
+      # "Build target" parameter) replaces the registry targets when set.
       - ${{ if eq(parameters.checkoutOnly, false) }}:
-        - script: bsp --local --overlay ci build "$(BSP_NAME)"
+        - script: |
+            set -e
+            TARGET="$(echo "$BSP_TARGET" | xargs)"
+            if [ -n "$TARGET" ]; then
+              echo "Building target: $TARGET"
+              bsp --local --overlay ci build "$(BSP_NAME)" --target "$TARGET"
+            else
+              bsp --local --overlay ci build "$(BSP_NAME)"
+            fi
           displayName: 'Run bsp build'
           condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
@@ -473,4 +517,5 @@ jobs:
         env:
           SYSTEM_ACCESSTOKEN: $(System.AccessToken)
           CHECK_ONLY: ${{ parameters.checkoutOnly }}
+          BSP_TARGET: ${{ parameters.target }}
           DEPLOY: ${{ and(eq(parameters.deploy, true), eq(replace(parameters.repoOverrides, ' ', ''), '')) }}

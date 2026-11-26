@@ -67,6 +67,13 @@ class RenderTest(unittest.TestCase):
         text = summary.render(MATRIX, RECORDS, False, False, False, ["meta-a@x", "poky@tag:v1"])
         self.assertIn("**Repo overrides:** `meta-a@x`, `poky@tag:v1`", text)
 
+    def test_build_target_line(self):
+        self.assertNotIn("Build target", summary.render(MATRIX, RECORDS, False, False, False))
+        text = summary.render(MATRIX, RECORDS, False, False, False, (), "linux-imx")
+        self.assertIn("**Build target:** `linux-imx`", text)
+        # Check-only runs never use the target.
+        self.assertNotIn("Build target", summary.render(MATRIX, RECORDS, True, False, False, (), "linux-imx"))
+
     def test_counts(self):
         text = summary.render(MATRIX, RECORDS, False, False, False)
         self.assertIn("1 failed, 1 canceled, 1 not run, 1 succeeded", text)

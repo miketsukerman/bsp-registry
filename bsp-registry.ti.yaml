@@ -1,0 +1,106 @@
+# Texas Instruments (TI) Arago BSP registry extension.
+# Included by bsp-registry.yml via the top-level ``include:`` directive.
+# Contains all TI-specific vendor, device, and preset definitions.
+# Release-level vendor_overrides that wire the TI BSP layers into the
+# per-Yocto-release entries remain in bsp-registry.yml because the registry
+# merge mechanism concatenates the ``releases`` list rather than merging
+# entries by slug, which would otherwise create duplicate release slugs.
+
+registry:
+
+  # =====================================
+  # Vendors
+  # =====================================
+
+  vendors:
+
+    - slug: ti
+      name: "Texas Instruments"
+      description: "Texas Instruments, Sitara & Jacinto embedded processors (Arago Project meta-ti / meta-arago)."
+      website: "https://www.ti.com/"
+      includes:
+        - vendors/ti/ti-common.yml
+
+  # =====================================
+  # Devices
+  # =====================================
+
+  devices:
+
+    # --- TI Sitara / Jacinto EVMs (Arago Project meta-ti) ---
+
+    - slug: am62xx-evm
+      description: "TI Sitara AM62x Evaluation Module"
+      vendor: ti
+      soc_vendor: ti
+      architecture: arm64
+      includes:
+        - vendors/ti/machine/am62xx-evm.yml
+
+    - slug: am64xx-evm
+      description: "TI Sitara AM64x Evaluation Module"
+      vendor: ti
+      soc_vendor: ti
+      architecture: arm64
+      includes:
+        - vendors/ti/machine/am64xx-evm.yml
+
+    - slug: j721e-evm
+      description: "TI Jacinto J721e (TDA4VM) Evaluation Module"
+      vendor: ti
+      soc_vendor: ti
+      architecture: arm64
+      includes:
+        - vendors/ti/machine/j721e-evm.yml
+
+    - slug: j722s-evm
+      description: "TI AM67x / J722S (AM6734) Evaluation Module"
+      vendor: ti
+      soc_vendor: ti
+      architecture: arm64
+      includes:
+        - vendors/ti/machine/j722s-evm.yml
+
+  # =====================================
+  # Presets
+  # =====================================
+
+  bsp:
+
+    # --- TI Arago (meta-ti / meta-arago) ---
+
+    - name: am62xx-evm
+      description: "TI Sitara AM62x EVM (Arago)"
+      device: am62xx-evm
+      releases: [scarthgap, kirkstone, wrynose]
+      vendor_release: ti
+      features: []
+      build:
+        path: build/am62xx-evm
+
+    - name: am64xx-evm
+      description: "TI Sitara AM64x EVM (Arago)"
+      device: am64xx-evm
+      releases: [scarthgap, kirkstone, wrynose]
+      vendor_release: ti
+      features: []
+      build:
+        path: build/am64xx-evm
+
+    - name: j721e-evm
+      description: "TI Jacinto J721e (TDA4VM) EVM (Arago)"
+      device: j721e-evm
+      releases: [scarthgap, kirkstone, wrynose]
+      vendor_release: ti
+      features: []
+      build:
+        path: build/j721e-evm
+
+    - name: j722s-evm
+      description: "TI AM67x / J722S (AM6734) EVM (Arago)"
+      device: j722s-evm
+      releases: [scarthgap, kirkstone, wrynose]
+      vendor_release: ti
+      features: []
+      build:
+        path: build/j722s-evm

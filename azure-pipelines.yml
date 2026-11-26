@@ -40,6 +40,16 @@
 # with result and duration on the run's Extensions tab. Logs of failed
 # presets are published as "failure-logs-<preset>-<attempt>" artifacts.
 #
+# Some presets use layers from private GitHub repositories (OTA features:
+# Advantech-EECC/meta-modular-bsp-ota; MediaTek and Rockchip modular BSPs).
+# To fetch them, set the secret pipeline variable GITHUB_FETCH_TOKEN (or
+# link a variable group / Azure Key Vault that defines it) to a read-only
+# token: a fine-grained personal access token, ideally of a service account,
+# with "Contents: read" on those repositories only. Each build job writes it
+# to a netrc in the job's temp directory (ci/azure/setup_github_netrc.py);
+# the token is never put into repository URLs. Without the variable, public
+# presets build as before and the private ones fail to fetch.
+#
 # Each build job starts with a pre-flight check (Docker, privileged
 # containers for Isar, free disk space) so a broken agent fails in seconds.
 #
@@ -287,6 +297,15 @@ jobs:
         displayName: 'Pre-flight agent check'
 
       - template: ci/azure/templates/install-bsp-tools.yml
+
+      # Credentials for private GitHub layers (see the header): writes a
+      # netrc with the secret GITHUB_FETCH_TOKEN and exports NETRC_FILE,
+      # which kas-container hands to kas and BitBake. No-op when unset.
+      - script: python3 ci/azure/setup_github_netrc.py "$(Agent.TempDirectory)/github-netrc"
+        displayName: 'Set up GitHub credentials for private layers'
+        env:
+          # Secret variables are not exposed to scripts unless mapped.
+          GITHUB_FETCH_TOKEN: $(GITHUB_FETCH_TOKEN)
 
       # Fetch the layers and validate the configuration first, with retries:
       # git/network hiccups are cheap to repeat here, unlike a full build.
